@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
 import './App.scss';
+import { withNamespaces, WithNamespaces } from 'react-i18next';
 
-class App extends Component {
+class App extends Component<WithNamespaces> {
   render() {
+    const { t } = this.props;
+
     return (
       <>
         <TopAppBar
-          title='Miami, FL'
+          title={t('welcome')}
           navigationIcon={<MaterialIcon
             icon='menu'
             onClick={() => console.log('click')}
@@ -23,4 +26,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withNamespaces()(App);
