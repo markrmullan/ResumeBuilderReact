@@ -1,25 +1,28 @@
 import i18n from "i18next";
 import detector from "i18next-browser-languagedetector";
+import XHRBackend from "i18next-xhr-backend";
 import { reactI18nextModule } from "react-i18next";
+
+const ENGLISH: string = 'en';
 
 i18n
   .use(detector)
+  .use(XHRBackend)
   .use(reactI18nextModule) // passes i18n down to react-i18next
   .init({
-    resources: {
-      en: {
-        translation: {
-          "welcome": "Welcome to React and react-i18next"
-        }
-      }
-    },
+    ns: ['common'],
+    defaultNS: 'common',
+
     lng: "en",
-    fallbackLng: "en",
+    fallbackLng: ENGLISH,
 
     interpolation: {
       escapeValue: false // react already safes from xss
     },
 
+    react: {
+      wait: true
+    }
   });
 
 export default i18n;

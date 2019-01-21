@@ -11,7 +11,7 @@ class App extends Component<WithNamespaces> {
     return (
       <>
         <TopAppBar
-          title={t('welcome')}
+          title={t('xhr')}
           navigationIcon={<MaterialIcon
             icon='menu'
             onClick={() => console.log('click')}
