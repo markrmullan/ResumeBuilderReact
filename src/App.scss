@@ -5,6 +5,13 @@
 
 .mdc-top-app-bar {
   .mdc-button {
-    @include mdc-button-ink-color($white);
+    &--raised {
+      @include mdc-button-container-fill-color($mdc-theme-on-primary);
+
+      color: $mdc-theme-primary;
+    }
+
+    white-space: nowrap;
+    width: fit-content;
   }
 }

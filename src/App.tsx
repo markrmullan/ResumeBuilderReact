@@ -21,8 +21,17 @@ class App extends Component<WithNamespaces> {
           />}
           actionItems={
             [
-              <Button href='login'>
+              <Button
+                unelevated={true}
+                href='login'
+              >
                 {t('log_in')}
+              </Button>,
+              <Button
+                raised={true}
+                href='get-started'
+              >
+                {t('sign_up')}
               </Button>
             ]
           }
