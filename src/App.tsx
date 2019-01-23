@@ -6,6 +6,7 @@ import './App.scss';
 import { withNamespaces, WithNamespaces } from 'react-i18next';
 import Button from '@material/react-button';
 import { LoginComponent } from './LoginComponent/component';
+import { SignupComponent } from './SignupComponent/component';
 
 class App extends Component<WithNamespaces> {
   render() {
@@ -36,11 +37,11 @@ class App extends Component<WithNamespaces> {
             ]
           }
         />
+        <TopAppBarFixedAdjust>
           <Switch>
             <Route exact={true} path='/login' component={LoginComponent} />
+            <Route exact={true} path='/get-started' component={SignupComponent} />
           </Switch>
-        <TopAppBarFixedAdjust>
-          My exciting content!
         </TopAppBarFixedAdjust>
       </>
     );
