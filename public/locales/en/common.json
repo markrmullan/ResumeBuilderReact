@@ -1,5 +1,10 @@
 {
+  "confirm_password": "Confirm password",
+  "create_a_password": "Create a password",
+  "create_account": "Create Account",
+  "email": "Email",
   "log_in": "Log in",
+  "pending_ellipsis": "Pending...",
   "sign_up": "Sign up",
   "xhr": "The xhr-backend is properly working!"
 }
