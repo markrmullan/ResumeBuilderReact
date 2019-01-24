@@ -67,6 +67,9 @@
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
     "terser-webpack-plugin": "1.1.0",
+    "tslint": "^5.12.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
     "typescript": "3.2.4",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
@@ -77,6 +80,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "lint": "tslint -p tsconfig.json -c tslint.json '{src,test}/**/*.{ts,tsx}' --fix",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

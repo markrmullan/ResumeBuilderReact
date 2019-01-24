@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import './i18n';
-import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import { AppComponent } from './App';
+import './i18n';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
 
 const ResumeBuilder = (
   <BrowserRouter>
-    <App />
+    <AppComponent />
   </BrowserRouter>
 );
 

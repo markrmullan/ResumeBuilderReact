@@ -4,7 +4,7 @@
   "create_account": "Create Account",
   "email": "Email",
   "log_in": "Log in",
-  "pending_ellipsis": "Pending...",
+  "saving_ellipsis": "Saving...",
   "sign_up": "Sign up",
   "xhr": "The xhr-backend is properly working!"
 }

@@ -1,11 +1,11 @@
-import i18n from "i18next";
-import detector from "i18next-browser-languagedetector";
-import XHRBackend from "i18next-xhr-backend";
-import { reactI18nextModule } from "react-i18next";
+import I18n from 'i18next';
+import detector from 'i18next-browser-languagedetector';
+import XHRBackend from 'i18next-xhr-backend';
+import { reactI18nextModule } from 'react-i18next';
 
 const ENGLISH: string = 'en';
 
-i18n
+I18n
   .use(detector)
   .use(XHRBackend)
   .use(reactI18nextModule) // passes i18n down to react-i18next
@@ -13,7 +13,7 @@ i18n
     ns: ['common'],
     defaultNS: 'common',
 
-    lng: "en",
+    lng: 'en',
     fallbackLng: ENGLISH,
 
     interpolation: {
@@ -25,4 +25,4 @@ i18n
     }
   });
 
-export default i18n;
+export { I18n as i18n };

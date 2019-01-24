@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
-import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
-import MaterialIcon from '@material/react-material-icon';
-import './App.scss';
-import { withNamespaces, WithNamespaces } from 'react-i18next';
 import Button from '@material/react-button';
+import MaterialIcon from '@material/react-material-icon';
+import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
+import React, { Component } from 'react';
+import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { Route, Switch } from 'react-router';
+import './App.scss';
 import { LoginComponent } from './LoginComponent/component';
 import { SignupComponent } from './SignupComponent/component';
 
 class App extends Component<WithNamespaces> {
-  render() {
+  public render() {
     const { t } = this.props;
 
     return (
@@ -17,20 +17,22 @@ class App extends Component<WithNamespaces> {
         <TopAppBar
           title={t('xhr')}
           navigationIcon={<MaterialIcon
-            icon='menu'
-            onClick={() => console.log('click')}
+            icon="menu"
+            onClick={() => undefined}
           />}
           actionItems={
             [
               <Button
+                key={1}
                 unelevated={true}
-                href='login'
+                href="login"
               >
                 {t('log_in')}
               </Button>,
               <Button
+                key={2}
                 raised={true}
-                href='get-started'
+                href="get-started"
               >
                 {t('sign_up')}
               </Button>
@@ -39,8 +41,8 @@ class App extends Component<WithNamespaces> {
         />
         <TopAppBarFixedAdjust>
           <Switch>
-            <Route exact={true} path='/login' component={LoginComponent} />
-            <Route exact={true} path='/get-started' component={SignupComponent} />
+            <Route exact={true} path="/login" component={LoginComponent} />
+            <Route exact={true} path="/get-started" component={SignupComponent} />
           </Switch>
         </TopAppBarFixedAdjust>
       </>
@@ -48,4 +50,4 @@ class App extends Component<WithNamespaces> {
   }
 }
 
-export default withNamespaces()(App);
+export const AppComponent = withNamespaces()(App);

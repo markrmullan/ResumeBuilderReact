@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import { withNamespaces, WithNamespaces } from 'react-i18next';
+import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 class Login extends Component<WithNamespaces> {
-  render() {
+  public render() {
     return (
       <div>Log me in already!</div>
-    )
+    );
   }
 }
 
