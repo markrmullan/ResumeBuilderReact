@@ -19,7 +19,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `yarn lint`
 
-Executes and fixes tslint violations declared in `tslint.json`
+Executes and fixes tslint violations declared in `tslint.json`, and alerts for sass-lint violations declared in `.sasslintrc.json`.
 
 ### `npm run build`
 

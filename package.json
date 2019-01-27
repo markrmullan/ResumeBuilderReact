@@ -81,8 +81,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json '{src,test}/**/*.{ts,tsx}' --fix",
-    "lint-sass": "sass-lint -c .sasslintrc.json -v -q --max-warnings 0",
+    "lint": "bash ./ci/run-lints.sh",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
