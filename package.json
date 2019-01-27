@@ -64,6 +64,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "resolve": "1.8.1",
+    "sass-lint": "^1.12.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
     "terser-webpack-plugin": "1.1.0",
@@ -81,6 +82,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "tslint -p tsconfig.json -c tslint.json '{src,test}/**/*.{ts,tsx}' --fix",
+    "lint-sass": "sass-lint -c .sasslintrc.json -v -q --max-warnings 0",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

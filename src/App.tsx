@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router';
 import './App.scss';
 import { LoginComponent } from './LoginComponent/component';
 import { SignupComponent } from './SignupComponent/component';
+import './styles/_material_components.scss';
 
 class App extends Component<WithNamespaces> {
   public render() {
