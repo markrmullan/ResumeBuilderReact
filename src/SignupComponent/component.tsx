@@ -2,6 +2,7 @@ import TextField, { Input } from '@material/react-text-field';
 import React, { Component } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { ApiQuery, post } from '../util/api';
 
 import './styles.scss';
 
@@ -28,6 +29,7 @@ class Signup extends Component<WithNamespaces, SignupState> {
           label={t('email')}
         >
           <Input
+            id="email"
             name="email"
             value={email}
             onChange={e => this.onChange(e)}/>
@@ -37,6 +39,7 @@ class Signup extends Component<WithNamespaces, SignupState> {
           label={t('create_a_password')}
         >
           <Input
+            id="password"
             name="password"
             type="password"
             autoComplete="new-password"
@@ -48,6 +51,7 @@ class Signup extends Component<WithNamespaces, SignupState> {
           label={t('confirm_password')}
         >
           <Input
+            id="password-confirmation"
             name="passwordConfirmation"
             type="password"
             autoComplete="new-password"
@@ -57,10 +61,9 @@ class Signup extends Component<WithNamespaces, SignupState> {
 
         <AsyncButton
           className="mdc-button mdc-ripple-upgraded mdc-button--raised"
-          raised={true}
           text={t('create_account')}
           pendingText={t('saving_ellipsis')}
-          onClick={this.submit}
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
         />
       </form>
     );
@@ -72,13 +75,15 @@ class Signup extends Component<WithNamespaces, SignupState> {
     this.setState({ [name]: value } as SignupState);
   }
 
-  public submit(_: React.FormEvent<HTMLButtonElement>) {
-    return new Promise((resolve, _) => {
-      const wait = setTimeout(() => {
-        clearTimeout(wait);
-        resolve('Promise A win!');
-      }, 2000);
-    });
+  public submit(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const { email, password } = this.state;
+
+    const apiQuery: Partial<ApiQuery> = {
+      baseResourceId: ''
+    };
+
+    post(apiQuery, { user: { email, password } });
   }
 }
 

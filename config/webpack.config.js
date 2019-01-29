@@ -499,6 +499,11 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+      // Define dev build globals
+      new webpack.DefinePlugin({
+        DEVELOPMENT: true,
+        PRODUCTION: false
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       isEnvProduction &&
