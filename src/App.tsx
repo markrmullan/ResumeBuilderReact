@@ -4,10 +4,11 @@ import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
-import './App.scss';
+
 import { LoginComponent } from './LoginComponent/component';
 import { SignupComponent } from './SignupComponent/component';
-import './styles/_material_components.scss';
+
+import './App.scss';
 
 class App extends Component<WithNamespaces> {
   public render() {

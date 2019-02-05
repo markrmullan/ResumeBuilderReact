@@ -6,5 +6,9 @@
   "log_in": "Log in",
   "saving_ellipsis": "Saving...",
   "sign_up": "Sign up",
+  "validation": {
+    "passwords_do_not_match": "Passwords do not match",
+    "minimum_characters_with_count": "Minimum {{count}} characters"
+  },
   "xhr": "The xhr-backend is properly working!"
 }

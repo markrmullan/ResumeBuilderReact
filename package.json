@@ -99,6 +99,9 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
+    "globals": {
+      "DEVELOPMENT": true
+    },
     "resolver": "jest-pnp-resolver",
     "setupFiles": [
       "react-app-polyfill/jsdom"
@@ -120,6 +123,7 @@
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
+      "@material": "identity-obj-proxy",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
