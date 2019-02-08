@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
 
-import { LoginComponent } from './LoginComponent/component';
-import { SignupComponent } from './SignupComponent/component';
+import { LoginComponent } from 'LoginComponent/component';
+import { SignupComponent } from 'SignupComponent/component';
 
 import './App.scss';
 

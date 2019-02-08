@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 class Login extends Component<WithNamespaces> {

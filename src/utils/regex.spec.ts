@@ -1,4 +1,4 @@
-import { EMAIL_REQUIRED } from './regex';
+import { EMAIL_REQUIRED } from 'utils/regex';
 
 describe('regexes', () => {
   it('EMAIL_REQUIRED', () => {

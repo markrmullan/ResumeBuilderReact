@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppComponent } from './App';
-import './i18n';
+import { AppComponent } from 'App';
+import 'i18n';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

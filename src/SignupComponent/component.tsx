@@ -2,9 +2,10 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import React, { Component, FormEvent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { post } from '../util/api';
-import { User } from '../util/models';
-import { EMAIL_REQUIRED } from '../util/regex';
+
+import { post } from 'utils/api';
+import { User } from 'utils/models';
+import { EMAIL_REQUIRED } from 'utils/regex';
 
 import './styles.scss';
 
