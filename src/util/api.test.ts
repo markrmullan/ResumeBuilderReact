@@ -1,6 +1,10 @@
 import { ApiQuery, url } from './api';
 
 describe('url', () => {
+  it('assumes that /users is the default path', () => {
+    expect(url({})).toEqual('/users');
+  });
+
   it('returns the ApiQuery path when one is defined', () => {
     const apiQuery: Partial<ApiQuery> = {
       path: 'experiences'

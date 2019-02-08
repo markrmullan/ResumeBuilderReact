@@ -7,6 +7,7 @@
   "saving_ellipsis": "Saving...",
   "sign_up": "Sign up",
   "validation": {
+    "invalid_email": "Invalid email",
     "passwords_do_not_match": "Passwords do not match",
     "minimum_characters_with_count": "Minimum {{count}} characters"
   },

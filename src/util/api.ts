@@ -16,7 +16,7 @@ export type ApiQuery = {
 const getDefaultApiQuery = (): ApiQuery => {
   return {
     baseResource: 'users',
-    baseResourceId: 'current',
+    baseResourceId: '',
     nestedResources: [],
     nestedResourceIds: [],
     queries: []
