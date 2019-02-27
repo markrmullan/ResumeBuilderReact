@@ -87,7 +87,9 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "bash ./ci/run-lints.sh",
-    "test": "node scripts/test.js"
+    "l": "yarn lint",
+    "test": "node scripts/test.js",
+    "t": "yarn test"
   },
   "eslintConfig": {
     "extends": "react-app"

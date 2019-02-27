@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore, compose, Store as ReduxStore } from 'redux';
+import { Store as ReduxStore, applyMiddleware, compose, createStore } from 'redux';
 
 import { middlewares } from 'middleware/redux';
 

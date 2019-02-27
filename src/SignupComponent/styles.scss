@@ -1,4 +1,6 @@
-.form-container {
+@import "../styles/common";
+
+.auth-container {
   display: grid;
   grid-template: repeat(4, auto) / 1fr;
   margin: 36px auto;
@@ -6,5 +8,11 @@
 
   .mdc-text-field-helper-text--validation-msg {
     margin-bottom: 16px;
+  }
+
+  .h1 {
+    color: $mdc-theme-primary;
+    font-weight: 600;
+    text-align: center;
   }
 }

@@ -4,6 +4,7 @@ import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { post } from 'utils/api';
+import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
@@ -24,8 +25,6 @@ type Errors = {
 
 type SignupStateWithErrors = SignupField & Errors;
 
-const MIN_PASSWORD_LENGTH: number = 8;
-
 class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
   public state = {
     email: '',
@@ -39,7 +38,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
     const { email, errors, password, passwordConfirmation } = this.state;
 
     return (
-      <div className="form-container">
+      <div className="auth-container">
         {errors.email && errors.email.map((error, i) => {
           return <div key={i}>{error}</div>;
         })}
@@ -47,6 +46,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
         {errors.password && errors.password.map((error, i) => {
           return <div key={i}>{error}</div>;
         })}
+        <h1 className="h1">{t('get_started')}</h1>
         <TextField
           label={t('email')}
           helperText={
@@ -119,7 +119,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
     this.tryCreateUser();
   }
 
-  private tryCreateUser = async (): Promise<any> => {
+  private tryCreateUser = async (): Promise<void> => {
     const { email, password } = this.state;
     const user: User = { email, password };
 
