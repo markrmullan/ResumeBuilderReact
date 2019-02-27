@@ -8,7 +8,7 @@ import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 type SignupField = {
   email: string;
@@ -38,7 +38,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
     const { email, errors, password, passwordConfirmation } = this.state;
 
     return (
-      <div className="auth-container">
+      <div className={styles.authContainer}>
         {errors.email && errors.email.map((error, i) => {
           return <div key={i}>{error}</div>;
         })}
@@ -46,7 +46,9 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
         {errors.password && errors.password.map((error, i) => {
           return <div key={i}>{error}</div>;
         })}
-        <h1 className="h1">{t('get_started')}</h1>
+        <h1 className={styles.h1}>
+          {t('get_started')}
+        </h1>
         <TextField
           label={t('email')}
           helperText={

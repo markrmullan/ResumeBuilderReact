@@ -8,6 +8,8 @@ import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
+import styles from 'SignupComponent/styles.module.scss';
+
 type LoginState = {
   email: string;
   error: string;
@@ -26,13 +28,15 @@ class Login extends Component<WithNamespaces, LoginState> {
     const { email, error, password } = this.state;
 
     return (
-      <div className="auth-container">
+      <div className={styles.authContainer}>
         {error &&
           <div>
             {error}
           </div>
         }
-        <h1 className="h1">{t('log_in')}</h1>
+        <h1 className={styles.h1}>
+          {t('log_in')}
+        </h1>
 
         <TextField
           label={t('email')}

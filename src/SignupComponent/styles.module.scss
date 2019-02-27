@@ -1,12 +1,12 @@
 @import "styles/common";
 
-.auth-container {
+.authContainer {
   display: grid;
   grid-template: repeat(4, auto) / 1fr;
   margin: 36px auto;
   max-width: 361px;
 
-  .mdc-text-field-helper-text--validation-msg {
+  :global(.mdc-text-field-helper-text--validation-msg) {
     margin-bottom: 16px;
   }
 
