@@ -29,11 +29,6 @@ class Login extends Component<WithNamespaces, LoginState> {
 
     return (
       <div className={styles.authContainer}>
-        {error &&
-          <div>
-            {error}
-          </div>
-        }
         <h1 className={styles.h1}>
           {t('log_in')}
         </h1>
@@ -41,8 +36,8 @@ class Login extends Component<WithNamespaces, LoginState> {
         <TextField
           label={t('email')}
           helperText={
-            <HelperText validation={true}>
-              {t('validation.invalid_email')}
+            <HelperText isValidationMessage={true} validation={true}>
+              {error || t('validation.invalid_email')}
             </HelperText>}
         >
           <Input
@@ -50,13 +45,17 @@ class Login extends Component<WithNamespaces, LoginState> {
             name="email"
             pattern={EMAIL_REQUIRED.source}
             value={email}
+            isValid={!error}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
         <TextField
           label={t('password')}
           helperText={
-            <HelperText validation={true}>
+            <HelperText
+              isValidationMessage={true}
+              validation={true}
+            >
               {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
             </HelperText>}
         >
@@ -84,7 +83,7 @@ class Login extends Component<WithNamespaces, LoginState> {
   private onChange(e: FormEvent<HTMLTextAreaElement>) {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.setState({ [name]: value } as LoginState);
+    this.setState({ [name]: value, error: '' } as LoginState);
   }
 
   private get allFieldsValid(): boolean {

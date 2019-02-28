@@ -39,13 +39,6 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
 
     return (
       <div className={styles.authContainer}>
-        {errors.email && errors.email.map((error, i) => {
-          return <div key={i}>{error}</div>;
-        })}
-
-        {errors.password && errors.password.map((error, i) => {
-          return <div key={i}>{error}</div>;
-        })}
         <h1 className={styles.h1}>
           {t('get_started')}
         </h1>
@@ -53,7 +46,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
           label={t('email')}
           helperText={
             <HelperText validation={true}>
-              {t('validation.invalid_email')}
+              {errors.email && errors.email[0] || t('validation.invalid_email')}
             </HelperText>}
         >
           <Input
@@ -61,6 +54,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             name="email"
             pattern={EMAIL_REQUIRED.source}
             value={email}
+            isValid={!errors.email || !errors.email[0]}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
@@ -68,7 +62,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
           label={t('create_a_password')}
           helperText={
             <HelperText validation={true}>
-              {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
+              {errors.password && errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
             </HelperText>}
         >
           <Input
@@ -78,6 +72,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             type="password"
             autoComplete="new-password"
             value={password}
+            isValid={!errors.password || !errors.password[0]}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
@@ -112,7 +107,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
   private onChange(e: FormEvent<HTMLTextAreaElement>) {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.setState({ [name]: value } as SignupField);
+    this.setState({ [name]: value, errors: this.defaultErrors.errors } as SignupStateWithErrors);
   }
 
   private submit = (e: FormEvent<HTMLButtonElement>): void => {
@@ -133,7 +128,9 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
   }
 
   private clearErrors = (): void => {
-    this.setState(this.defaultErrors);
+    this.setState({
+      errors: this.defaultErrors.errors
+    });
   }
 
   private get allFieldsValid(): boolean {
