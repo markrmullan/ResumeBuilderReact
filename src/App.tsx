@@ -3,12 +3,10 @@ import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import { LoginComponent } from 'LoginComponent/component';
 import { SignupComponent } from 'SignupComponent/component';
-import { sharedStore as store } from 'state/store';
 
 import './App.scss';
 
@@ -17,7 +15,7 @@ class App extends Component<WithNamespaces> {
     const { t } = this.props;
 
     return (
-      <Provider store={store}>
+      <>
         <TopAppBar
           title={t('xhr')}
           navigationIcon={<MaterialIcon
@@ -49,7 +47,7 @@ class App extends Component<WithNamespaces> {
             <Route exact={true} path="/get-started" component={SignupComponent} />
           </Switch>
         </TopAppBarFixedAdjust>
-      </Provider>
+      </>
     );
   }
 }
