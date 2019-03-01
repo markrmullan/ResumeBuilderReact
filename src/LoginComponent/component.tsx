@@ -12,14 +12,14 @@ import styles from 'SignupComponent/styles.module.scss';
 
 type LoginState = {
   email: string;
-  error: string;
+  error?: string;
   password: string;
 };
 
 class Login extends Component<WithNamespaces, LoginState> {
   public state = {
     email: '',
-    error: '',
+    error: undefined,
     password: ''
   };
 
@@ -45,7 +45,7 @@ class Login extends Component<WithNamespaces, LoginState> {
             name="email"
             pattern={EMAIL_REQUIRED.source}
             value={email}
-            isValid={!error}
+            isValid={error ? false : undefined}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
@@ -83,7 +83,7 @@ class Login extends Component<WithNamespaces, LoginState> {
   private onChange(e: FormEvent<HTMLTextAreaElement>) {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.setState({ [name]: value, error: '' } as LoginState);
+    this.setState({ [name]: value, error: undefined } as LoginState);
   }
 
   private get allFieldsValid(): boolean {
@@ -99,7 +99,7 @@ class Login extends Component<WithNamespaces, LoginState> {
 
   private tryLogin = async (): Promise<void> => {
     const { email, password } = this.state;
-    const user: Pick<User, 'email' | 'password'> = { email, password };
+    const user: User = { email, password };
 
     try {
       await post({ baseResourceId: 'sign_in' }, { user });
@@ -110,7 +110,7 @@ class Login extends Component<WithNamespaces, LoginState> {
 
   private clearError(): void {
     this.setState({
-      error: ''
+      error: undefined
     });
   }
 }

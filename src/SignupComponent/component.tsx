@@ -18,8 +18,8 @@ type SignupField = {
 
 type Errors = {
   errors: {
-    email?: string[];
-    password?: string[];
+    email: string[];
+    password: string[];
   };
 };
 
@@ -28,7 +28,7 @@ type SignupStateWithErrors = SignupField & Errors;
 class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
   public state = {
     email: '',
-    errors: this.defaultErrors.errors,
+    errors: Signup.getDefaultErrors().errors,
     password: '',
     passwordConfirmation: ''
   };
@@ -42,11 +42,12 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
         <h1 className={styles.h1}>
           {t('get_started')}
         </h1>
+
         <TextField
           label={t('email')}
           helperText={
-            <HelperText validation={true}>
-              {errors.email && errors.email[0] || t('validation.invalid_email')}
+            <HelperText isValidationMessage={true} validation={true}>
+              {errors.email[0] || t('validation.invalid_email')}
             </HelperText>}
         >
           <Input
@@ -54,7 +55,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             name="email"
             pattern={EMAIL_REQUIRED.source}
             value={email}
-            isValid={!errors.email || !errors.email[0]}
+            isValid={errors.email[0] ? false : undefined}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
@@ -62,7 +63,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
           label={t('create_a_password')}
           helperText={
             <HelperText validation={true}>
-              {errors.password && errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
+              {errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
             </HelperText>}
         >
           <Input
@@ -72,7 +73,6 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             type="password"
             autoComplete="new-password"
             value={password}
-            isValid={!errors.password || !errors.password[0]}
             onChange={e => this.onChange(e)}/>
         </TextField>
 
@@ -107,13 +107,18 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
   private onChange(e: FormEvent<HTMLTextAreaElement>) {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.setState({ [name]: value, errors: this.defaultErrors.errors } as SignupStateWithErrors);
+    this.setState({
+      [name]: value,
+      errors: Signup.getDefaultErrors().errors
+    } as SignupStateWithErrors);
   }
 
   private submit = (e: FormEvent<HTMLButtonElement>): void => {
-    this.clearErrors();
-    e.preventDefault();
-    this.tryCreateUser();
+    if (this.allFieldsValid) {
+      this.clearErrors();
+      e.preventDefault();
+      this.tryCreateUser();
+    }
   }
 
   private tryCreateUser = async (): Promise<void> => {
@@ -123,13 +128,18 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
     try {
       await post({}, { user });
     } catch ({ response }) {
-      this.setState({ errors: response.data.errors });
+      this.setState({
+        errors: {
+          ...Signup.getDefaultErrors().errors,
+          ...response.data.errors
+        }
+      });
     }
   }
 
   private clearErrors = (): void => {
     this.setState({
-      errors: this.defaultErrors.errors
+      errors: Signup.getDefaultErrors().errors
     });
   }
 
@@ -141,7 +151,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
       password === passwordConfirmation;
   }
 
-  private get defaultErrors(): Errors {
+  private static getDefaultErrors(): Errors {
     return {
       errors: {
         email: [],
