@@ -26,6 +26,23 @@ type Errors = {
 type SignupStateWithErrors = SignupField & Errors;
 
 class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
+
+  private get allFieldsValid(): boolean {
+    const { email, password, passwordConfirmation } = this.state;
+
+    return EMAIL_REQUIRED.test(email) &&
+      password.length >= MIN_PASSWORD_LENGTH &&
+      password === passwordConfirmation;
+  }
+
+  private static getDefaultErrors(): Errors {
+    return {
+      errors: {
+        email: [],
+        password: []
+      }
+    };
+  }
   public state = {
     email: '',
     errors: Signup.getDefaultErrors().errors,
@@ -141,23 +158,6 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
     this.setState({
       errors: Signup.getDefaultErrors().errors
     });
-  }
-
-  private get allFieldsValid(): boolean {
-    const { email, password, passwordConfirmation } = this.state;
-
-    return EMAIL_REQUIRED.test(email) &&
-      password.length >= MIN_PASSWORD_LENGTH &&
-      password === passwordConfirmation;
-  }
-
-  private static getDefaultErrors(): Errors {
-    return {
-      errors: {
-        email: [],
-        password: []
-      }
-    };
   }
 }
 
