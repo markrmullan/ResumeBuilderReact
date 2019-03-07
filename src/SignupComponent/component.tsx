@@ -2,6 +2,7 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import React, { Component, FormEvent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
@@ -117,6 +118,13 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
           pendingText={t('saving_ellipsis')}
           onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
         />
+
+        <div className={styles.switchAuthMethod}>
+          <span>{t('already_have_account')}</span>
+          <Link to="login">
+            {t('log_in')}
+          </Link>
+        </div>
       </div>
     );
   }

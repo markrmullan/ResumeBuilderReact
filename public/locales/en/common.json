@@ -1,14 +1,16 @@
 {
+  "already_have_account": "Already have an account? ",
   "confirm_password": "Confirm password",
   "create_a_password": "Create a password",
   "create_account": "Create Account",
   "email": "Email",
+  "first_time_here": "First time here? ",
   "get_started": "Get Started",
   "loading_ellipsis": "Loading...",
   "log_in": "Log In",
   "password": "Password",
   "saving_ellipsis": "Saving...",
-  "sign_up": "Sign up",
+  "sign_up": "Sign Up",
   "submit": "Submit",
   "validation": {
     "invalid_email": "Invalid email",
