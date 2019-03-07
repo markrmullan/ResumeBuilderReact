@@ -1,4 +1,4 @@
-import { ApiQuery, url } from './api';
+import { ApiQuery, url } from 'utils/api';
 
 describe('url', () => {
   it('assumes that /users is the default path', () => {

@@ -27,7 +27,6 @@ type Errors = {
 type SignupStateWithErrors = SignupField & Errors;
 
 class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
-
   private get allFieldsValid(): boolean {
     const { email, password, passwordConfirmation } = this.state;
 
@@ -44,6 +43,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
       }
     };
   }
+
   public state = {
     email: '',
     errors: Signup.getDefaultErrors().errors,
