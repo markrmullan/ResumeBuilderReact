@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
+import { Cell, Grid, Row } from '@material/react-layout-grid';
+
 import { CV } from 'utils/models';
 
 type CVListItemComponentProps = {
@@ -12,14 +14,25 @@ class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithN
     const { cvs } = this.props;
 
     return (
-      cvs.map((cv, i) => {
-        return (
-          <div key={i}>
-            {cv.name}
-          </div>
-        )
-      })
-    )
+      <Grid
+        marginHeight={50}
+      >
+        <Row>
+          {cvs.map((cv, i) => {
+            return (
+              <Cell
+                desktopColumns={3}
+                tabletColumns={4}
+                phoneColumns={4}
+                key={i}
+              >
+                {cv.name}
+              </Cell>
+            )
+          })}
+        </Row>
+      </Grid>
+    );
   }
 }
 

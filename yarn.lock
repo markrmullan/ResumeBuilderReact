@@ -812,6 +812,11 @@
     "@material/theme" "^0.41.0"
     "@material/typography" "^0.41.0"
 
+"@material/layout-grid@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/layout-grid/-/layout-grid-0.41.0.tgz#2e7d3be76313e0684d573b10c2c6a88b3230d251"
+  integrity sha512-Sa5RNoTGgfIojqJ9E94p7/k11V6q/tGk7HwKi4AQNAPjxield0zcl3G/SbsSb8YSHoK+D+7OXDN+n11x6EqF7g==
+
 "@material/line-ripple@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/line-ripple/-/line-ripple-0.41.0.tgz#de499b0d1dc7f60ddbf497bcc49be76475642d1f"
@@ -844,6 +849,15 @@
   resolved "https://registry.yarnpkg.com/@material/react-floating-label/-/react-floating-label-0.8.0.tgz#5cc397876d476855554310c56168ba7e3772291b"
   dependencies:
     "@material/floating-label" "^0.41.0"
+    classnames "^2.2.5"
+    react "^16.4.2"
+
+"@material/react-layout-grid@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@material/react-layout-grid/-/react-layout-grid-0.8.0.tgz#b0f73a3342b56badb0be4fe40b2f969962ca8263"
+  integrity sha512-fRjAF3vltejpI8ffSS01UJDdeBv8mwNbLIR6Qu8bMP9PE78C4hwZpUeols1eYCEU2VQlUGaMADSgnA1lbQG1jg==
+  dependencies:
+    "@material/layout-grid" "^0.41.0"
     classnames "^2.2.5"
     react "^16.4.2"
 

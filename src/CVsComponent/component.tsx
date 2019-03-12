@@ -4,6 +4,8 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { get } from 'utils/api';
 import { CV } from 'utils/models';
 
+import { Grid } from '@material/react-layout-grid';
+
 import { CVListItem } from 'CVsComponent/CVListItem/component';
 import { Spinner } from 'common/Spinner/component';
 
@@ -19,15 +21,22 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
   }
 
   public render() {
-    const { cvs } = this.state;
+    const { cvs, pending } = this.state;
+
+    if (pending) {
+      return (
+        <Grid marginHeight={50}>
+          <Spinner />
+        </Grid>
+      );
+    }
 
     return (
-      <div>
-        <Spinner />
+      <Grid marginHeight={50}>
         <CVListItem
           cvs={cvs}
         />
-      </div>
+      </Grid>
     )
   }
 
