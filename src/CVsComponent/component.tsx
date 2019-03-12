@@ -5,6 +5,7 @@ import { get } from 'utils/api';
 import { CV } from 'utils/models';
 
 import { CVListItem } from 'CVsComponent/CVListItem/component';
+import { Spinner } from 'common/Spinner/component';
 
 type CVsComponentState = {
   cvs: CV[];
@@ -22,6 +23,7 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
 
     return (
       <div>
+        <Spinner />
         <CVListItem
           cvs={cvs}
         />
