@@ -112,7 +112,10 @@ class Login extends Component<WithNamespaces, LoginState> {
     try {
       await post({ baseResourceId: 'sign_in' }, { user });
     } catch ({ response }) {
-      this.setState({ error: response.data.error });
+      this.setState({
+        error: response.data.error,
+        password: ''
+      });
     }
   }
 
