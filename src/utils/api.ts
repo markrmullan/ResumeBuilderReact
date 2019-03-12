@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: DEVELOPMENT ? 'http://localhost:3001/' : ''
+  baseURL: DEVELOPMENT ? 'http://localhost:3001/' : '',
+  withCredentials: true
 });
 
 export type ApiQuery = {
