@@ -10,6 +10,10 @@ export type User = {
   password: string;
 };
 
+export interface CV extends BaseModel {
+  name: string;
+};
+
 export interface Experience extends BaseModel {
   company: string;
   position: string;
