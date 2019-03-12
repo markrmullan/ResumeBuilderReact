@@ -43,7 +43,7 @@ export const url = (params: Partial<ApiQuery>) => {
   return `/${baseUrl}`;
 };
 
-export const get = async (params: Partial<ApiQuery> | string) => {
+export const get = async (params: Partial<ApiQuery> | string): Promise<any> => {
   if (typeof params === 'string') params = { path: params };
 
   const response = await axiosInstance.get(url(params));

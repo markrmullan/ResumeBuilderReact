@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router';
 
 import { LoginComponent } from 'LoginComponent/component';
 import { SignupComponent } from 'SignupComponent/component';
+import { ResumeBuilder } from 'ResumeBuilderComponent/component';
 
 import './App.scss';
 
@@ -45,6 +46,7 @@ class App extends Component<WithNamespaces> {
           <Switch>
             <Route exact={true} path="/login" component={LoginComponent} />
             <Route exact={true} path="/get-started" component={SignupComponent} />
+            <Route exact={true} path="/cv" component={ResumeBuilder} />
           </Switch>
         </TopAppBarFixedAdjust>
       </>

@@ -1,5 +1,5 @@
 import TextField, { HelperText, Input } from '@material/react-text-field';
-import React, { Component, FormEvent } from 'react';
+import React, { PureComponent, FormEvent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -26,7 +26,7 @@ type Errors = {
 
 type SignupStateWithErrors = SignupField & Errors;
 
-class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
+class Signup extends PureComponent<WithNamespaces, SignupStateWithErrors> {
   private get allFieldsValid(): boolean {
     const { email, password, passwordConfirmation } = this.state;
 

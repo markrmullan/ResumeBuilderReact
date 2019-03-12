@@ -1,5 +1,5 @@
 import TextField, { HelperText, Input } from '@material/react-text-field';
-import React, { Component, FormEvent } from 'react';
+import React, { PureComponent, FormEvent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ type LoginState = {
   password: string;
 };
 
-class Login extends Component<WithNamespaces, LoginState> {
+class Login extends PureComponent<WithNamespaces, LoginState> {
   public state = {
     email: '',
     error: undefined,
