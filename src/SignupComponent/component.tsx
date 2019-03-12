@@ -71,6 +71,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
           <Input
             id="email"
             name="email"
+            required={true}
             pattern={EMAIL_REQUIRED.source}
             value={email}
             isValid={errors.email[0] ? false : undefined}
@@ -88,6 +89,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             id="password"
             minLength={MIN_PASSWORD_LENGTH}
             name="password"
+            required={true}
             type="password"
             autoComplete="new-password"
             value={password}
@@ -105,6 +107,7 @@ class Signup extends Component<WithNamespaces, SignupStateWithErrors> {
             pattern={`^${password}$`}
             id="password-confirmation"
             name="passwordConfirmation"
+            required={true}
             type="password"
             autoComplete="new-password"
             value={passwordConfirmation}
