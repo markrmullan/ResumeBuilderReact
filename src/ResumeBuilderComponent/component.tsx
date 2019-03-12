@@ -10,20 +10,22 @@ type ResumeBuilderState = {
 
 class ResumeBuilderComponent extends PureComponent<WithNamespaces, ResumeBuilderState> {
   public state = {
-    experiences: []
+    experiences: [] as Experience[]
   };
 
   public render() {
+    const { experiences } = this.state;
+
     return (
       <div>
-        {/* {this.state.experiences.map((exp, i) => {
+        {experiences.map((exp, i) => {
           return (
             <div key={i}>
               <div>{exp.position}</div>
               <div>{exp.company}</div>
             </div>
           )
-        })} */}
+        })}
       </div>
     )
   }
@@ -34,11 +36,11 @@ class ResumeBuilderComponent extends PureComponent<WithNamespaces, ResumeBuilder
 
   private hydrateUser = async () => {
     try {
-      const [experiences]: [Experience[]] = await Promise.all([
-        get({ baseResource: 'experiences' })]) as [Experience[]
-      ];
+      const [experiences] = await Promise.all([
+        get({ baseResource: 'experiences' })
+      ]);
 
-      this.setState({ experiences });
+      this.setState({ experiences: experiences.data });
     } catch {
       this.setState({ experiences: [] });
     }
