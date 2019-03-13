@@ -28,7 +28,7 @@ class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithN
               >
                 {cv.name}
               </Cell>
-            )
+            );
           })}
         </Row>
       </Grid>

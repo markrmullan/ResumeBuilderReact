@@ -1,5 +1,5 @@
 import TextField, { HelperText, Input } from '@material/react-text-field';
-import React, { PureComponent, FormEvent } from 'react';
+import React, { FormEvent, PureComponent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';

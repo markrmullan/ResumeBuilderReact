@@ -1,6 +1,7 @@
+// sass-lint:disable
 .container {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
@@ -17,12 +18,12 @@ $duration: 1.4s;
 }
 
 .path {
-  stroke-dasharray: $offset;
-  stroke-dashoffset: 0;
-  transform-origin: center;
   animation:
     dash $duration ease-in-out infinite,
     colors ($duration*4) ease-in-out infinite;
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
 }
 
 @keyframes colors {
@@ -37,10 +38,10 @@ $duration: 1.4s;
  0% { stroke-dashoffset: $offset; }
  50% {
    stroke-dashoffset: $offset/4;
-   transform:rotate(135deg);
+   transform: rotate(135deg);
  }
  100% {
    stroke-dashoffset: $offset;
-   transform:rotate(450deg);
+   transform: rotate(450deg);
  }
 }

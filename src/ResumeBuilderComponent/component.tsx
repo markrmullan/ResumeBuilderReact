@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { Experience } from 'utils/models';
 import { get } from 'utils/api';
+import { Experience } from 'utils/models';
 
 type ResumeBuilderState = {
   experiences: Experience[];
@@ -24,10 +24,10 @@ class ResumeBuilderComponent extends PureComponent<WithNamespaces, ResumeBuilder
               <div>{exp.position}</div>
               <div>{exp.company}</div>
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 
   public componentDidMount() {

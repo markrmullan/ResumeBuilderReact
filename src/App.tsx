@@ -7,8 +7,8 @@ import { Route, Switch } from 'react-router';
 
 import { CVs } from 'CVsComponent/component';
 import { LoginComponent } from 'LoginComponent/component';
-import { SignupComponent } from 'SignupComponent/component';
 import { ResumeBuilder } from 'ResumeBuilderComponent/component';
+import { SignupComponent } from 'SignupComponent/component';
 
 import './App.scss';
 
