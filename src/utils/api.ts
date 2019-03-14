@@ -1,6 +1,7 @@
 import axios from 'axios';
+import 'middleware/axios';
 
-const axiosInstance = axios.create({
+const axiosInstance = axios.createWith401Handler({
   baseURL: DEVELOPMENT ? 'http://localhost:3001/' : '',
   withCredentials: true
 });
