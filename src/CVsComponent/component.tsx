@@ -7,8 +7,8 @@ import { CV } from 'utils/models';
 import Button from '@material/react-button';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 
-import { CreateCVModal } from 'CVsComponent/CreateCVModal/component';
 import { CVListItem } from 'CVsComponent/CVListItem/component';
+import { CreateCVModal } from 'CVsComponent/CreateCVModal/component';
 import { Spinner } from 'common/Spinner/component';
 
 import styles from './styles.module.scss';

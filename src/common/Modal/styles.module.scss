@@ -1,25 +1,25 @@
 @import "styles/common";
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 
 .content {
-  position: absolute;
-  top: 95px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
-  border: 1px solid #ccc;
-  background: $white;
-  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  background: $white;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  bottom: 40px;
+  left: 40px;
   outline: none;
+  overflow: auto;
   padding: 20px;
+  position: absolute;
+  right: 40px;
+  top: 95px;
 }

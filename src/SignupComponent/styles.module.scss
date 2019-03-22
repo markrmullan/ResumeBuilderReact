@@ -1,6 +1,6 @@
 @import "styles/common";
 
-.authContainer {
+.auth-container {
   display: grid;
   grid-template: repeat(4, auto) / 1fr;
   margin: 36px auto;
@@ -16,7 +16,7 @@
     text-align: center;
   }
 
-  .switchAuthMethod {
+  .switch-auth-method {
     font-size: 0.875em;
     margin-top: 12px;
     text-align: center;

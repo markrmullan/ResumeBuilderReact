@@ -7,9 +7,9 @@ import Button from '@material/react-button';
 // import Modal from 'common/Modal/component';
 import Dialog, {
   DialogButton,
-  DialogTitle,
   DialogContent,
-  DialogFooter
+  DialogFooter,
+  DialogTitle
 } from '@material/react-dialog';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 // import AsyncButton from 'react-async-button';
@@ -20,13 +20,13 @@ import styles from './styles.module.scss';
 type CreateCVModalComponentProps = {
   cancelAction: () => void;
   isOpen: boolean;
-  onCreate: () => void;
+  onCreate: () => Promise<void>;
 };
 
 type CreateCVModalComponentState = {
   isOpen: boolean;
   name: string;
-}
+};
 
 class CreateCVModalComponent extends PureComponent<CreateCVModalComponentProps & WithNamespaces, CreateCVModalComponentState> {
   public state = {
@@ -68,7 +68,7 @@ class CreateCVModalComponent extends PureComponent<CreateCVModalComponentProps &
 
         <DialogFooter>
           <DialogButton
-            action=''
+            action=""
           >
             {t('cancel')}
           </DialogButton>
@@ -104,7 +104,7 @@ class CreateCVModalComponent extends PureComponent<CreateCVModalComponentProps &
     if (this.allFieldsValid) {
       const { name } = this.state;
       const { onCreate } = this.props;
-      await post({baseResource: 'cvs'}, { cv: { name }});
+      await post({ baseResource: 'cvs' }, { cv: { name } });
       await onCreate();
 
       this.closeModal();

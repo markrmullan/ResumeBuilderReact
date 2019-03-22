@@ -447,6 +447,7 @@ module.exports = function(webpackEnv) {
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                   modules: true,
                   getLocalIdent: getCSSModuleLocalIdent,
+                  camelCase: true
                 }
               ),
             },

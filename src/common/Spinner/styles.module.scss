@@ -19,29 +19,29 @@ $duration: 1.4s;
 
 .path {
   animation:
-    dash $duration ease-in-out infinite,
-    colors ($duration*4) ease-in-out infinite;
+  dash $duration ease-in-out infinite,
+  colors ($duration * 4) ease-in-out infinite;
   stroke-dasharray: $offset;
   stroke-dashoffset: 0;
   transform-origin: center;
 }
 
 @keyframes colors {
-	0% { stroke: #4285F4; }
-	25% { stroke: #DE3E35; }
-	50% { stroke: #F7C223; }
-	75% { stroke: #1B9A59; }
-  100% { stroke: #4285F4; }
+  0% { stroke: #4285f4; }
+  25% { stroke: #de3e35; }
+  50% { stroke: #f7c223; }
+  75% { stroke: #1b9a59; }
+  100% { stroke: #4285f4; }
 }
 
 @keyframes dash {
- 0% { stroke-dashoffset: $offset; }
- 50% {
-   stroke-dashoffset: $offset/4;
-   transform: rotate(135deg);
- }
- 100% {
-   stroke-dashoffset: $offset;
-   transform: rotate(450deg);
- }
+  0% { stroke-dashoffset: $offset; }
+  50% {
+    stroke-dashoffset: $offset/4;
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: $offset;
+    transform: rotate(450deg);
+  }
 }
