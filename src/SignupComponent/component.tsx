@@ -1,8 +1,12 @@
-import TextField, { HelperText, Input } from '@material/react-text-field';
-import React, { FormEvent, PureComponent } from 'react';
-import AsyncButton from 'react-async-button';
+import { ConnectSocialProfile } from 'SignupComponent/ConnectSocialProfile/component';
+import { ContactInformationForm } from 'SignupComponent/ContactInformationForm/component';
+import { NameForm } from 'SignupComponent/NameForm/component';
+import { PasswordForm } from 'SignupComponent/PasswordForm/component';
+import classnames from 'classnames';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Modal } from 'common/Modal/component';
+import React, { FormEvent, PureComponent} from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
@@ -12,9 +16,12 @@ import { EMAIL_REQUIRED } from 'utils/regex';
 import styles from './styles.module.scss';
 
 type SignupField = {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   passwordConfirmation: string;
+  phoneNumber: string;
 };
 
 type Errors = {
@@ -24,9 +31,15 @@ type Errors = {
   };
 };
 
-type SignupStateWithErrors = SignupField & Errors;
+type TComponentState = {
+  currentPage: number;
+  funnelIsOpen: boolean;
+};
 
-class Signup extends PureComponent<WithNamespaces, SignupStateWithErrors> {
+type TComponentProps = RouteComponentProps & WithNamespaces;
+type SignupStateWithErrors = SignupField & Errors & TComponentState;
+
+class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
   private get allFieldsValid(): boolean {
     const { email, password, passwordConfirmation } = this.state;
 
@@ -46,93 +59,66 @@ class Signup extends PureComponent<WithNamespaces, SignupStateWithErrors> {
 
   public state = {
     email: '',
+    firstName: '',
+    lastName: '',
     errors: Signup.getDefaultErrors().errors,
+    funnelIsOpen: true,
+    currentPage: 1,
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
+    phoneNumber: ''
   };
 
   public render() {
     const { t } = this.props;
-    const { email, errors, password, passwordConfirmation } = this.state;
+    const { currentPage, email, errors, firstName, lastName, password, passwordConfirmation, phoneNumber, funnelIsOpen } = this.state;
+
+    const className = classnames(styles.funnelContainer, styles[`funnelStage${currentPage}`]);
 
     return (
-      <div className={styles.authContainer}>
-        <h1 className={styles.h1}>
-          {t('get_started')}
-        </h1>
+      <Modal
+        isOpen={funnelIsOpen}
+      >
+        <div className={className}>
+          <ConnectSocialProfile
+            clickNext={() => this.clickNext()}
+          />
+          <NameForm
+            clickPrev={() => this.clickPrev()}
+            clickNext={() => this.clickNext()}
+            firstName={firstName}
+            lastName={lastName}
+            onChange={e => this.onChange(e)}
+          />
+          <ContactInformationForm
+            email={email}
+            phoneNumber={phoneNumber}
+            errors={errors}
+            onChange={e => this.onChange(e)}
+            clickPrev={() => this.clickPrev()}
+            clickNext={() => this.clickNext()}
+          />
+          <PasswordForm
+            password={password}
+            passwordConfirmation={passwordConfirmation}
+            errors={errors}
+            onChange={e => this.onChange(e)}
+            clickPrev={() => this.clickPrev()}
+            clickNext={(e) => this.submit(e)}
+          />
+        </div>
 
-        <TextField
-          label={t('email')}
-          helperText={
-            <HelperText isValidationMessage={true} validation={true}>
-              {errors.email[0] || t('validation.invalid_email')}
-            </HelperText>}
-        >
-          <Input
-            id="email"
-            name="email"
-            required={true}
-            pattern={EMAIL_REQUIRED.source}
-            value={email}
-            isValid={errors.email[0] ? false : undefined}
-            onChange={e => this.onChange(e)}/>
-        </TextField>
-
-        <TextField
-          label={t('create_a_password')}
-          helperText={
-            <HelperText validation={true}>
-              {errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
-            </HelperText>}
-        >
-          <Input
-            id="password"
-            minLength={MIN_PASSWORD_LENGTH}
-            name="password"
-            required={true}
-            type="password"
-            autoComplete="new-password"
-            value={password}
-            onChange={e => this.onChange(e)}/>
-        </TextField>
-
-        <TextField
-          label={t('confirm_password')}
-          helperText={
-            <HelperText validation={true}>
-              {t('validation.passwords_do_not_match')}
-            </HelperText>}
-        >
-          <Input
-            pattern={`^${password}$`}
-            id="password-confirmation"
-            name="passwordConfirmation"
-            required={true}
-            type="password"
-            autoComplete="new-password"
-            value={passwordConfirmation}
-            onChange={e => this.onChange(e)}/>
-        </TextField>
-
-        <AsyncButton
-          className="mdc-button mdc-ripple-upgraded mdc-button--raised"
-          disabled={!this.allFieldsValid}
-          text={t('create_account')}
-          pendingText={t('saving_ellipsis')}
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
-        />
-
-        <div className={styles.switchAuthMethod}>
+        <p className={styles.p}>
           <span>{t('already_have_account')}</span>
           <Link to="login">
             {t('log_in')}
           </Link>
-        </div>
-      </div>
+        </p>
+      </Modal>
     );
   }
 
-  private onChange(e: FormEvent<HTMLTextAreaElement>) {
+  public onChange(e: FormEvent<HTMLTextAreaElement>): void {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
     this.setState({
@@ -141,7 +127,19 @@ class Signup extends PureComponent<WithNamespaces, SignupStateWithErrors> {
     } as SignupStateWithErrors);
   }
 
-  private submit = (e: FormEvent<HTMLButtonElement>): void => {
+  public clickNext(): void {
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1
+    }));
+  }
+
+  public clickPrev(): void {
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage - 1
+    }));
+  }
+
+  public submit = (e: FormEvent<HTMLButtonElement>): void => {
     if (this.allFieldsValid) {
       this.clearErrors();
       e.preventDefault();
@@ -150,17 +148,20 @@ class Signup extends PureComponent<WithNamespaces, SignupStateWithErrors> {
   }
 
   private tryCreateUser = async (): Promise<void> => {
-    const { email, password } = this.state;
-    const user: User = { email, password };
+    const { history } = this.props;
+    const { email, firstName, lastName, phoneNumber, password } = this.state;
+    const user: User = { email, firstName, lastName, phoneNumber, password };
 
     try {
       await post({}, { user });
+      history.push('/cvs');
     } catch ({ response }) {
       this.setState({
         errors: {
           ...Signup.getDefaultErrors().errors,
-          ...response.data.errors
-        }
+          ...response.data.errors,
+        },
+        currentPage: 3
       });
     }
   }

@@ -13,6 +13,8 @@ axios.createWith401Handler = (config: AxiosRequestConfig) => {
       if (error.response.status === 401) {
         window.location.href = '/login';
       }
+
+      return Promise.reject(error);
     }
   );
 

@@ -8,6 +8,9 @@ type BaseModel = Readonly<{
 export type User = {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
 };
 
 export interface CV extends BaseModel {

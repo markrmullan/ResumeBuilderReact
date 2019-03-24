@@ -22,3 +22,62 @@
     text-align: center;
   }
 }
+
+.funnel-stage {
+  &-1 {
+    transform: translateX(0%);
+  }
+
+  &-2 {
+    transform: translateX(-100%);
+  }
+
+  &-3 {
+    transform: translateX(-200%);
+  }
+
+  &-4 {
+    transform: translateX(-300%);
+  }
+}
+
+.p {
+  color: $gray-60;
+  text-align: center;
+}
+
+.funnel-container {
+  display: grid;
+  grid-template-columns: repeat(4, 100%);
+  margin: 0 auto;
+  transition: transform 0.4s ease;
+
+  .form-funnel {
+    margin: 0 auto;
+    width: 100%;
+
+    @media (min-width: 540px) {
+      width: 480px;
+    }
+
+    .h1 {
+      color: $mdc-theme-primary;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .fields {
+      display: grid;
+
+      :global(.mdc-text-field-helper-text--validation-msg) {
+        margin-bottom: 12px;
+      }
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 16px;
+    }
+  }
+}

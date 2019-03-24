@@ -40,6 +40,7 @@ class CreateCVModalComponent extends PureComponent<CreateCVModalComponentProps &
 
     return (
       <Dialog
+        allowFullScreen={true}
         open={isOpen}
         className={styles.modal}
       >

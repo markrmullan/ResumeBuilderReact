@@ -5,6 +5,10 @@
     white-space: nowrap;
     width: fit-content;
 
+    &--outlined {
+      @include mdc-button-ink-color($mdc-theme-on-primary);
+    }
+
     &--raised {
       @include mdc-button-container-fill-color($mdc-theme-on-primary);
       @include mdc-button-ink-color($mdc-theme-primary);

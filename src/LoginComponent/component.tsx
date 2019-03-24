@@ -107,7 +107,7 @@ class Login extends PureComponent<WithNamespaces, LoginState> {
 
   private tryLogin = async (): Promise<void> => {
     const { email, password } = this.state;
-    const user: User = { email, password };
+    const user: Pick<User, 'email' | 'password'> = { email, password };
 
     try {
       await post({ baseResourceId: 'sign_in' }, { user });

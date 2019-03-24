@@ -11,6 +11,7 @@
     "@material/react-text-field": "^0.8.0",
     "@material/react-top-app-bar": "^0.8.0",
     "@svgr/webpack": "2.4.1",
+    "@types/classnames": "^2.2.7",
     "@types/i18next-browser-languagedetector": "^2.0.1",
     "@types/i18next-xhr-backend": "^1.4.1",
     "@types/jest": "23.3.13",

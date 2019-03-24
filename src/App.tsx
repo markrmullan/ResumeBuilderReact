@@ -1,9 +1,9 @@
-import Button from '@material/react-button';
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { CVs } from 'CVsComponent/component';
 import { LoginComponent } from 'LoginComponent/component';
@@ -26,20 +26,20 @@ class App extends Component<WithNamespaces> {
           />}
           actionItems={
             [
-              <Button
+              <Link
                 key={1}
-                unelevated={true}
-                href="login"
+                className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined"
+                to="login"
               >
                 {t('log_in')}
-              </Button>,
-              <Button
+              </Link>,
+              <Link
                 key={2}
-                raised={true}
-                href="get-started"
+                className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
+                to="get-started"
               >
                 {t('sign_up')}
-              </Button>
+              </Link>
             ]
           }
         />
