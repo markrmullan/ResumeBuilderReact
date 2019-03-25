@@ -1,8 +1,8 @@
 type BaseModel = Readonly<{
   id: number;
   uuid: Uuid;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }>;
 
 export type User = {
@@ -13,6 +13,10 @@ export type User = {
   phoneNumber: string;
 };
 
+export interface Resume extends BaseModel {
+  name: string;
+}
+
 export interface CV extends BaseModel {
   name: string;
 }
@@ -20,6 +24,6 @@ export interface CV extends BaseModel {
 export interface Experience extends BaseModel {
   company: string;
   position: string;
-  start_date: string;
-  end_date: string;
+  startDate: string;
+  endDate: string;
 }

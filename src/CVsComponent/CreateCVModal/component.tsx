@@ -4,7 +4,6 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { AT_LEAST_ONE_CHARACTER } from 'utils/regex';
 
 import Button from '@material/react-button';
-// import Modal from 'common/Modal/component';
 import Dialog, {
   DialogButton,
   DialogContent,
@@ -12,8 +11,6 @@ import Dialog, {
   DialogTitle
 } from '@material/react-dialog';
 import TextField, { HelperText, Input } from '@material/react-text-field';
-// import AsyncButton from 'react-async-button';
-//
 import { post } from 'utils/api';
 import styles from './styles.module.scss';
 

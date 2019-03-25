@@ -1,16 +1,18 @@
+import { AxiosResponse } from 'axios';
+import React, { FormEvent, PureComponent } from 'react';
+import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { Link, RouteComponentProps } from 'react-router-dom';
+
 import { ConnectSocialProfile } from 'SignupComponent/ConnectSocialProfile/component';
 import { ContactInformationForm } from 'SignupComponent/ContactInformationForm/component';
 import { NameForm } from 'SignupComponent/NameForm/component';
 import { PasswordForm } from 'SignupComponent/PasswordForm/component';
 import classnames from 'classnames';
-import { Link, RouteComponentProps } from 'react-router-dom';
 import { Modal } from 'common/Modal/component';
-import React, { FormEvent, PureComponent} from 'react';
-import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
-import { User } from 'utils/models';
+import { Resume, User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
 import styles from './styles.module.scss';
@@ -104,7 +106,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
             errors={errors}
             onChange={e => this.onChange(e)}
             clickPrev={() => this.clickPrev()}
-            clickNext={(e) => this.submit(e)}
+            clickNext={e => this.submit(e)}
           />
         </div>
 
@@ -154,16 +156,25 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
 
     try {
       await post({}, { user });
-      history.push('/cvs');
+      const resume: Resume = await this.createFirstResume();
+      history.push(`/resumes/${resume.uuid}/edit`);
     } catch ({ response }) {
       this.setState({
         errors: {
           ...Signup.getDefaultErrors().errors,
-          ...response.data.errors,
+          ...response.data.errors
         },
         currentPage: 3
       });
     }
+  }
+
+  private createFirstResume = async(): Promise<Resume> => {
+    const { t } = this.props;
+
+    const response: AxiosResponse<Resume> = await post({ baseResource: 'cvs' }, { cv: { name: t('untitled') } });
+
+    return response.data;
   }
 
   private clearErrors = (): void => {

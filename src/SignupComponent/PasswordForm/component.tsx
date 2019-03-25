@@ -96,6 +96,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
 
   private get allFieldsValid(): boolean {
     const { password, passwordConfirmation } = this.props;
+
     return !!password &&
       password.length >= MIN_PASSWORD_LENGTH &&
       password === passwordConfirmation;

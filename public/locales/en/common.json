@@ -33,6 +33,7 @@
   "sign_up": "Sign Up",
   "skip": "Skip",
   "submit": "Submit",
+  "untitled": "Untitled",
   "validation": {
     "invalid_email": "Invalid email",
     "passwords_do_not_match": "Passwords do not match",
