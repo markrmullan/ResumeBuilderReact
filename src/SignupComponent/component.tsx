@@ -185,12 +185,14 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
   }
 
   private onConnectWithFacebook = (response: any) => {
-    this.setState(prevState => ({
-      currentPage: prevState.currentPage + 1,
-      firstName: response.first_name,
-      lastName: response.last_name,
-      email: response.email
-    }));
+    if (response.id) {
+      this.setState(prevState => ({
+        currentPage: prevState.currentPage + 1,
+        firstName: response.first_name,
+        lastName: response.last_name,
+        email: response.email
+      }));
+    }
   }
 }
 
