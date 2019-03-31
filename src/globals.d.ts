@@ -10,3 +10,7 @@ type Obj<T> = Record<PropertyKey, T>;
 declare const DEVELOPMENT: boolean;
 
 declare module 'react-async-button';
+
+interface Window {
+  FB: any;
+}

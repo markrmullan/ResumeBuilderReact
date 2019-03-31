@@ -1,12 +1,16 @@
 import React, { PureComponent } from 'react';
+import { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import Button from '@material/react-button';
 
+import { ConnectWithFacebook } from 'SignupComponent/ConnectWith/Facebook/component';
+
 import styles from '../styles.module.scss';
 
 type TOwnProps = {
+  onConnectWithFacebook: (response: ReactFacebookLoginInfo) => void;
   clickNext: () => void;
 };
 
@@ -14,7 +18,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { clickNext, t } = this.props;
+    const { clickNext, onConnectWithFacebook, t } = this.props;
 
     return (
       <div className={styles.formFunnel}>
@@ -25,6 +29,12 @@ class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
         <p className={styles.p}>
           {t('prefill_your_resume_with_social_profile')}
         </p>
+
+        <div className={styles.connectWithContainer}>
+          <ConnectWithFacebook
+            onConnectWithFacebook={onConnectWithFacebook}
+          />
+        </div>
 
         <div className={styles.buttonContainer}>
           <Link

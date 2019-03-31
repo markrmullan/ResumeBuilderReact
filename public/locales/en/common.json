@@ -8,6 +8,7 @@
   "cannot_be_blank": "Cannot be blank",
   "character_limit_reached_plural": "{{count}} characters max",
   "confirm_password": "Confirm Password",
+  "connect_with_facebook": "Connect with Facebook",
   "connect_your_social_profile": "Connect Your Social Profile",
   "create_a_password": "Create a Password",
   "create_account": "Create Account",

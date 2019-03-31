@@ -83,6 +83,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
       >
         <div className={className}>
           <ConnectSocialProfile
+            onConnectWithFacebook={this.onConnectWithFacebook}
             clickNext={() => this.clickNext()}
           />
           <NameForm
@@ -181,6 +182,15 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     this.setState({
       errors: Signup.getDefaultErrors().errors
     });
+  }
+
+  private onConnectWithFacebook = (response: any) => {
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1,
+      firstName: response.first_name,
+      lastName: response.last_name,
+      email: response.email
+    }));
   }
 }
 
