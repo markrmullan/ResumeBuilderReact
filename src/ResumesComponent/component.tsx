@@ -7,28 +7,28 @@ import { CV } from 'utils/models';
 import Button from '@material/react-button';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 
-import { CVListItem } from 'CVsComponent/CVListItem/component';
-import { CreateCVModal } from 'CVsComponent/CreateCVModal/component';
+import { CVListItem } from 'ResumesComponent/ResumeListItem/component';
+import { CreateCVModal } from 'ResumesComponent/CreateResumeModal/component';
 import { Spinner } from 'common/Spinner/component';
 
 import styles from './styles.module.scss';
 
-type CVsComponentState = {
+type ResumesComponentState = {
   createCVModalOpen: boolean;
-  cvs: CV[];
+  resumes: CV[];
   pending: boolean;
 };
 
-class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
+class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentState> {
   public state = {
-    cvs: [],
+    resumes: [],
     createCVModalOpen: false,
     pending: true
   };
 
   public render() {
     const { t } = this.props;
-    const { createCVModalOpen, cvs, pending } = this.state;
+    const { createCVModalOpen, resumes, pending } = this.state;
 
     if (pending) {
       return (
@@ -43,7 +43,7 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
         marginHeight={50}
       >
         <CVListItem
-          cvs={cvs}
+          resumes={resumes}
         />
 
         <Row>
@@ -57,14 +57,14 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
               onClick={this.openModal}
               raised={true}
             >
-              {!cvs.length && t('create_your_first') || t('create_another')}
+              {!resumes.length && t('create_your_first') || t('create_another')}
             </Button>
           </Cell>
         </Row>
 
         {createCVModalOpen &&
           <CreateCVModal
-            onCreate={this.fetchCVs}
+            onCreate={this.fetchResumes}
             isOpen={true}
             cancelAction={this.closeModal}
           />
@@ -74,20 +74,20 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
   }
 
   public componentDidMount() {
-    this.fetchCVs();
+    this.fetchResumes();
   }
 
-  private fetchCVs = async (): Promise<void> => {
+  private fetchResumes = async (): Promise<void> => {
     try {
-      const cvs = await get({ baseResource: 'cvs' });
+      const resumes = await get({ baseResource: 'resumes' });
 
       this.setState({
-        cvs: cvs.data,
+        resumes: resumes.data,
         pending: false
       });
     } catch {
       this.setState({
-        cvs: [],
+        resumes: [],
         pending: false
       });
     }
@@ -106,4 +106,4 @@ class CVsComponent extends PureComponent<WithNamespaces, CVsComponentState> {
   }
 }
 
-export const CVs = withNamespaces()(CVsComponent);
+export const Resumes = withNamespaces()(ResumesComponent);

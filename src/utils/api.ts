@@ -59,7 +59,7 @@ export const post = async (params: Partial<ApiQuery>, data: object = {}) => {
   return response;
 };
 
-type BaseResource = 'cvs' | 'experiences' | 'users';
+type BaseResource = 'resumes' | 'experiences' | 'users';
 
 type NestedResource = 'experiences';
 

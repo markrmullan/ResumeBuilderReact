@@ -6,19 +6,19 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import { CV } from 'utils/models';
 
 type CVListItemComponentProps = {
-  cvs: CV[];
+  resumes: CV[];
 };
 
 class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithNamespaces> {
   public render() {
-    const { cvs } = this.props;
+    const { resumes } = this.props;
 
     return (
       <Grid
         marginHeight={50}
       >
         <Row>
-          {cvs.map((cv, i) => {
+          {resumes.map((cv, i) => {
             return (
               <Cell
                 desktopColumns={3}

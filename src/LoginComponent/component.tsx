@@ -113,8 +113,7 @@ class Login extends PureComponent<WithNamespaces, LoginState> {
       await post({ baseResourceId: 'sign_in' }, { user });
     } catch ({ response }) {
       this.setState({
-        error: response.data.error,
-        password: ''
+        error: response.data.error
       });
     }
   }

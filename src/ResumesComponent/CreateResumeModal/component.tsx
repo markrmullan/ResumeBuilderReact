@@ -102,7 +102,7 @@ class CreateCVModalComponent extends PureComponent<CreateCVModalComponentProps &
     if (this.allFieldsValid) {
       const { name } = this.state;
       const { onCreate } = this.props;
-      await post({ baseResource: 'cvs' }, { cv: { name } });
+      await post({ baseResource: 'resumes' }, { cv: { name } });
       await onCreate();
 
       this.closeModal();

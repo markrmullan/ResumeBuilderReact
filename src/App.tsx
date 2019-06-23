@@ -5,11 +5,13 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { EditResume } from 'CVsComponent/EditResume/component';
-import { CVs } from 'CVsComponent/component';
+import { EditResume } from 'ResumesComponent/EditResume/component';
+import { Resumes } from 'ResumesComponent/component';
 import { LoginComponent } from 'LoginComponent/component';
 import { ResumeBuilder } from 'ResumeBuilderComponent/component';
 import { SignupComponent } from 'SignupComponent/component';
+
+import { ROUTES } from 'utils/constants';
 
 import './App.scss';
 
@@ -46,9 +48,9 @@ class App extends Component<WithNamespaces> {
         />
         <TopAppBarFixedAdjust>
           <Switch>
-            <Route exact={true} path="/login" component={LoginComponent} />
+            <Route exact={true} path={ROUTES.login} component={LoginComponent} />
             <Route exact={true} path="/get-started" component={SignupComponent} />
-            <Route exact={true} path="/cvs" component={CVs} />
+            <Route exact={true} path="/resumes" component={Resumes} />
             <Route path="/resumes/:rId/edit" component={EditResume} />
             <Route exact={true} path="/cv" component={ResumeBuilder} />
           </Switch>
