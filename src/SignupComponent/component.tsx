@@ -173,7 +173,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
   private createFirstResume = async(): Promise<Resume> => {
     const { t } = this.props;
 
-    const response: AxiosResponse<Resume> = await post({ baseResource: 'resumes' }, { cv: { name: t('untitled') } });
+    const response: AxiosResponse<Resume> = await post({ baseResource: 'resumes' }, { resume: { name: t('untitled') } });
 
     return response.data;
   }

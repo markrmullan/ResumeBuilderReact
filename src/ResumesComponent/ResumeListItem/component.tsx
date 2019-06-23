@@ -3,13 +3,13 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 
-import { CV } from 'utils/models';
+import { Resume } from 'utils/models';
 
-type CVListItemComponentProps = {
-  resumes: CV[];
+type ResumeListItemComponentProps = {
+  resumes: Resume[];
 };
 
-class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithNamespaces> {
+class ResumeListItemComponent extends PureComponent<ResumeListItemComponentProps & WithNamespaces> {
   public render() {
     const { resumes } = this.props;
 
@@ -18,7 +18,7 @@ class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithN
         marginHeight={50}
       >
         <Row>
-          {resumes.map((cv, i) => {
+          {resumes.map((resume, i) => {
             return (
               <Cell
                 desktopColumns={3}
@@ -26,7 +26,7 @@ class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithN
                 phoneColumns={4}
                 key={i}
               >
-                {cv.name}
+                {resume.name}
               </Cell>
             );
           })}
@@ -36,4 +36,4 @@ class CVListItemComponent extends PureComponent<CVListItemComponentProps & WithN
   }
 }
 
-export const CVListItem = withNamespaces()(CVListItemComponent);
+export const ResumeListItem = withNamespaces()(ResumeListItemComponent);

@@ -17,7 +17,7 @@ export interface Resume extends BaseModel {
   name: string;
 }
 
-export interface CV extends BaseModel {
+export interface Resume extends BaseModel {
   name: string;
 }
 

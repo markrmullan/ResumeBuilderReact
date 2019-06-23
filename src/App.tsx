@@ -52,7 +52,7 @@ class App extends Component<WithNamespaces> {
             <Route exact={true} path="/get-started" component={SignupComponent} />
             <Route exact={true} path="/resumes" component={Resumes} />
             <Route path="/resumes/:rId/edit" component={EditResume} />
-            <Route exact={true} path="/cv" component={ResumeBuilder} />
+            <Route exact={true} path="/resume" component={ResumeBuilder} />
           </Switch>
         </TopAppBarFixedAdjust>
       </>

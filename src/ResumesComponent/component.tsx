@@ -2,33 +2,33 @@ import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { get } from 'utils/api';
-import { CV } from 'utils/models';
+import { Resume } from 'utils/models';
 
 import Button from '@material/react-button';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 
-import { CVListItem } from 'ResumesComponent/ResumeListItem/component';
-import { CreateCVModal } from 'ResumesComponent/CreateResumeModal/component';
+import { ResumeListItem } from 'ResumesComponent/ResumeListItem/component';
+import { CreateResumeModal } from 'ResumesComponent/CreateResumeModal/component';
 import { Spinner } from 'common/Spinner/component';
 
 import styles from './styles.module.scss';
 
 type ResumesComponentState = {
-  createCVModalOpen: boolean;
-  resumes: CV[];
+  createResumeModalOpen: boolean;
+  resumes: Resume[];
   pending: boolean;
 };
 
 class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentState> {
   public state = {
     resumes: [],
-    createCVModalOpen: false,
+    createResumeModalOpen: false,
     pending: true
   };
 
   public render() {
     const { t } = this.props;
-    const { createCVModalOpen, resumes, pending } = this.state;
+    const { createResumeModalOpen, resumes, pending } = this.state;
 
     if (pending) {
       return (
@@ -42,7 +42,7 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
       <Grid
         marginHeight={50}
       >
-        <CVListItem
+        <ResumeListItem
           resumes={resumes}
         />
 
@@ -62,8 +62,8 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
           </Cell>
         </Row>
 
-        {createCVModalOpen &&
-          <CreateCVModal
+        {createResumeModalOpen &&
+          <CreateResumeModal
             onCreate={this.fetchResumes}
             isOpen={true}
             cancelAction={this.closeModal}
@@ -95,13 +95,13 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
 
   private openModal = (): void => {
     this.setState({
-      createCVModalOpen: true
+      createResumeModalOpen: true
     });
   }
 
   private closeModal = (): void => {
     this.setState({
-      createCVModalOpen: false
+      createResumeModalOpen: false
     });
   }
 }
