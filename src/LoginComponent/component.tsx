@@ -1,5 +1,6 @@
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import React, { FormEvent, PureComponent } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -17,7 +18,9 @@ type LoginState = {
   password: string;
 };
 
-class Login extends PureComponent<WithNamespaces, LoginState> {
+type TComponentProps = RouteComponentProps & WithNamespaces;
+
+class Login extends PureComponent<TComponentProps, LoginState> {
   public state = {
     email: '',
     error: undefined,
@@ -106,11 +109,13 @@ class Login extends PureComponent<WithNamespaces, LoginState> {
   }
 
   private tryLogin = async (): Promise<void> => {
+    const { history } = this.props;
     const { email, password } = this.state;
     const user: Pick<User, 'email' | 'password'> = { email, password };
 
     try {
       await post({ baseResourceId: 'sign_in' }, { user });
+      history.push('/resumes');
     } catch ({ response }) {
       this.setState({
         error: response.data.error
