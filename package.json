@@ -1,6 +1,9 @@
 {
   "name": "resume-builder-ts",
   "version": "0.1.0",
+  "engines": {
+    "node": "8.11.x"
+  },
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.6",
