@@ -11,17 +11,6 @@
     "@material/react-text-field": "^0.8.0",
     "@material/react-top-app-bar": "^0.8.0",
     "@svgr/webpack": "2.4.1",
-    "@types/classnames": "^2.2.7",
-    "@types/i18next-browser-languagedetector": "^2.0.1",
-    "@types/i18next-xhr-backend": "^1.4.1",
-    "@types/jest": "23.3.13",
-    "@types/node": "10.12.18",
-    "@types/react": "16.7.20",
-    "@types/react-dom": "16.0.11",
-    "@types/react-facebook-login": "^4.1.0",
-    "@types/react-modal": "^3.8.1",
-    "@types/react-router": "^4.4.3",
-    "@types/react-router-dom": "^4.3.1",
     "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -158,5 +147,17 @@
       "react-app"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/i18next-browser-languagedetector": "^3.0.0",
+    "@types/i18next-xhr-backend": "^1.4.2",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-facebook-login": "^4.1.1",
+    "@types/react-modal": "^3.10.5",
+    "@types/react-router": "^5.1.5",
+    "@types/react-router-dom": "^5.1.4"
+  }
 }
