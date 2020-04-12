@@ -30,11 +30,11 @@ class EditResumeComponent extends PureComponent<TComponentProps> {
           <h3>{t('personal_information')}</h3>
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>
-              <TextField label={t('first_name')} fullWidth InputLabelProps={{ shrink: true }} value={firstName} onChange={e => updateUser({ ...user, firstName: e.target.value })} />
+              <TextField label={t('first_name')} fullWidth InputLabelProps={{ shrink: !!firstName.length }} value={firstName} onChange={e => updateUser({ ...user, firstName: e.target.value })} />
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <TextField label={t('last_name')} fullWidth InputLabelProps={{ shrink: true }} value={lastName} onChange={e => updateUser({ ...user, lastName: e.target.value })} />
+              <TextField label={t('last_name')} fullWidth InputLabelProps={{ shrink: !!lastName.length }} value={lastName} onChange={e => updateUser({ ...user, lastName: e.target.value })} />
             </Grid>
           </Grid>
         </Grid>
