@@ -3,7 +3,7 @@ import { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import Button from '@material/react-button';
+import { Button } from '@material-ui/core';
 
 import { ConnectWithFacebook } from 'SignupComponent/ConnectWith/Facebook/component';
 
@@ -45,8 +45,9 @@ class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
           </Link>
 
           <Button
-            raised={true}
+            color="primary"
             onClick={clickNext}
+            variant="contained"
           >
             {t('skip')}
           </Button>

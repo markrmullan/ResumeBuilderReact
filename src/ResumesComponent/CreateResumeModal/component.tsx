@@ -3,9 +3,8 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { AT_LEAST_ONE_CHARACTER } from 'utils/regex';
 
-import Button from '@material/react-button';
+import { Button } from '@material-ui/core';
 import Dialog, {
-  DialogButton,
   DialogContent,
   DialogFooter,
   DialogTitle
@@ -32,7 +31,7 @@ class CreateResumeModalComponent extends PureComponent<CreateResumeModalComponen
   };
 
   public render() {
-    const { t } = this.props;
+    const { cancelAction, t } = this.props;
     const { isOpen, name } = this.state;
 
     return (
@@ -65,15 +64,18 @@ class CreateResumeModalComponent extends PureComponent<CreateResumeModalComponen
         </DialogContent>
 
         <DialogFooter>
-          <DialogButton
-            action=""
+          <Button
+            onClick={() => cancelAction()}
+            variant="outlined"
+            color="primary"
           >
             {t('cancel')}
-          </DialogButton>
+          </Button>
           <Button
             disabled={!this.allFieldsValid}
-            outlined={true}
             onClick={this.createResume}
+            variant="contained"
+            color="primary"
           >
             {t('save')}
           </Button>

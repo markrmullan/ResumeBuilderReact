@@ -1,7 +1,7 @@
 import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import Button from '@material/react-button';
+import { Button } from '@material-ui/core';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 
 import { AT_LEAST_ONE_CHARACTER } from 'utils/regex';
@@ -76,15 +76,17 @@ class NameFormComponent extends PureComponent<TComponentProps> {
 
         <div className={styles.buttonContainer}>
           <Button
-            outlined={true}
             onClick={clickPrev}
+            variant="outlined"
+            color="primary"
           >
             {t('back')}
           </Button>
           <Button
-            raised={true}
             onClick={clickNext}
             disabled={!this.allFieldsValid}
+            variant="contained"
+            color="primary"
           >
             {t('next')}
           </Button>

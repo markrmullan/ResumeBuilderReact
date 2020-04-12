@@ -14,11 +14,11 @@ axios.createWith401Handler = (config: AxiosRequestConfig) => {
   axiosInstance.interceptors.response.use(_ => _, error => {
     let { href } = window.location;
 
-      if (error.response.status === 401 && href !== ROUTES.login) {
+    if (error.response.status === 401 && href !== ROUTES.login) {
         href = ROUTES.login;
       }
 
-      return Promise.reject(error);
+    return Promise.reject(error);
     }
   );
 

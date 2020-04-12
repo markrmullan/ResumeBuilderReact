@@ -1,7 +1,7 @@
 import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import Button from '@material/react-button';
+import { Button } from '@material-ui/core';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import AsyncButton from 'react-async-button';
 
@@ -76,7 +76,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
 
         <div className={styles.buttonContainer}>
           <Button
-            outlined={true}
+            variant="outlined"
             onClick={clickPrev}
           >
             {t('back')}

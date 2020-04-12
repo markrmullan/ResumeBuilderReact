@@ -1,20 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { get } from 'utils/api';
 import { Resume } from 'utils/models';
 
-import Button from '@material/react-button';
-import { Cell, Grid, Row } from '@material/react-layout-grid';
+import { Button, Grid } from '@material-ui/core';
+import MaterialIcon from '@material/react-material-icon';
 
-import { ResumeListItem } from 'ResumesComponent/ResumeListItem/component';
-import { CreateResumeModal } from 'ResumesComponent/CreateResumeModal/component';
+import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner/component';
 
 import styles from './styles.module.scss';
 
 type ResumesComponentState = {
-  createResumeModalOpen: boolean;
   resumes: Resume[];
   pending: boolean;
 };
@@ -22,54 +20,43 @@ type ResumesComponentState = {
 class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentState> {
   public state = {
     resumes: [],
-    createResumeModalOpen: false,
     pending: true
   };
 
   public render() {
     const { t } = this.props;
-    const { createResumeModalOpen, resumes, pending } = this.state;
+    const { pending } = this.state;
 
     if (pending) {
       return (
-        <Grid marginHeight={50}>
+        <Grid>
           <Spinner />
         </Grid>
       );
     }
 
     return (
-      <Grid
-        marginHeight={50}
-      >
-        <ResumeListItem
-          resumes={resumes}
-        />
+      <Fragment>
+        <Grid container={true} className={styles.container}>
+          <Grid container={true}>
+            <Grid xs={12} sm={9} lg={9}>
+              <h1>{t('resumes')}</h1>
+            </Grid>
+            <Grid alignItems="center" justify="flex-end" container={true} xs={12} sm={3} lg={3}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={styles.createNewButton}
+                startIcon={<MaterialIcon icon="add" />}
+              >
+                {t('create_new')}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
 
-        <Row>
-          <Cell
-            className={styles.ctaButtonContainer}
-            phoneColumns={4}
-            tabletColumns={8}
-            desktopColumns={12}
-          >
-            <Button
-              onClick={this.openModal}
-              raised={true}
-            >
-              {!resumes.length && t('create_your_first') || t('create_another')}
-            </Button>
-          </Cell>
-        </Row>
-
-        {createResumeModalOpen &&
-          <CreateResumeModal
-            onCreate={this.fetchResumes}
-            isOpen={true}
-            cancelAction={this.closeModal}
-          />
-        }
-      </Grid>
+        <FullWidthDivider />
+      </Fragment>
     );
   }
 
@@ -91,18 +78,6 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
         pending: false
       });
     }
-  }
-
-  private openModal = (): void => {
-    this.setState({
-      createResumeModalOpen: true
-    });
-  }
-
-  private closeModal = (): void => {
-    this.setState({
-      createResumeModalOpen: false
-    });
   }
 }
 

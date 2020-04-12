@@ -1,3 +1,17 @@
-.cta-button-container {
-  justify-self: center;
+@import "styles/common";
+
+.container {
+  margin-bottom: 8px;
+
+  .cta-button-container {
+    justify-self: center;
+  }
+
+  .create-new-button {
+    white-space: nowrap;
+
+    @media (max-width: $xs-screen-max) {
+      width: 100%;
+    }
+  }
 }

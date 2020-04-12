@@ -1,12 +1,11 @@
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import React, { FormEvent, PureComponent } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { post } from 'utils/api';
-import { MIN_PASSWORD_LENGTH } from 'utils/constants';
+import { MIN_PASSWORD_LENGTH, ROUTES } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
@@ -115,7 +114,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
 
     try {
       await post({ baseResourceId: 'sign_in' }, { user });
-      history.push('/resumes');
+      history.push(ROUTES.dashboard);
     } catch ({ response }) {
       this.setState({
         error: response.data.error
