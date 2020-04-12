@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
-import { ConnectWithFacebook } from 'SignupComponent/ConnectWith/Facebook/component';
+import { ConnectWithFacebook } from 'SignupComponent/ConnectWith/Facebook';
 
 import styles from '../styles.module.scss';
 

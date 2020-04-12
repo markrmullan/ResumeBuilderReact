@@ -3,12 +3,12 @@ import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { ConnectSocialProfile } from 'SignupComponent/ConnectSocialProfile/component';
-import { ContactInformationForm } from 'SignupComponent/ContactInformationForm/component';
-import { NameForm } from 'SignupComponent/NameForm/component';
-import { PasswordForm } from 'SignupComponent/PasswordForm/component';
+import { ConnectSocialProfile } from 'SignupComponent/ConnectSocialProfile';
+import { ContactInformationForm } from 'SignupComponent/ContactInformationForm';
+import { NameForm } from 'SignupComponent/NameForm';
+import { PasswordForm } from 'SignupComponent/PasswordForm';
 import classnames from 'classnames';
-import { Modal } from 'common/Modal/component';
+import { Modal } from 'common/Modal';
 
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';

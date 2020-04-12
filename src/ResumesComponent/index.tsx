@@ -7,7 +7,7 @@ import MaterialIcon from '@material/react-material-icon';
 import classnames from 'classnames';
 
 import { FullWidthDivider } from 'common/FullWidthDivider';
-import { Spinner } from 'common/Spinner/component';
+import { Spinner } from 'common/Spinner';
 import { get, post } from 'utils/api';
 import { Resume } from 'utils/models';
 

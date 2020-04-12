@@ -8,11 +8,11 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 
-import { LoginComponent } from 'LoginComponent/component';
-import { ResumeBuilder } from 'ResumeBuilderComponent/component';
-import { EditResume } from 'ResumesComponent/EditResume/component';
-import { Resumes } from 'ResumesComponent/component';
-import { SignupComponent } from 'SignupComponent/component';
+import { LoginComponent } from 'LoginComponent';
+import { ResumeBuilder } from 'ResumeBuilderComponent';
+import { Resumes } from 'ResumesComponent';
+import { EditResume } from 'ResumesComponent/EditResume';
+import { SignupComponent } from 'SignupComponent';
 
 import { ROUTES } from 'utils/constants';
 import { CurrentUserContextImpl } from 'utils/contexts';
