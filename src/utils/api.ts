@@ -45,12 +45,12 @@ export const url = (params: Partial<ApiQuery>) => {
   return `/${baseUrl}`;
 };
 
-export const get = async (params: Partial<ApiQuery> | string): Promise<any> => {
+export const get = async <T> (params: Partial<ApiQuery> | string): Promise<T> => {
   if (typeof params === 'string') params = { path: params };
 
-  const response = await axiosInstance.get(url(params));
+  const response = await axiosInstance.get<T>(url(params));
 
-  return response;
+  return response.data as unknown as T;
 };
 
 export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {

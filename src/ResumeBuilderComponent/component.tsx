@@ -37,10 +37,10 @@ class ResumeBuilderComponent extends PureComponent<WithNamespaces, ResumeBuilder
   private hydrateUser = async () => {
     try {
       const [experiences] = await Promise.all([
-        get({ baseResource: 'experiences' })
+        get<Experience[]>({ baseResource: 'experiences' })
       ]);
 
-      this.setState({ experiences: experiences.data });
+      this.setState({ experiences });
     } catch {
       this.setState({ experiences: [] });
     }

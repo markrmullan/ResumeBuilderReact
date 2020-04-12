@@ -83,10 +83,10 @@ class ResumesComponent extends PureComponent<TComponentProps, ResumesComponentSt
 
   private fetchResumes = async (): Promise<void> => {
     try {
-      const resumes = await get({ baseResource: 'resumes' });
+      const resumes: Resume[] = await get<Resume[]>({ baseResource: 'resumes' });
 
       this.setState({
-        resumes: resumes.data,
+        resumes,
         pending: false
       });
     } catch {
