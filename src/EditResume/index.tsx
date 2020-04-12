@@ -3,10 +3,11 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Grid, TextField } from '@material-ui/core';
+import { ResumeExperiences } from 'ResumeExperiences';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
-import { fetchResume } from 'utils/requests';
+import { createWorkExperience, fetchResume } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -27,11 +28,12 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
   };
 
   public render() {
-    const { t } = this.props;
+    const { match, t } = this.props;
+    const { rId: resumeId } = match.params;
     const { user } = this.context;
     const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
     const { resume } = this.state;
-    const { jobTitle = '' } = resume;
+    const { experiences = [], jobTitle = '' } = resume;
 
     return (
       <div className={styles.container}>
@@ -115,7 +117,14 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
           <Grid item xs={12}>
             <h3>{t('professional_experience')}</h3>
+            <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
           </Grid>
+
+          <ResumeExperiences
+            createWorkExperience={() => this.createWorkExperience()}
+            experiences={experiences}
+            resumeId={resumeId}
+          />
         </Grid>
       </div>
     );
@@ -138,6 +147,18 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
         [name]: value
       }
     } as TComponentState);
+  }
+
+  private async createWorkExperience() {
+    const { rId: resumeId } = this.props.match.params;
+
+    const experience = await createWorkExperience(resumeId);
+    this.setState(prevState => ({
+      resume: {
+        ...prevState.resume,
+        experiences: [...prevState.resume.experiences, experience]
+      }
+    }));
   }
 
   private onUserChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {

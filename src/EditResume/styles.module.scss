@@ -1,3 +1,11 @@
+@import "styles/common";
+
 .container {
   margin: 0 12px;
+
+  .supporting-info {
+    color: $gray-70;
+    font-size: 0.75em;
+    margin-top: 4px;
+  }
 }

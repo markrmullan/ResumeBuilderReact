@@ -1,6 +1,7 @@
 {
   "access_your_resume_any_time": "Save your progress for later, and access your resume any time.",
   "add_your_name": "Add Your Name",
+  "add_work_experience": "Add Work Experience",
   "allow_employers_to_contact_you": "Allow employers to contact you by entering your phone number and email address.",
   "already_have_account": "Already have an account? ",
   "app_name": "Resume Builder Pro",
@@ -35,6 +36,7 @@
   "phone_number": "Phone Number",
   "prefill_your_resume_with_social_profile": "Prefill your resume with info from your social profile",
   "professional_experience": "Professional Experience",
+  "professional_experience_supporting_info": "Include your last 10 years of relevant experience. List your most recent position first.",
   "resumes": "Resumes",
   "save": "Save",
   "saving_ellipsis": "Saving...",

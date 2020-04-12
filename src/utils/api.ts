@@ -27,9 +27,15 @@ const getDefaultApiQuery = (): ApiQuery => {
 
 export const url = (params: Partial<ApiQuery>) => {
   const apiQuery: ApiQuery = { ...getDefaultApiQuery(), ...params };
-  const { path, baseResource, baseResourceId, queries } = apiQuery;
+  const { path, baseResource, baseResourceId, nestedResources, nestedResourceIds, queries } = apiQuery;
 
-  const baseUrl = path || `${baseResource}/${baseResourceId}`;
+  let baseUrl = path || `${baseResource}/${baseResourceId}`;
+
+  nestedResources.forEach((nestedResource, index) => {
+    const id = nestedResourceIds[index];
+
+    baseUrl += `/${nestedResource}${id ? `/${id}` : ''}`;
+  });
 
   const queryStrings = queries.map(query => {
     const key = Object.keys(query)[0];

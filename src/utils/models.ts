@@ -13,12 +13,15 @@ export interface User extends BaseModel {
 }
 
 export interface Resume extends BaseModel {
+  experiences: Experience[];
   jobTitle: string;
   name: string;
 }
 
 export interface Experience extends BaseModel {
+  city: string;
   company: string;
+  description: string;
   position: string;
   startDate: string;
   endDate: string;
