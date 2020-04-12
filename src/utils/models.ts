@@ -4,13 +4,13 @@ type BaseModel = Readonly<{
   updatedAt: string;
 }>;
 
-export type User = {
+export interface User extends BaseModel {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
-};
+}
 
 export interface Resume extends BaseModel {
   jobTitle: string;

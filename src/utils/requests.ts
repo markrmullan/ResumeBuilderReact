@@ -1,4 +1,4 @@
-import { ApiQuery, get } from './api';
+import { ApiQuery, get, patch } from './api';
 import { Resume, User } from './models';
 
 export const fetchCurrentUser = (): Promise<User> => {
@@ -12,4 +12,12 @@ export const fetchResume = (resumeId: Uuid): Promise<Resume> => {
   };
 
   return get<Resume>(query);
+};
+
+export const patchCurrentUser = (user: User): Promise<User> => {
+  const query: Partial<ApiQuery> = {
+    baseResourceId: user.uuid
+  };
+
+  return patch<User>(query, user);
 };

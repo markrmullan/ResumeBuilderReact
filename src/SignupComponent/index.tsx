@@ -153,7 +153,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
   private tryCreateUser = async (): Promise<void> => {
     const { history } = this.props;
     const { email, firstName, lastName, phoneNumber, password } = this.state;
-    const user: User = { email, firstName, lastName, phoneNumber, password };
+    const user: Partial<User> = { email, firstName, lastName, phoneNumber, password };
 
     try {
       await post({}, { user });

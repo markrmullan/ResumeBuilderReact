@@ -17,7 +17,7 @@ import { SignupComponent } from 'SignupComponent';
 import { ROUTES } from 'utils/constants';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
-import { fetchCurrentUser } from 'utils/requests';
+import { fetchCurrentUser, patchCurrentUser } from 'utils/requests';
 
 import './App.scss';
 
@@ -44,7 +44,8 @@ class App extends Component<WithNamespaces, AppState> {
       <ThemeProvider theme={theme}>
         <CurrentUserContextImpl.Provider value={{
           user: currentUser,
-          updateUser: currentUser => this.setState({ currentUser })
+          updateUser: (currentUser: User) => this.setState({ currentUser }),
+          patchCurrentUser: async (toUpdate: User) => patchCurrentUser(toUpdate)
         }}>
           <TopAppBar
             title={t('app_name')}

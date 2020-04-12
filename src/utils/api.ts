@@ -59,6 +59,12 @@ export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Pr
   return response.data as unknown as Promise<T>;
 };
 
+export const patch = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
+  const response = await axiosInstance.patch(url(params), data) || {};
+
+  return response.data as unknown as Promise<T>;
+};
+
 type BaseResource = 'resumes' | 'experiences' | 'users';
 
 type NestedResource = 'experiences';
