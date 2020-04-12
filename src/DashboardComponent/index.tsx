@@ -13,14 +13,14 @@ import { Resume } from 'utils/models';
 
 import styles from './styles.module.scss';
 
-type ResumesComponentState = {
+type DashboardComponentState = {
   resumes: Resume[];
   pending: boolean;
 };
 
 type TComponentProps = RouteComponentProps & WithNamespaces;
 
-class ResumesComponent extends PureComponent<TComponentProps, ResumesComponentState> {
+class DashboardComponent extends PureComponent<TComponentProps, DashboardComponentState> {
   public state = {
     resumes: [],
     pending: true
@@ -98,4 +98,4 @@ class ResumesComponent extends PureComponent<TComponentProps, ResumesComponentSt
   }
 }
 
-export const Resumes = withNamespaces()(ResumesComponent);
+export const Dashboard = withNamespaces()(DashboardComponent);

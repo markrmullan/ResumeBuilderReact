@@ -13,6 +13,7 @@ export type User = {
 };
 
 export interface Resume extends BaseModel {
+  jobTitle: string;
   name: string;
 }
 

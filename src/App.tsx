@@ -10,14 +10,14 @@ import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 
 import { LoginComponent } from 'LoginComponent';
 import { ResumeBuilder } from 'ResumeBuilderComponent';
-import { Resumes } from 'ResumesComponent';
-import { EditResume } from 'ResumesComponent/EditResume';
+import { Dashboard } from 'DashboardComponent';
+import { EditResume } from 'EditResume';
 import { SignupComponent } from 'SignupComponent';
 
 import { ROUTES } from 'utils/constants';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
-import { getCurrentUser } from 'utils/requests';
+import { fetchCurrentUser } from 'utils/requests';
 
 import './App.scss';
 
@@ -75,7 +75,7 @@ class App extends Component<WithNamespaces, AppState> {
             <Switch>
               <Route exact path={ROUTES.login} component={LoginComponent} />
               <Route exact path="/get-started" component={SignupComponent} />
-              <Route exact path="/dashboard" component={Resumes} />
+              <Route exact path="/dashboard" component={Dashboard} />
               <Route path="/resumes/:rId/edit" component={EditResume} />
               <Route exact path="/resume" component={ResumeBuilder} />
             </Switch>
@@ -86,7 +86,7 @@ class App extends Component<WithNamespaces, AppState> {
   }
 
   public async componentDidMount() {
-    const currentUser: User = await getCurrentUser();
+    const currentUser: User = await fetchCurrentUser();
 
     this.setState({ currentUser });
   }
