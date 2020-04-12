@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -39,28 +39,28 @@ class ResumesComponent extends PureComponent<TComponentProps, ResumesComponentSt
     }
 
     return (
-      <Fragment>
-        <Grid container={true} className={styles.container}>
-          <Grid container={true}>
-            <Grid item={true} xs={12} sm={9} lg={9} className={styles.headerEl}>
+      <div className="app-wrapper-max-width">
+        <Grid container className={styles.container}>
+          <Grid container>
+            <Grid item xs={12} sm={9} lg={9} className={styles.headerEl}>
               <h1>{t('resumes')}</h1>
             </Grid>
-            <Grid alignItems="center" justify="flex-end" container={true} item={true} xs={12} sm={3} lg={3}>
+            <Grid alignItems="center" justify="flex-end" container item xs={12} sm={3} lg={3}>
               <Button
                 color="primary"
                 variant="contained"
                 className={classnames(styles.createNewButton, styles.headerEl)}
                 startIcon={<MaterialIcon icon="add" />}
                 onClick={this.createResume}
-              >
-                {t('create_new')}
-              </Button>
+                >
+                  {t('create_new')}
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <FullWidthDivider />
-      </Fragment>
+          <FullWidthDivider />
+      </div>
     );
   }
 

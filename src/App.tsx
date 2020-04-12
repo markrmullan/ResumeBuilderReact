@@ -1,4 +1,4 @@
-import React, { createContext, Component } from 'react';
+import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { Resumes } from 'ResumesComponent/component';
 import { SignupComponent } from 'SignupComponent/component';
 
 import { ROUTES } from 'utils/constants';
+import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
 import { getCurrentUser } from 'utils/requests';
 
@@ -26,15 +27,13 @@ const theme = createMuiTheme({
   }
 });
 
-const CurrentUserContext = createContext(undefined);
-
 type AppState = {
-  currentUser?: User;
+  currentUser: User;
 };
 
 class App extends Component<WithNamespaces, AppState> {
   public state = {
-    currentUser: undefined
+    currentUser: {} as User
   };
 
   public render() {
@@ -43,7 +42,10 @@ class App extends Component<WithNamespaces, AppState> {
 
     return (
       <ThemeProvider theme={theme}>
-        <CurrentUserContext.Provider value={currentUser}>
+        <CurrentUserContextImpl.Provider value={{
+          user: currentUser,
+          updateUser: currentUser => this.setState({ currentUser })
+        }}>
           <TopAppBar
             title={t('xhr')}
             navigationIcon={<MaterialIcon
@@ -70,17 +72,15 @@ class App extends Component<WithNamespaces, AppState> {
             }
           />
           <TopAppBarFixedAdjust>
-            <div className="app-wrapper-max-width">
-              <Switch>
-                <Route exact={true} path={ROUTES.login} component={LoginComponent} />
-                <Route exact={true} path="/get-started" component={SignupComponent} />
-                <Route exact={true} path="/dashboard" component={Resumes} />
-                <Route path="/resumes/:rId/edit" component={EditResume} />
-                <Route exact={true} path="/resume" component={ResumeBuilder} />
-              </Switch>
-            </div>
+            <Switch>
+              <Route exact path={ROUTES.login} component={LoginComponent} />
+              <Route exact path="/get-started" component={SignupComponent} />
+              <Route exact path="/dashboard" component={Resumes} />
+              <Route path="/resumes/:rId/edit" component={EditResume} />
+              <Route exact path="/resume" component={ResumeBuilder} />
+            </Switch>
           </TopAppBarFixedAdjust>
-        </CurrentUserContext.Provider>
+        </CurrentUserContextImpl.Provider>
       </ThemeProvider>
     );
   }

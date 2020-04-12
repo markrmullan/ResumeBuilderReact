@@ -37,8 +37,8 @@ class NameFormComponent extends PureComponent<TComponentProps> {
             label={t('first_name')}
             helperText={
               <HelperText
-                isValidationMessage={true}
-                validation={true}
+                isValidationMessage
+                validation
               >
                 {t('cannot_be_blank')}
               </HelperText>}
@@ -46,7 +46,7 @@ class NameFormComponent extends PureComponent<TComponentProps> {
             <Input
               id="firstName"
               name="firstName"
-              required={true}
+              required
               pattern={AT_LEAST_ONE_CHARACTER.source}
               value={firstName}
               onChange={e => onChange(e)}
@@ -57,8 +57,8 @@ class NameFormComponent extends PureComponent<TComponentProps> {
             label={t('last_name')}
             helperText={
               <HelperText
-                isValidationMessage={true}
-                validation={true}
+                isValidationMessage
+                validation
               >
                 {t('cannot_be_blank')}
               </HelperText>}
@@ -66,7 +66,7 @@ class NameFormComponent extends PureComponent<TComponentProps> {
             <Input
               id="lastName"
               name="lastName"
-              required={true}
+              required
               pattern={AT_LEAST_ONE_CHARACTER.source}
               value={lastName}
               onChange={e => onChange(e)}

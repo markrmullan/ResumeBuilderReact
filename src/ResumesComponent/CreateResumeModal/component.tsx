@@ -36,7 +36,7 @@ class CreateResumeModalComponent extends PureComponent<CreateResumeModalComponen
 
     return (
       <Dialog
-        allowFullScreen={true}
+        allowFullScreen
         open={isOpen}
         className={styles.modal}
       >
@@ -46,17 +46,17 @@ class CreateResumeModalComponent extends PureComponent<CreateResumeModalComponen
             label={t('name')}
             helperText={
               <HelperText
-                isValidationMessage={true}
-                validation={true}
+                isValidationMessage
+                validation
               >
                 {t('cannot_be_blank')}
               </HelperText>}
           >
             <Input
-              autoFocus={true}
+              autoFocus
               id="name"
               name="name"
-              required={true}
+              required
               pattern={AT_LEAST_ONE_CHARACTER.source}
               value={name}
               onChange={e => this.onChange(e)}/>

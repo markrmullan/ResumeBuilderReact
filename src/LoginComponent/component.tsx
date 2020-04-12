@@ -39,7 +39,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
         <TextField
           label={t('email')}
           helperText={
-            <HelperText isValidationMessage={true} validation={true}>
+            <HelperText isValidationMessage validation>
               {error || t('validation.invalid_email')}
             </HelperText>}
         >
@@ -56,8 +56,8 @@ class Login extends PureComponent<TComponentProps, LoginState> {
           label={t('password')}
           helperText={
             <HelperText
-              isValidationMessage={true}
-              validation={true}
+              isValidationMessage
+              validation
             >
               {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
             </HelperText>}

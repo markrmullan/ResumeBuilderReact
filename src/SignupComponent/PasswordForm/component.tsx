@@ -40,7 +40,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
           <TextField
             label={t('create_a_password')}
             helperText={
-              <HelperText validation={true}>
+              <HelperText validation>
                 {errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
               </HelperText>}
           >
@@ -48,7 +48,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
               id="password"
               minLength={MIN_PASSWORD_LENGTH}
               name="password"
-              required={true}
+              required
               type="password"
               autoComplete="new-password"
               value={password}
@@ -58,7 +58,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
           <TextField
             label={t('confirm_password')}
             helperText={
-              <HelperText validation={true}>
+              <HelperText validation>
                 {t('validation.passwords_do_not_match')}
               </HelperText>}
           >
@@ -66,7 +66,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
               pattern={`^${password}$`}
               id="password-confirmation"
               name="passwordConfirmation"
-              required={true}
+              required
               type="password"
               autoComplete="new-password"
               value={passwordConfirmation}

@@ -41,7 +41,7 @@ class ContactInformationFormComponent extends PureComponent<TComponentProps> {
           <TextField
             label={t('phone_number')}
             helperText={
-              <HelperText isValidationMessage={true} validation={true}>
+              <HelperText isValidationMessage validation>
                 {t('character_limit_reached_plural', { count: MAX_PHONE_LENGTH })}
               </HelperText>}
           >
@@ -57,7 +57,7 @@ class ContactInformationFormComponent extends PureComponent<TComponentProps> {
           <TextField
             label={t('email')}
             helperText={
-              <HelperText isValidationMessage={true} validation={true}>
+              <HelperText isValidationMessage validation>
                 {errors.email[0] || t('validation.invalid_email')}
               </HelperText>}
           >
