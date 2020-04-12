@@ -54,33 +54,33 @@ class App extends Component<WithNamespaces, AppState> {
               onClick={() => undefined}
             />}
             actionItems={
-              [
-                <Link
-                  key={1}
-                  className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined"
-                  to="login"
-                >
-                  {t('log_in')}
-                </Link>,
-                <Link
-                  key={2}
-                  className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
-                  to="get-started"
-                >
-                  {t('sign_up')}
-                </Link>
-              ]
-            }
-          />
-          <TopAppBarFixedAdjust>
-            <Switch>
-              <Route exact path={ROUTES.login} component={LoginComponent} />
-              <Route exact path="/get-started" component={SignupComponent} />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route path="/resumes/:rId/edit" component={EditResume} />
-              <Route exact path="/resume" component={ResumeBuilder} />
-            </Switch>
-          </TopAppBarFixedAdjust>
+                [
+                  <Link
+                    key={1}
+                    className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined"
+                    to="login"
+                  >
+                    {t('log_in')}
+                  </Link>,
+                  <Link
+                    key={2}
+                    className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
+                    to="get-started"
+                  >
+                    {t('sign_up')}
+                  </Link>
+                ]
+              }
+            />
+            <TopAppBarFixedAdjust>
+              <Switch>
+                <Route exact path={ROUTES.login} component={LoginComponent} />
+                <Route exact path="/get-started" component={SignupComponent} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route path="/resumes/:rId/edit" component={EditResume} />
+                <Route exact path="/resume" component={ResumeBuilder} />
+              </Switch>
+            </TopAppBarFixedAdjust>
         </CurrentUserContextImpl.Provider>
       </ThemeProvider>
     );

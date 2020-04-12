@@ -4,6 +4,7 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Button, Grid } from '@material-ui/core';
 import MaterialIcon from '@material/react-material-icon';
 
+import { EditExperience } from 'ResumeExperiences/EditExperience';
 import { Experience } from 'utils/models';
 
 type TOwnProps = {
@@ -21,9 +22,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
     return (
       <Grid container item xs={12}>
         {experiences.map(exp => (
-          <Grid item xs={12}>
-            <div key={exp.uuid}>{exp.uuid}</div>
-          </Grid>
+          <EditExperience key={exp.uuid} experience={exp} />
         ))}
         <Button
           color="primary"
