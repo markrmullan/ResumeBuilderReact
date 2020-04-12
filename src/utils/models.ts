@@ -1,5 +1,4 @@
 type BaseModel = Readonly<{
-  id: number;
   uuid: Uuid;
   createdAt: string;
   updatedAt: string;
@@ -12,10 +11,6 @@ export type User = {
   lastName: string;
   phoneNumber: string;
 };
-
-export interface Resume extends BaseModel {
-  name: string;
-}
 
 export interface Resume extends BaseModel {
   name: string;

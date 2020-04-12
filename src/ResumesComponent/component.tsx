@@ -1,8 +1,6 @@
 import React, { Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-
-import { get } from 'utils/api';
-import { Resume } from 'utils/models';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { Button, Grid } from '@material-ui/core';
 import MaterialIcon from '@material/react-material-icon';
@@ -10,6 +8,8 @@ import classnames from 'classnames';
 
 import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner/component';
+import { get, post } from 'utils/api';
+import { Resume } from 'utils/models';
 
 import styles from './styles.module.scss';
 
@@ -18,7 +18,9 @@ type ResumesComponentState = {
   pending: boolean;
 };
 
-class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentState> {
+type TComponentProps = RouteComponentProps & WithNamespaces;
+
+class ResumesComponent extends PureComponent<TComponentProps, ResumesComponentState> {
   public state = {
     resumes: [],
     pending: true
@@ -40,15 +42,16 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
       <Fragment>
         <Grid container={true} className={styles.container}>
           <Grid container={true}>
-            <Grid xs={12} sm={9} lg={9} className={styles.headerEl}>
+            <Grid item={true} xs={12} sm={9} lg={9} className={styles.headerEl}>
               <h1>{t('resumes')}</h1>
             </Grid>
-            <Grid alignItems="center" justify="flex-end" container={true} xs={12} sm={3} lg={3}>
+            <Grid alignItems="center" justify="flex-end" container={true} item={true} xs={12} sm={3} lg={3}>
               <Button
                 color="primary"
                 variant="contained"
                 className={classnames(styles.createNewButton, styles.headerEl)}
                 startIcon={<MaterialIcon icon="add" />}
+                onClick={this.createResume}
               >
                 {t('create_new')}
               </Button>
@@ -63,6 +66,19 @@ class ResumesComponent extends PureComponent<WithNamespaces, ResumesComponentSta
 
   public componentDidMount() {
     this.fetchResumes();
+  }
+
+  private createResume = async (): Promise<void> => {
+    const { history, t } = this.props;
+
+    const body = {
+      resume: {
+        name: t('untitled')
+      }
+    };
+
+    const createdResume: Resume = await post({ baseResource: 'resumes' }, body);
+    history.push(`/resumes/${createdResume.uuid}/edit`);
   }
 
   private fetchResumes = async (): Promise<void> => {

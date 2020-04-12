@@ -53,10 +53,10 @@ export const get = async (params: Partial<ApiQuery> | string): Promise<any> => {
   return response;
 };
 
-export const post = async (params: Partial<ApiQuery>, data: object = {}) => {
-  const response = await axiosInstance.post(url(params), data);
+export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
+  const response = await axiosInstance.post(url(params), data) || {};
 
-  return response;
+  return response.data as unknown as Promise<T>;
 };
 
 type BaseResource = 'resumes' | 'experiences' | 'users';
