@@ -21,10 +21,10 @@ type TComponentState = {
 type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 
 class EditResumeComponent extends PureComponent<TComponentProps, TComponentState> {
+  public static contextType = CurrentUserContextImpl;
   public state = {
     resume: {} as Resume
-  }
-  public static contextType = CurrentUserContextImpl;
+  };
 
   public render() {
     const { t } = this.props;
@@ -55,52 +55,52 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
           <Grid container item spacing={3}>
             <Grid item xs={12} md={3}>
-              <TextField 
-                variant="outlined" 
-                label={t('first_name')} 
-                fullWidth 
-                InputLabelProps={{ shrink: !!firstName.length }} 
-                value={firstName} 
-                onChange={e => updateUser({ ...user, firstName: e.target.value })} 
+              <TextField
+                variant="outlined"
+                label={t('first_name')}
+                fullWidth
+                InputLabelProps={{ shrink: !!firstName.length }}
+                value={firstName}
+                onChange={e => updateUser({ ...user, firstName: e.target.value })}
               />
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <TextField 
-                variant="outlined" 
-                label={t('last_name')} 
-                fullWidth 
-                InputLabelProps={{ shrink: !!lastName.length }} 
-                value={lastName} 
-                onChange={e => updateUser({ ...user, lastName: e.target.value })} 
+              <TextField
+                variant="outlined"
+                label={t('last_name')}
+                fullWidth
+                InputLabelProps={{ shrink: !!lastName.length }}
+                value={lastName}
+                onChange={e => updateUser({ ...user, lastName: e.target.value })}
               />
             </Grid>
           </Grid>
-          
+
           <Grid container item spacing={3}>
             <Grid item xs={12} md={3}>
-              <TextField 
-                variant="outlined" 
-                label={t('email')} 
-                fullWidth 
-                InputLabelProps={{ shrink: !!email.length }} 
-                value={email} 
-                onChange={e => updateUser({ ...user, email: e.target.value })} 
+              <TextField
+                variant="outlined"
+                label={t('email')}
+                fullWidth
+                InputLabelProps={{ shrink: !!email.length }}
+                value={email}
+                onChange={e => updateUser({ ...user, email: e.target.value })}
               />
             </Grid>
 
             <Grid item xs={12} md={3}>
-              <TextField 
-                variant="outlined" 
-                label={t('phone')} 
-                fullWidth 
-                InputLabelProps={{ shrink: !!phoneNumber.length }} 
-                value={phoneNumber} 
+              <TextField
+                variant="outlined"
+                label={t('phone')}
+                fullWidth
+                InputLabelProps={{ shrink: !!phoneNumber.length }}
+                value={phoneNumber}
                 inputMode="tel"
                 onChange={e => updateUser({ ...user, phoneNumber: e.target.value })} />
             </Grid>
           </Grid>
-          
+
           <Grid item xs={12}>
             <h3>{t('professional_experience')}</h3>
           </Grid>

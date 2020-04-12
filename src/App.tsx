@@ -8,10 +8,10 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 
-import { LoginComponent } from 'LoginComponent';
-import { ResumeBuilder } from 'ResumeBuilderComponent';
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
+import { LoginComponent } from 'LoginComponent';
+import { ResumeBuilder } from 'ResumeBuilderComponent';
 import { SignupComponent } from 'SignupComponent';
 
 import { ROUTES } from 'utils/constants';
@@ -47,7 +47,7 @@ class App extends Component<WithNamespaces, AppState> {
           updateUser: currentUser => this.setState({ currentUser })
         }}>
           <TopAppBar
-            title={t('xhr')}
+            title={t('app_name')}
             navigationIcon={<MaterialIcon
               icon="menu"
               onClick={() => undefined}

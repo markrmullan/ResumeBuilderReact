@@ -3,6 +3,7 @@
   "add_your_name": "Add Your Name",
   "allow_employers_to_contact_you": "Allow employers to contact you by entering your phone number and email address.",
   "already_have_account": "Already have an account? ",
+  "app_name": "Resume Builder Pro",
   "back": "Back",
   "cancel": "Cancel",
   "cannot_be_blank": "Cannot be blank",
@@ -34,7 +35,7 @@
   "phone_number": "Phone Number",
   "prefill_your_resume_with_social_profile": "Prefill your resume with info from your social profile",
   "professional_experience": "Professional Experience",
-  "resumes": "Dashboard",
+  "resumes": "Resumes",
   "save": "Save",
   "saving_ellipsis": "Saving...",
   "sign_up": "Sign Up",
@@ -45,6 +46,5 @@
     "invalid_email": "Invalid email",
     "passwords_do_not_match": "Passwords do not match",
     "minimum_characters_with_count": "Minimum {{count}} characters"
-  },
-  "xhr": "The xhr-backend is properly working!"
+  }
 }
