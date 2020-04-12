@@ -1,7 +1,9 @@
 @import "styles/common";
 
 .container {
-  margin-bottom: 8px;
+  .header-el {
+    margin-bottom: 12px;
+  }
 
   .cta-button-container {
     justify-self: center;
