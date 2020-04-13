@@ -30,7 +30,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
     return (
       <Fragment>
         <Row>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={3} className={styles.mb16}>
             <TextField
               variant="outlined"
               label={t('job_title')}
@@ -43,7 +43,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
             />
           </Col>
 
-          <Col xs={12} md={3}>
+          <Col xs={12} md={3} className={styles.mb16}>
             <TextField
               variant="outlined"
               label={t('employer')}
@@ -58,7 +58,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
         </Row>
 
         <Row>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={3} className={styles.mb16}>
             <KeyboardDatePicker
               className={styles.datePicker}
               autoOk
@@ -75,7 +75,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
             />
           </Col>
 
-          <Col xs={12} md={3}>
+          <Col xs={12} md={3} className={styles.mb16}>
             {Math.random() > 0.5 ?
               <TextField
                 variant="outlined"

@@ -1,15 +1,11 @@
 @import "styles/common";
-
-.container {
-  margin: 0 12px;
   
-  .prof-experience {
-    margin-bottom: 0;
-  }
+.mb16 {
+  margin-bottom: 16px;
+}
 
-  .supporting-info {
-    color: $gray-70;
-    font-size: 0.75em;
-    margin-top: 4px;
-  }
+.supporting-info {
+  color: $gray-70;
+  font-size: 0.75em;
+  margin-top: 4px;
 }
