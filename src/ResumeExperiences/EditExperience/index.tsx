@@ -2,10 +2,13 @@ import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Grid, TextField } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
+import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
 
 import { Experience } from 'utils/models';
 import { patchWorkExperience } from 'utils/requests';
+
+const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
+const DATE_PICKER_FORMAT = 'MM/yyyy';
 
 type TOwnProps = {
   experience: Experience;
@@ -19,7 +22,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 class EditExperienceComponent extends PureComponent<TComponentProps> {
   public render() {
     const now = new Date();
-    const { experience = {} as Experience, onWorkExperienceChange, t } = this.props;
+    const { experience = {} as Experience, t } = this.props;
     const { endDate = now, company = '', position = '', startDate = now } = experience;
 
     return (
@@ -33,7 +36,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               InputLabelProps={{ shrink: !!position }}
               name="position"
               value={position}
-              onChange={e => onWorkExperienceChange(e, experience.uuid)}
+              onChange={this.onWorkExperienceChange}
               onBlur={this.patchWorkExperience}
             />
           </Grid>
@@ -46,7 +49,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               InputLabelProps={{ shrink: !!company }}
               name="company"
               value={company}
-              onChange={e => onWorkExperienceChange(e, experience.uuid)}
+              onChange={this.onWorkExperienceChange}
               onBlur={this.patchWorkExperience}
             />
           </Grid>
@@ -61,11 +64,11 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               inputVariant="outlined"
               variant="inline"
               label={t('start_date')}
-              format="MM/yyyy"
+              format={DATE_PICKER_FORMAT}
               openTo="year"
-              views={['year', 'month']}
+              views={DATE_PICKER_VIEWS}
               value={startDate}
-              onChange={startDate => this.onWorkExperienceDateChange('startDate', startDate as unknown as Date)}
+              onChange={this.onWorkExperienceStartDateChange}
             />
           </Grid>
 
@@ -86,11 +89,12 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
                 inputVariant="outlined"
                 variant="inline"
                 label={t('end_date')}
-                format="MM/yyyy"
+                format={DATE_PICKER_FORMAT}
                 openTo="year"
-                views={['year', 'month']}
+                views={DATE_PICKER_VIEWS}
+                minDate={startDate}
                 value={endDate}
-                onChange={endDate => this.onWorkExperienceDateChange('endDate', endDate as unknown as Date)}
+                onChange={this.onWorkExperienceEndDateChange}
               />
             }
           </Grid>
@@ -99,10 +103,24 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
     );
   }
 
-  private onWorkExperienceDateChange = (key: string, val: Date): void => {
-    const { experience, onWorkExperienceDateChange } = this.props;
+  private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { experience: { uuid: experienceUuid }, onWorkExperienceChange } = this.props;
 
-    onWorkExperienceDateChange(experience.uuid, key, val);
+    onWorkExperienceChange(e, experienceUuid);
+  }
+
+  private onWorkExperienceStartDateChange = (val: unknown): void => {
+    this.onWorkExperienceDateChange('startDate', val);
+  }
+
+  private onWorkExperienceEndDateChange = (val: unknown): void => {
+    this.onWorkExperienceDateChange('endDate', val);
+  }
+
+  private onWorkExperienceDateChange = (key: string, val: unknown): void => {
+    const { experience: { uuid: experienceUuid }, onWorkExperienceDateChange } = this.props;
+
+    onWorkExperienceDateChange(experienceUuid, key, val as Date);
   }
 
   private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
