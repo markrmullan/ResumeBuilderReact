@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { TextField } from '@material-ui/core';
+import { FormControlLabel, Switch, TextField } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
 import { Col, Row } from 'react-bootstrap';
 
@@ -19,6 +19,7 @@ type TOwnProps = {
 };
 
 type TComponentState = {
+  doesCurrentlyWorkHere: boolean;
   experience: Experience;
 };
 
@@ -26,13 +27,15 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
   public state = {
+    doesCurrentlyWorkHere: !!this.props.experience.startDate && !this.props.experience.endDate,
     experience: this.props.experience
   };
 
   public render() {
+    const now = new Date();
     const { t } = this.props;
-    const { experience } = this.state;
-    const { endDate, company = '', position = '', startDate } = experience;
+    const { doesCurrentlyWorkHere, experience } = this.state;
+    const { endDate = now, company = '', position = '', startDate = now } = experience;
 
     return (
       <Fragment>
@@ -83,7 +86,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           </Col>
 
           <Col xs={12} md={3} className={styles.mb16}>
-            {Math.random() > 0.5 ?
+            {doesCurrentlyWorkHere ?
               <TextField
                 variant="outlined"
                 label={t('end_date')}
@@ -108,10 +111,38 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 onChange={this.onWorkExperienceEndDateChange}
               />
             }
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={doesCurrentlyWorkHere}
+                  onChange={this.toggleDoesCurrentlyWorkHere}
+                  color="primary"
+                />
+              }
+              label={t('currently_work_here')}
+            />
           </Col>
         </Row>
       </Fragment>
     );
+  }
+
+  private toggleDoesCurrentlyWorkHere = (): void => {
+    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+
+    this.setState(prevState => ({
+      doesCurrentlyWorkHere: !prevState.doesCurrentlyWorkHere,
+      experience: {
+        ...prevState.experience,
+        endDate: prevState.doesCurrentlyWorkHere ? new Date() : undefined
+      }
+    } as TComponentState), () => {
+      patchWorkExperience(resumeId, {
+        uuid: experienceUuid,
+        endDate: (this.state.experience.endDate || null) as string
+      });
+    });
   }
 
   private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -121,11 +152,11 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
   }
 
   private onWorkExperienceStartDateChange = (val: unknown): void => {
-    this.updateWorkExperienceState('startDate', val as Date);
+    this.onWorkExperienceDateChange('startDate', val);
   }
 
   private onWorkExperienceEndDateChange = (val: unknown): void => {
-    this.updateWorkExperienceState('endDate', val as Date);
+    this.onWorkExperienceDateChange('endDate', val);
   }
 
   private updateWorkExperienceState = (name: string, value: string | Date): void => {
@@ -135,6 +166,16 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         [name]: value
       }
     } as TComponentState));
+  }
+
+  private onWorkExperienceDateChange = (key: string, val: unknown): void => {
+    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+
+    this.updateWorkExperienceState(key, val as Date);
+    patchWorkExperience(resumeId, {
+      uuid: experienceUuid,
+      [key]: val as Date
+    });
   }
 
   private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {

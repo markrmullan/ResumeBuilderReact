@@ -24,5 +24,5 @@ export interface Experience extends BaseModel {
   description: string;
   position: string;
   startDate: string;
-  endDate: string;
+  endDate: Maybe<string>;
 }
