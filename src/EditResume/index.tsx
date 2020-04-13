@@ -61,7 +61,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 variant="outlined"
                 label={t('first_name')}
                 fullWidth
-                InputLabelProps={{ shrink: !!firstName.length }}
+                InputLabelProps={{ shrink: !!firstName }}
                 name="firstName"
                 value={firstName}
                 onChange={this.onUserChange}
@@ -74,7 +74,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 variant="outlined"
                 label={t('last_name')}
                 fullWidth
-                InputLabelProps={{ shrink: !!lastName.length }}
+                InputLabelProps={{ shrink: !!lastName }}
                 name="lastName"
                 value={lastName}
                 onChange={this.onUserChange}
@@ -93,7 +93,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 variant="outlined"
                 label={t('email')}
                 fullWidth
-                InputLabelProps={{ shrink: !!email.length }}
+                InputLabelProps={{ shrink: !!email }}
                 name="email"
                 value={email}
                 onChange={this.onUserChange}
@@ -105,7 +105,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 variant="outlined"
                 label={t('phone')}
                 fullWidth
-                InputLabelProps={{ shrink: !!phoneNumber.length }}
+                InputLabelProps={{ shrink: !!phoneNumber }}
                 name="phoneNumber"
                 value={phoneNumber}
                 inputMode="tel"

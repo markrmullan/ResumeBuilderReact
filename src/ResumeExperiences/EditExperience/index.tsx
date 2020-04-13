@@ -30,7 +30,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               variant="outlined"
               label={t('job_title')}
               fullWidth
-              InputLabelProps={{ shrink: !!position.length }}
+              InputLabelProps={{ shrink: !!position }}
               name="position"
               value={position}
               onChange={e => onWorkExperienceChange(e, experience.uuid)}
@@ -43,7 +43,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               variant="outlined"
               label={t('employer')}
               fullWidth
-              InputLabelProps={{ shrink: !!company.length }}
+              InputLabelProps={{ shrink: !!company }}
               name="company"
               value={company}
               onChange={e => onWorkExperienceChange(e, experience.uuid)}
