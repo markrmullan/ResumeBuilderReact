@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
@@ -10,8 +10,6 @@ import { Experience } from 'utils/models';
 
 type TOwnProps = {
   createWorkExperience: () => void;
-  onWorkExperienceChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid) => void;
-  onWorkExperienceDateChange: (experienceId: Uuid, key: string, val: Date) => void;
   experiences: Experience[];
   resumeId: Uuid;
 };
@@ -20,7 +18,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { createWorkExperience, experiences = [], onWorkExperienceChange, onWorkExperienceDateChange, resumeId, t } = this.props;
+    const { createWorkExperience, experiences = [], resumeId, t } = this.props;
 
     return (
       <Fragment>
@@ -29,8 +27,6 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
             key={exp.uuid}
             experience={exp}
             resumeId={resumeId}
-            onWorkExperienceChange={onWorkExperienceChange}
-            onWorkExperienceDateChange={onWorkExperienceDateChange}
           />
         ))}
         <Row>

@@ -15,16 +15,23 @@ import styles from './styles.module.scss';
 
 type TOwnProps = {
   experience: Experience;
-  onWorkExperienceChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid) => void;
-  onWorkExperienceDateChange: (requestId: Uuid, key: string, val: Date) => void;
   resumeId: Uuid;
+};
+
+type TComponentState = {
+  experience: Experience;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditExperienceComponent extends PureComponent<TComponentProps> {
+class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
+  public state = {
+    experience: this.props.experience
+  };
+
   public render() {
-    const { experience = {} as Experience, t } = this.props;
+    const { t } = this.props;
+    const { experience } = this.state;
     const { endDate, company = '', position = '', startDate } = experience;
 
     return (
@@ -108,23 +115,26 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
   }
 
   private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { experience: { uuid: experienceUuid }, onWorkExperienceChange } = this.props;
+    const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    onWorkExperienceChange(e, experienceUuid);
+    this.updateWorkExperienceState(name, value);
   }
 
   private onWorkExperienceStartDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('startDate', val);
+    this.updateWorkExperienceState('startDate', val as Date);
   }
 
   private onWorkExperienceEndDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('endDate', val);
+    this.updateWorkExperienceState('endDate', val as Date);
   }
 
-  private onWorkExperienceDateChange = (key: string, val: unknown): void => {
-    const { experience: { uuid: experienceUuid }, onWorkExperienceDateChange } = this.props;
-
-    onWorkExperienceDateChange(experienceUuid, key, val as Date);
+  private updateWorkExperienceState = (name: string, value: string | Date): void => {
+    this.setState(({ experience }) => ({
+      experience: {
+        ...experience,
+        [name]: value
+      }
+    } as TComponentState));
   }
 
   private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
