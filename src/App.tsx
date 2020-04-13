@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Route } from 'react-router';
-import { Link, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
