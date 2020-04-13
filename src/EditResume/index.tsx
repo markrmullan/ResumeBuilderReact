@@ -123,6 +123,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
           <ResumeExperiences
             createWorkExperience={this.createWorkExperience}
             onWorkExperienceChange={this.onWorkExperienceChange}
+            onWorkExperienceDateChange={this.onWorkExperienceDateChange}
             experiences={experiences}
             resumeId={resumeId}
           />
@@ -173,6 +174,24 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
             return {
               ...exp,
               [name]: value
+            };
+          }
+
+          return exp;
+        })
+      }
+    }));
+  }
+
+  private onWorkExperienceDateChange = (experienceId: Uuid, key: string, val: Date): void => {
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        experiences: resume.experiences.map(exp => {
+          if (exp.uuid === experienceId) {
+            return {
+              ...exp,
+              [key]: val
             };
           }
 

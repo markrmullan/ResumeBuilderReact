@@ -10,6 +10,7 @@ import { Experience } from 'utils/models';
 type TOwnProps = {
   createWorkExperience: () => void;
   onWorkExperienceChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid) => void;
+  onWorkExperienceDateChange: (experienceId: Uuid, key: string, val: Date) => void;
   experiences: Experience[];
   resumeId: Uuid;
 };
@@ -18,7 +19,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { createWorkExperience, experiences = [], onWorkExperienceChange, resumeId, t } = this.props;
+    const { createWorkExperience, experiences = [], onWorkExperienceChange, onWorkExperienceDateChange, resumeId, t } = this.props;
 
     return (
       <Grid container item spacing={3}>
@@ -28,6 +29,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
             experience={exp}
             resumeId={resumeId}
             onWorkExperienceChange={onWorkExperienceChange}
+            onWorkExperienceDateChange={onWorkExperienceDateChange}
           />
         ))}
         <Button

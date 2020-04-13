@@ -10,6 +10,7 @@ import { patchWorkExperience } from 'utils/requests';
 type TOwnProps = {
   experience: Experience;
   onWorkExperienceChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid) => void;
+  onWorkExperienceDateChange: (requestId: Uuid, key: string, val: Date) => void;
   resumeId: Uuid;
 };
 
@@ -64,7 +65,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               openTo="year"
               views={['year', 'month']}
               value={startDate}
-              onChange={e => this.setState({ date: e as unknown as Date })}
+              onChange={startDate => this.onWorkExperienceDateChange('startDate', startDate as unknown as Date)}
             />
           </Grid>
 
@@ -89,13 +90,19 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
                 openTo="year"
                 views={['year', 'month']}
                 value={endDate}
-                onChange={e => this.setState({ date: e as unknown as Date })}
+                onChange={endDate => this.onWorkExperienceDateChange('endDate', endDate as unknown as Date)}
               />
             }
           </Grid>
         </Grid>
       </Fragment>
     );
+  }
+
+  private onWorkExperienceDateChange = (key: string, val: Date): void => {
+    const { experience, onWorkExperienceDateChange } = this.props;
+
+    onWorkExperienceDateChange(experience.uuid, key, val);
   }
 
   private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
