@@ -1,7 +1,16 @@
+@import "styles/common";
+
 .mb16 {
   margin-bottom: 16px;
 }
 
 .date-picker {
   width: 100%;
+}
+
+.spec {
+  .currently-work-here {
+    color: $gray-80;
+    font-size: 0.875em;
+  }
 }

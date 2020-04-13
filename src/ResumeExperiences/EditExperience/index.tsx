@@ -67,7 +67,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           </Col>
         </Row>
 
-        <Row>
+        <Row className={styles.spec}>
           <Col xs={12} md={3} className={styles.mb16}>
             <KeyboardDatePicker
               className={styles.datePicker}
@@ -113,6 +113,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             }
 
             <FormControlLabel
+              classes={{ label: styles.currentlyWorkHere }}
               control={
                 <Switch
                   checked={doesCurrentlyWorkHere}
