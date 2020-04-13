@@ -117,7 +117,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
       history.push(ROUTES.dashboard);
     } catch ({ response }) {
       this.setState({
-        error: response.data.error
+        error: response.error
       });
     }
   }

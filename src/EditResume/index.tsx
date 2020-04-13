@@ -163,7 +163,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     this.setState(({ resume }) => ({
       resume: {
         ...resume,
-        experiences: [...resume.experiences, experience]
+        experiences: [...(resume.experiences || []), experience]
       }
     }));
   }

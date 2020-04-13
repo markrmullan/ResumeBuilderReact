@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { Modal } from 'common/Modal';
 
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
-import { Resume, User } from 'utils/models';
+import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
 import styles from './styles.module.scss';
@@ -157,25 +156,16 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
 
     try {
       await post({}, { user });
-      const resume: Resume = await this.createFirstResume();
-      history.push(`/resumes/${resume.uuid}/edit`);
+      history.push('/dashboard');
     } catch ({ response }) {
       this.setState({
         errors: {
           ...Signup.getDefaultErrors().errors,
-          ...response.data.errors
+          ...response.errors
         },
         currentPage: 3
       });
     }
-  }
-
-  private createFirstResume = async(): Promise<Resume> => {
-    const { t } = this.props;
-
-    const response: AxiosResponse<Resume> = await post({ baseResource: 'resumes' }, { resume: { name: t('untitled') } });
-
-    return response.data;
   }
 
   private clearErrors = (): void => {
