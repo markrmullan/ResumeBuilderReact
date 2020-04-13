@@ -2,9 +2,10 @@ import React, { ChangeEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Grid, TextField } from '@material-ui/core';
-import { ResumeExperiences } from 'ResumeExperiences';
+import { TextField } from '@material-ui/core';
+import { Col, Container, Row } from 'react-bootstrap';
 
+import { ResumeExperiences } from 'ResumeExperiences';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
 import { createWorkExperience, fetchResume } from 'utils/requests';
@@ -37,12 +38,14 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
     return (
       <div className={styles.container}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <h3>{t('personal_information')}</h3>
-          </Grid>
-          <Grid container item spacing={3}>
-            <Grid item xs={12} md={6}>
+        <Container fluid>
+          <Row>
+            <Col md={6}>
+              <h3>{t('personal_information')}</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
               <TextField
                 variant="outlined"
                 label={t('job_title')}
@@ -52,11 +55,11 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 value={jobTitle}
                 onChange={this.onChange}
               />
-            </Grid>
-          </Grid>
+            </Col>
+          </Row>
 
-          <Grid container item spacing={3}>
-            <Grid item xs={12} md={3}>
+          <Row>
+            <Col xs={12} md={3}>
               <TextField
                 variant="outlined"
                 label={t('first_name')}
@@ -67,9 +70,9 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 onChange={this.onUserChange}
                 onBlur={this.patchCurrentUser}
               />
-            </Grid>
+            </Col>
 
-            <Grid item xs={12} md={3}>
+            <Col xs={12} md={3}>
               <TextField
                 variant="outlined"
                 label={t('last_name')}
@@ -80,11 +83,11 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 onChange={this.onUserChange}
                 onBlur={this.patchCurrentUser}
               />
-            </Grid>
-          </Grid>
+            </Col>
+          </Row>
 
-          <Grid container item spacing={3}>
-            <Grid item xs={12} md={3}>
+          <Row>
+            <Col xs={12} md={3}>
               {/* FIXME figure out how to persist email on change? or make this field RO?
                 the email is used for sign-in so you'd need to check for uniqueness. Or,
                 need to make the email field that appears on resumes different than the email
@@ -98,9 +101,9 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 value={email}
                 onChange={this.onUserChange}
               />
-            </Grid>
+            </Col>
 
-            <Grid item xs={12} md={3}>
+            <Col xs={12} md={3}>
               <TextField
                 variant="outlined"
                 label={t('phone')}
@@ -112,13 +115,19 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 onChange={this.onUserChange}
                 onBlur={this.patchCurrentUser}
               />
-            </Grid>
-          </Grid>
+            </Col>
+          </Row>
 
-          <Grid item xs={12}>
-            <h3>{t('professional_experience')}</h3>
-            <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
-          </Grid>
+          <Row className={styles.profExperience}>
+            <Col md={6}>
+              <h3>{t('professional_experience')}</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
+            </Col>
+          </Row>
 
           <ResumeExperiences
             createWorkExperience={this.createWorkExperience}
@@ -127,7 +136,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
             experiences={experiences}
             resumeId={resumeId}
           />
-        </Grid>
+        </Container>
       </div>
     );
   }

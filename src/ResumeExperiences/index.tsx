@@ -1,8 +1,9 @@
-import React, { ChangeEvent, PureComponent } from 'react';
+import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import MaterialIcon from '@material/react-material-icon';
+import { Row } from 'react-bootstrap';
 
 import { EditExperience } from 'ResumeExperiences/EditExperience';
 import { Experience } from 'utils/models';
@@ -22,7 +23,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
     const { createWorkExperience, experiences = [], onWorkExperienceChange, onWorkExperienceDateChange, resumeId, t } = this.props;
 
     return (
-      <Grid container item spacing={3}>
+      <Fragment>
         {experiences.map(exp => (
           <EditExperience
             key={exp.uuid}
@@ -32,14 +33,16 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
             onWorkExperienceDateChange={onWorkExperienceDateChange}
           />
         ))}
-        <Button
-          color="primary"
-          startIcon={<MaterialIcon icon="add" />}
-          onClick={createWorkExperience}
-          >
-            {t('add_work_experience')}
-          </Button>
-      </Grid>
+        <Row>
+          <Button
+            color="primary"
+            startIcon={<MaterialIcon icon="add" />}
+            onClick={createWorkExperience}
+            >
+              {t('add_work_experience')}
+            </Button>
+        </Row>
+      </Fragment>
     );
   }
 }

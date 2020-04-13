@@ -1,14 +1,17 @@
 import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { Grid, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
+import { Col, Row } from 'react-bootstrap';
 
 import { Experience } from 'utils/models';
 import { patchWorkExperience } from 'utils/requests';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
 const DATE_PICKER_FORMAT = 'MM/yyyy';
+
+import styles from './styles.module.scss';
 
 type TOwnProps = {
   experience: Experience;
@@ -21,14 +24,13 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class EditExperienceComponent extends PureComponent<TComponentProps> {
   public render() {
-    const now = new Date();
     const { experience = {} as Experience, t } = this.props;
-    const { endDate = now, company = '', position = '', startDate = now } = experience;
+    const { endDate, company = '', position = '', startDate } = experience;
 
     return (
       <Fragment>
-        <Grid container item spacing={3}>
-          <Grid item xs={12} md={3}>
+        <Row>
+          <Col xs={12} md={3}>
             <TextField
               variant="outlined"
               label={t('job_title')}
@@ -39,9 +41,9 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               onChange={this.onWorkExperienceChange}
               onBlur={this.patchWorkExperience}
             />
-          </Grid>
+          </Col>
 
-          <Grid item xs={12} md={3}>
+          <Col xs={12} md={3}>
             <TextField
               variant="outlined"
               label={t('employer')}
@@ -52,12 +54,13 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               onChange={this.onWorkExperienceChange}
               onBlur={this.patchWorkExperience}
             />
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
 
-        <Grid container item spacing={3}>
-          <Grid item xs={12} md={3}>
+        <Row>
+          <Col xs={12} md={3}>
             <KeyboardDatePicker
+              className={styles.datePicker}
               autoOk
               disableToolbar
               disableFuture
@@ -70,10 +73,10 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
               value={startDate}
               onChange={this.onWorkExperienceStartDateChange}
             />
-          </Grid>
+          </Col>
 
-          <Grid item xs={12} md={3}>
-            {endDate > now ?
+          <Col xs={12} md={3}>
+            {Math.random() > 0.5 ?
               <TextField
                 variant="outlined"
                 label={t('end_date')}
@@ -84,6 +87,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
                 value="Present"
               /> :
               <KeyboardDatePicker
+                className={styles.datePicker}
                 autoOk
                 disableToolbar
                 inputVariant="outlined"
@@ -97,8 +101,8 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
                 onChange={this.onWorkExperienceEndDateChange}
               />
             }
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
       </Fragment>
     );
   }
@@ -125,10 +129,10 @@ class EditExperienceComponent extends PureComponent<TComponentProps> {
 
   private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
-    const { experience, resumeId } = this.props;
+    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
 
     patchWorkExperience(resumeId, {
-      uuid: experience.uuid,
+      uuid: experienceUuid,
       [name]: value
     });
   }
