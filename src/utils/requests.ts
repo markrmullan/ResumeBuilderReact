@@ -31,3 +31,14 @@ export const createWorkExperience = (resumeId: Uuid, experience: Experience = {}
 
   return post<Experience>(query, experience);
 };
+
+export const patchWorkExperience = (resumeId: Uuid, experience: Partial<Experience> = {}): Promise<Experience> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId,
+    nestedResources: ['experiences'],
+    nestedResourceIds: [experience.uuid!]
+  };
+
+  return patch<Experience>(query, experience);
+};

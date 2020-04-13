@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.6",
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.10",
+    "@material-ui/pickers": "^3.2.10",
     "@material/react-button": "^0.8.0",
     "@material/react-dialog": "^0.10.0",
     "@material/react-layout-grid": "^0.8.0",
@@ -26,6 +28,7 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
     "css-loader": "1.0.0",
+    "date-fns": "^2.12.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.6.0",

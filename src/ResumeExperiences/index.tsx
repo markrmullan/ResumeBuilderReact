@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { ChangeEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button, Grid } from '@material-ui/core';
@@ -9,6 +9,7 @@ import { Experience } from 'utils/models';
 
 type TOwnProps = {
   createWorkExperience: () => void;
+  onWorkExperienceChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid) => void;
   experiences: Experience[];
   resumeId: Uuid;
 };
@@ -17,17 +18,22 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { createWorkExperience, experiences = [], t } = this.props;
+    const { createWorkExperience, experiences = [], onWorkExperienceChange, resumeId, t } = this.props;
 
     return (
-      <Grid container item xs={12}>
+      <Grid container item spacing={3}>
         {experiences.map(exp => (
-          <EditExperience key={exp.uuid} experience={exp} />
+          <EditExperience
+            key={exp.uuid}
+            experience={exp}
+            resumeId={resumeId}
+            onWorkExperienceChange={onWorkExperienceChange}
+          />
         ))}
         <Button
           color="primary"
           startIcon={<MaterialIcon icon="add" />}
-          onClick={() => createWorkExperience()}
+          onClick={createWorkExperience}
           >
             {t('add_work_experience')}
           </Button>

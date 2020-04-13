@@ -50,7 +50,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 placeholder="e.g. Teacher"
                 name="jobTitle"
                 value={jobTitle}
-                onChange={e => this.onChange(e)}
+                onChange={this.onChange}
               />
             </Grid>
           </Grid>
@@ -64,8 +64,8 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 InputLabelProps={{ shrink: !!firstName.length }}
                 name="firstName"
                 value={firstName}
-                onChange={e => this.onUserChange(e)}
-                onBlur={e => this.patchCurrentUser(e)}
+                onChange={this.onUserChange}
+                onBlur={this.patchCurrentUser}
               />
             </Grid>
 
@@ -77,8 +77,8 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 InputLabelProps={{ shrink: !!lastName.length }}
                 name="lastName"
                 value={lastName}
-                onChange={e => this.onUserChange(e)}
-                onBlur={e => this.patchCurrentUser(e)}
+                onChange={this.onUserChange}
+                onBlur={this.patchCurrentUser}
               />
             </Grid>
           </Grid>
@@ -96,7 +96,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 InputLabelProps={{ shrink: !!email.length }}
                 name="email"
                 value={email}
-                onChange={e => this.onUserChange(e)}
+                onChange={this.onUserChange}
               />
             </Grid>
 
@@ -109,8 +109,8 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 name="phoneNumber"
                 value={phoneNumber}
                 inputMode="tel"
-                onChange={e => this.onUserChange(e)}
-                onBlur={e => this.patchCurrentUser(e)}
+                onChange={this.onUserChange}
+                onBlur={this.patchCurrentUser}
               />
             </Grid>
           </Grid>
@@ -121,7 +121,8 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
           </Grid>
 
           <ResumeExperiences
-            createWorkExperience={() => this.createWorkExperience()}
+            createWorkExperience={this.createWorkExperience}
+            onWorkExperienceChange={this.onWorkExperienceChange}
             experiences={experiences}
             resumeId={resumeId}
           />
@@ -137,7 +138,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     this.setState({ resume });
   }
 
-  private onChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  private onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { resume } = this.state;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
@@ -149,19 +150,39 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     } as TComponentState);
   }
 
-  private async createWorkExperience() {
+  private createWorkExperience = async () => {
     const { rId: resumeId } = this.props.match.params;
 
     const experience = await createWorkExperience(resumeId);
-    this.setState(prevState => ({
+    this.setState(({ resume }) => ({
       resume: {
-        ...prevState.resume,
-        experiences: [...prevState.resume.experiences, experience]
+        ...resume,
+        experiences: [...resume.experiences, experience]
       }
     }));
   }
 
-  private onUserChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, experienceId: Uuid): void => {
+    const { name, value }: { name: string; value: string } = e.currentTarget;
+
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        experiences: resume.experiences.map(exp => {
+          if (exp.uuid === experienceId) {
+            return {
+              ...exp,
+              [name]: value
+            };
+          }
+
+          return exp;
+        })
+      }
+    }));
+  }
+
+  private onUserChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { updateUser, user } = this.context;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
@@ -171,7 +192,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     });
   }
 
-  private patchCurrentUser(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  private patchCurrentUser = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { patchCurrentUser, user } = this.context;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 

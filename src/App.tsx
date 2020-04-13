@@ -3,6 +3,9 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
 import { deepPurple } from '@material-ui/core/colors';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import MaterialIcon from '@material/react-material-icon';
@@ -47,13 +50,14 @@ class App extends Component<WithNamespaces, AppState> {
           updateUser: (currentUser: User) => this.setState({ currentUser }),
           patchCurrentUser: async (toUpdate: User) => patchCurrentUser(toUpdate)
         }}>
-          <TopAppBar
-            title={t('app_name')}
-            navigationIcon={<MaterialIcon
-              icon="menu"
-              onClick={() => undefined}
-            />}
-            actionItems={
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <TopAppBar
+              title={t('app_name')}
+              navigationIcon={<MaterialIcon
+                icon="menu"
+                onClick={() => undefined}
+              />}
+              actionItems={
                 [
                   <Link
                     key={1}
@@ -81,6 +85,7 @@ class App extends Component<WithNamespaces, AppState> {
                 <Route exact path="/resume" component={ResumeBuilder} />
               </Switch>
             </TopAppBarFixedAdjust>
+          </MuiPickersUtilsProvider>
         </CurrentUserContextImpl.Provider>
       </ThemeProvider>
     );
