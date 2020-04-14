@@ -10,13 +10,12 @@ import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner';
 import { get, post } from 'utils/api';
 import { CurrentUserContextImpl } from 'utils/contexts';
-import { Resume, User } from 'utils/models';
+import { Resume } from 'utils/models';
 import { fetchCurrentUser } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
 type DashboardComponentState = {
-  currentUser: User;
   resumes: Resume[];
   pending: boolean;
 };
@@ -27,14 +26,13 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
   public static contextType = CurrentUserContextImpl;
 
   public state = {
-    currentUser: {} as User,
     resumes: [],
     pending: true
   };
 
   public render() {
     const { t } = this.props;
-    const { currentUser, pending } = this.state;
+    const { pending } = this.state;
 
     if (pending) {
       return (
@@ -46,41 +44,36 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
 
     return (
       <div className="app-wrapper-max-width">
-        <CurrentUserContextImpl.Provider value={{
-          user: currentUser,
-          updateUser: this.context.updateUser,
-          patchCurrentUser: this.context.patchCurrentUser
-        }}>
-          <Grid container className={styles.container}>
-            <Grid container>
-              <Grid item xs={12} sm={9} lg={9} className={styles.headerEl}>
-                <h1>{t('resumes')}</h1>
-              </Grid>
-              <Grid alignItems="center" justify="flex-end" container item xs={12} sm={3} lg={3}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  className={classnames(styles.createNewButton, styles.headerEl)}
-                  startIcon={<MaterialIcon icon="add" />}
-                  onClick={this.createResume}
-                  >
-                    {t('create_new')}
-                  </Button>
-                </Grid>
+        <Grid container className={styles.container}>
+          <Grid container>
+            <Grid item xs={12} sm={9} lg={9} className={styles.headerEl}>
+              <h1>{t('resumes')}</h1>
+            </Grid>
+            <Grid alignItems="center" justify="flex-end" container item xs={12} sm={3} lg={3}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={classnames(styles.createNewButton, styles.headerEl)}
+                startIcon={<MaterialIcon icon="add" />}
+                onClick={this.createResume}
+                >
+                  {t('create_new')}
+                </Button>
               </Grid>
             </Grid>
+          </Grid>
 
-            <FullWidthDivider />
-        </CurrentUserContextImpl.Provider>
+          <FullWidthDivider />
       </div>
     );
   }
 
   public componentDidMount() {
+    const { updateUser } = this.context;
     this.fetchResumes();
 
     fetchCurrentUser().then(currentUser => {
-      this.setState({ currentUser });
+      updateUser(currentUser);
     });
   }
 
