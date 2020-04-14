@@ -8,6 +8,7 @@ type Voidable<T> = T | void;
 type Obj<T> = Record<PropertyKey, T>;
 
 declare const DEVELOPMENT: boolean;
+declare const PRODUCTION: boolean;
 
 declare module 'i18next-xhr-backend';
 declare module 'i18next-browser-languagedetector';

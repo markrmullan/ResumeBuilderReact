@@ -503,7 +503,7 @@ module.exports = function(webpackEnv) {
       // Define dev build globals
       new webpack.DefinePlugin({
         DEVELOPMENT: false,
-        PRODUCTION: false
+        PRODUCTION: process.env.NODE_ENV === 'production'
       }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
