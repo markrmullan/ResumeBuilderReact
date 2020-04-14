@@ -115,9 +115,9 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     try {
       await post({ baseResourceId: 'sign_in' }, { user });
       history.push(ROUTES.dashboard);
-    } catch ({ response }) {
+    } catch ({ data: { error } }) {
       this.setState({
-        error: response.error
+        error
       });
     }
   }

@@ -60,9 +60,13 @@ export const get = async <T> (params: Partial<ApiQuery> | string): Promise<T> =>
 };
 
 export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
-  const response = await axiosInstance.post(url(params), data) || {};
+  try {
+    const response = await axiosInstance.post(url(params), data) || {};
 
-  return response.data as unknown as Promise<T>;
+    return response.data as unknown as Promise<T>;
+  } catch ({ response }) {
+    throw response;
+  }
 };
 
 export const patch = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {

@@ -13,7 +13,6 @@ import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
 import { LoginComponent } from 'LoginComponent';
-import { ResumeBuilder } from 'ResumeBuilderComponent';
 import { SignupComponent } from 'SignupComponent';
 
 import { ROUTES } from 'utils/constants';
@@ -81,7 +80,6 @@ class App extends Component<WithNamespaces, AppState> {
                 <Route exact path="/get-started" component={SignupComponent} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route path="/resumes/:rId/edit" component={EditResume} />
-                <Route exact path="/resume" component={ResumeBuilder} />
               </Switch>
             </TopAppBarFixedAdjust>
           </MuiPickersUtilsProvider>

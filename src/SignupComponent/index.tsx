@@ -157,11 +157,11 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     try {
       await post({}, { user });
       history.push('/dashboard');
-    } catch ({ response }) {
+    } catch ({ data: { errors } }) {
       this.setState({
         errors: {
           ...Signup.getDefaultErrors().errors,
-          ...response.errors
+          ...errors
         },
         currentPage: 3
       });
