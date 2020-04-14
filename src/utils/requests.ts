@@ -1,4 +1,4 @@
-import { ApiQuery, get, patch, post } from './api';
+import { ApiQuery, destroy, get, patch, post } from './api';
 import { Experience, Resume, User } from './models';
 
 export const fetchCurrentUser = (): Promise<User> => {
@@ -41,4 +41,15 @@ export const patchWorkExperience = (resumeId: Uuid, experience: Partial<Experien
   };
 
   return patch<Experience>(query, experience);
+};
+
+export const deleteWorkExperience = (resumeId: Uuid, experienceId: Uuid): Promise<void> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId,
+    nestedResources: ['experiences'],
+    nestedResourceIds: [experienceId]
+  };
+
+  return destroy<void>(query);
 };

@@ -1,29 +1,34 @@
 import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { FormControlLabel, Switch, TextField } from '@material-ui/core';
+import { FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
+import MaterialIcon from '@material/react-material-icon';
 import classnames from 'classnames';
+import { format } from 'date-fns';
 import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
 
+import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
 import { Experience } from 'utils/models';
 import { patchWorkExperience } from 'utils/requests';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
-const DATE_PICKER_FORMAT = 'MM/yyyy';
+const DATE_PICKER_FORMAT = 'MMM yyyy';
 
 import styles from './styles.module.scss';
 
 type TOwnProps = {
   experience: Experience;
+  deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
   resumeId: Uuid;
 };
 
 type TComponentState = {
   doesCurrentlyWorkHere: boolean;
   experience: Experience;
+  isDeleteConfirmationModalOpen: boolean;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
@@ -38,7 +43,8 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
 
     this.state = {
       doesCurrentlyWorkHere: !!startDate && !endDate,
-      experience
+      experience,
+      isDeleteConfirmationModalOpen: false
     };
     this.throttledPatchWorkExperienceDescription = throttle(this.patchWorkExperienceDescription, 2000);
   }
@@ -46,11 +52,40 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
   public render() {
     const now = new Date();
     const { t } = this.props;
-    const { doesCurrentlyWorkHere, experience } = this.state;
+    const { doesCurrentlyWorkHere, experience, isDeleteConfirmationModalOpen } = this.state;
     const { company = '', description = '', endDate = now, position = '', startDate = now } = experience;
 
     return (
       <Fragment>
+        <ConfirmationDialog
+          title={t('delete_entry')}
+          description={t('are_you_sure_you_want_to_delete_this_entry')}
+          secondaryButtonAction={this.deleteWorkExperience}
+          secondaryButtonText={t('delete')}
+          primaryButtonAction={this.closeDeleteConfirmationModal}
+          primaryButtonText={t('cancel')}
+          open={isDeleteConfirmationModalOpen}
+        />
+
+        <Row className={styles.mb16}>
+          <Col xs={12} md={6}>
+            <div className={styles.summary}>
+              <div>
+                <div className={styles.title}>{position}</div>
+                <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
+              </div>
+              <div className={styles.deleteIconContainer}>
+                <Tooltip arrow title={t('delete')} placement="top">
+                  <MaterialIcon
+                    className={styles.deleteIcon}
+                    icon="delete_outlined"
+                    onClick={this.openDeleteConfirmationModal}
+                  />
+                </Tooltip>
+              </div>
+            </div>
+          </Col>
+        </Row>
         <Row>
           <Col xs={12} md={3} className={styles.mb16}>
             <TextField
@@ -225,6 +260,22 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
       uuid: experienceUuid,
       description
     });
+  }
+
+  private openDeleteConfirmationModal = (): void => {
+    this.setState({ isDeleteConfirmationModalOpen: true });
+  }
+
+  private closeDeleteConfirmationModal = (): void => {
+    this.setState({ isDeleteConfirmationModalOpen: false });
+  }
+
+  private deleteWorkExperience = async (): Promise<void> => {
+    const { deleteWorkExperience } = this.props;
+    const { uuid: experienceId } = this.state.experience;
+
+    await deleteWorkExperience(experienceId);
+    this.closeDeleteConfirmationModal();
   }
 }
 

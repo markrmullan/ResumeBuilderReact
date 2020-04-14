@@ -8,7 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { ResumeExperiences } from 'ResumeExperiences';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
-import { createWorkExperience, fetchResume } from 'utils/requests';
+import { createWorkExperience, deleteWorkExperience, fetchResume } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -130,6 +130,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
         <ResumeExperiences
           createWorkExperience={this.createWorkExperience}
+          deleteWorkExperience={this.deleteWorkExperience}
           experiences={experiences}
           resumeId={resumeId}
         />
@@ -164,6 +165,18 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
       resume: {
         ...resume,
         experiences: [...(resume.experiences || []), experience]
+      }
+    }));
+  }
+
+  private deleteWorkExperience = async (experienceId: Uuid): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    await deleteWorkExperience(resumeId, experienceId);
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        experiences: [...(resume.experiences || []).filter(exp => exp.uuid !== experienceId)]
       }
     }));
   }

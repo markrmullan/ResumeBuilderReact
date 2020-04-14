@@ -4,6 +4,27 @@
   margin-bottom: 16px;
 }
 
+.summary {
+  align-items: center;
+  display: flex;
+  font-size: 0.875em;
+  line-height: 1.2;
+  justify-content: space-between;
+
+  .title {
+    font-weight: $bolder;
+  }
+
+  .delete-icon-container {
+    cursor: pointer;
+
+    .delete-icon {
+      color: $gray-60;
+      width: 24px;
+    }
+  }
+}
+
 .date-picker {
   width: 100%;
 }

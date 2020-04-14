@@ -10,6 +10,7 @@ import { Experience } from 'utils/models';
 
 type TOwnProps = {
   createWorkExperience: () => void;
+  deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
   experiences: Experience[];
   resumeId: Uuid;
 };
@@ -18,7 +19,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { createWorkExperience, experiences = [], resumeId, t } = this.props;
+    const { createWorkExperience, deleteWorkExperience, experiences = [], resumeId, t } = this.props;
 
     return (
       <Fragment>
@@ -26,6 +27,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
           <EditExperience
             key={exp.uuid}
             experience={exp}
+            deleteWorkExperience={deleteWorkExperience}
             resumeId={resumeId}
           />
         ))}
