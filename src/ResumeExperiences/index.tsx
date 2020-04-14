@@ -3,7 +3,7 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
 import MaterialIcon from '@material/react-material-icon';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 import { EditExperience } from 'ResumeExperiences/EditExperience';
 import { Experience } from 'utils/models';
@@ -30,13 +30,15 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
           />
         ))}
         <Row>
-          <Button
-            color="primary"
-            startIcon={<MaterialIcon icon="add" />}
-            onClick={createWorkExperience}
-            >
-              {t('add_work_experience')}
-            </Button>
+          <Col xs={12} md={6}>
+            <Button
+              color="primary"
+              startIcon={<MaterialIcon icon="add" />}
+              onClick={createWorkExperience}
+              >
+                {t('add_work_experience')}
+              </Button>
+          </Col>
         </Row>
       </Fragment>
     );
