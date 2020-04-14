@@ -71,7 +71,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           <Col xs={12} md={6}>
             <div className={styles.summary}>
               <div>
-                <div className={styles.title}>{position}</div>
+                <div className={styles.title}>{position || t('not_specified')}</div>
                 <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
               </div>
               <div className={styles.deleteIconContainer}>
