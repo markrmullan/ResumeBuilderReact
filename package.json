@@ -10,7 +10,6 @@
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.10",
     "@material-ui/pickers": "^3.2.10",
-    "@material/react-layout-grid": "^0.8.0",
     "@material/react-material-icon": "^0.8.0",
     "@material/react-text-field": "^0.8.0",
     "@material/react-top-app-bar": "^0.8.0",
