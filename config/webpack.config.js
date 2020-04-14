@@ -502,7 +502,7 @@ module.exports = function(webpackEnv) {
       ),
       // Define dev build globals
       new webpack.DefinePlugin({
-        DEVELOPMENT: true,
+        DEVELOPMENT: false,
         PRODUCTION: false
       }),
       // Inlines the webpack runtime script. This script is too small to warrant

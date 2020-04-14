@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'middleware/axios';
 
 const axiosInstance = axios.createWith401Handler({
-  baseURL: DEVELOPMENT ? 'http://localhost:3001/' : '',
+  baseURL: DEVELOPMENT ? 'http://localhost:3001/' : 'https://resume-builder-server.herokuapp.com/',
   withCredentials: true
 });
 
