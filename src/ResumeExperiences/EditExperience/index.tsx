@@ -3,8 +3,11 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { FormControlLabel, Switch, TextField } from '@material-ui/core';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
+import classnames from 'classnames';
+import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
 
+import { RichTextEditor } from 'common/RichTextEditor';
 import { Experience } from 'utils/models';
 import { patchWorkExperience } from 'utils/requests';
 
@@ -26,16 +29,25 @@ type TComponentState = {
 type TComponentProps = TOwnProps & WithNamespaces;
 
 class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
-  public state = {
-    doesCurrentlyWorkHere: !!this.props.experience.startDate && !this.props.experience.endDate,
-    experience: this.props.experience
-  };
+  private throttledPatchWorkExperienceDescription: Function;
+
+  public constructor(props: TComponentProps) {
+    super(props);
+    const { experience } = this.props;
+    const { endDate, startDate } = experience;
+
+    this.state = {
+      doesCurrentlyWorkHere: !!startDate && !endDate,
+      experience
+    };
+    this.throttledPatchWorkExperienceDescription = throttle(this.patchWorkExperienceDescription, 2000);
+  }
 
   public render() {
     const now = new Date();
     const { t } = this.props;
     const { doesCurrentlyWorkHere, experience } = this.state;
-    const { endDate = now, company = '', position = '', startDate = now } = experience;
+    const { company = '', description = '', endDate = now, position = '', startDate = now } = experience;
 
     return (
       <Fragment>
@@ -68,7 +80,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         </Row>
 
         <Row className={styles.spec}>
-          <Col xs={12} md={3} className={styles.mb16}>
+          <Col xs={12} md={3} className={classnames(styles.mb16, styles.startDate)}>
             <KeyboardDatePicker
               className={styles.datePicker}
               autoOk
@@ -85,7 +97,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             />
           </Col>
 
-          <Col xs={12} md={3} className={styles.mb16}>
+          <Col xs={12} md={3}>
             {doesCurrentlyWorkHere ?
               <TextField
                 variant="outlined"
@@ -94,7 +106,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 InputProps={{
                   readOnly: true
                 }}
-                value="Present"
+                value={t('present')}
               /> :
               <KeyboardDatePicker
                 className={styles.datePicker}
@@ -113,7 +125,10 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             }
 
             <FormControlLabel
-              classes={{ label: styles.currentlyWorkHere }}
+              classes={{
+                label: styles.currentlyWorkHere,
+                root: styles.currentlyWorkHereRoot
+              }}
               control={
                 <Switch
                   checked={doesCurrentlyWorkHere}
@@ -122,6 +137,19 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 />
               }
               label={t('currently_work_here')}
+            />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={12} md={6}>
+            <RichTextEditor
+              label={t('description')}
+              onEditorChange={(e: string) => {
+                this.updateWorkExperienceState('description', e);
+                this.throttledPatchWorkExperienceDescription();
+              }}
+              value={description}
             />
           </Col>
         </Row>
@@ -186,6 +214,16 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
     patchWorkExperience(resumeId, {
       uuid: experienceUuid,
       [name]: value
+    });
+  }
+
+  private patchWorkExperienceDescription = (): void => {
+    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+    const { experience: { description } } = this.state;
+
+    patchWorkExperience(resumeId, {
+      uuid: experienceUuid,
+      description
     });
   }
 }

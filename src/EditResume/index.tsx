@@ -37,7 +37,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     const { experiences = [], jobTitle = '' } = resume;
 
     return (
-      <Container fluid>
+      <Container fluid className={styles.outerContainer}>
         <Row>
           <Col md={6} className={styles.mb16}>
             <h3>{t('personal_information')}</h3>
@@ -49,7 +49,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
               variant="outlined"
               label={t('job_title')}
               fullWidth
-              placeholder="e.g. Teacher"
+              placeholder={t('eg_teacher')}
               name="jobTitle"
               value={jobTitle}
               onChange={this.onChange}

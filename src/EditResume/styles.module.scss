@@ -1,11 +1,23 @@
 @import "styles/common";
-  
-.mb16 {
-  margin-bottom: 16px;
-}
 
-.supporting-info {
-  color: $gray-70;
-  font-size: 0.75em;
-  margin-top: 4px;
+.outer-container {
+  @media (min-width: $md-screen-min) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (min-width: $lg-screen-min) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .mb16 {
+    margin-bottom: 16px;
+  }
+
+  .supporting-info {
+    color: $gray-70;
+    font-size: 0.75em;
+    margin-top: 4px;
+  }
 }

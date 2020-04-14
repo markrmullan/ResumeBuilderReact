@@ -12,5 +12,19 @@
   .currently-work-here {
     color: $gray-80;
     font-size: 0.875em;
+
+    &-root {
+      margin-bottom: 0;
+    }
+  }
+
+  .start-date {
+    @media (min-width: $md-screen-min) {
+      margin-bottom: 0;
+    }
+  }
+
+  .editor {
+    border-radius: 8px;
   }
 }

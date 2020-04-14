@@ -22,6 +22,13 @@
   padding: 0 12px;
 }
 
+// Tiny overrides
+.tox {
+  &.tox-tinymce {
+    border-radius: 4px;
+  }
+}
+
 // resets
 p, h1, h2, h3, h4, h5 {
   margin: 0;
