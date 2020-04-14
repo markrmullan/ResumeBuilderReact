@@ -142,7 +142,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         </Row>
 
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} className={styles.mb16}>
             <RichTextEditor
               label={t('description')}
               onEditorChange={(e: string) => {
