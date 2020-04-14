@@ -61,14 +61,14 @@ class App extends Component<WithNamespaces, AppState> {
                   <Link
                     key={1}
                     className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined"
-                    to="login"
+                    to="/login"
                   >
                     {t('log_in')}
                   </Link>,
                   <Link
                     key={2}
                     className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
-                    to="get-started"
+                    to="/get-started"
                   >
                     {t('sign_up')}
                   </Link>
