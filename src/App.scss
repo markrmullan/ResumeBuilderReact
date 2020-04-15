@@ -7,6 +7,10 @@
 
     &--outlined {
       @include mdc-button-ink-color($mdc-theme-on-primary);
+
+      &.mr12 {
+        margin-right: 12px;
+      }
     }
 
     &--raised {

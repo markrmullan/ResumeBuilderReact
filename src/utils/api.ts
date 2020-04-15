@@ -75,7 +75,9 @@ export const patch = async <T> (params: Partial<ApiQuery>, data: object = {}): P
   return response.data as unknown as Promise<T>;
 };
 
-export const destroy = async <T> (params: Partial<ApiQuery>): Promise<T> => {
+export const destroy = async <T> (params: Partial<ApiQuery> | string): Promise<T> => {
+  if (typeof params === 'string') params = { path: params };
+
   const response = await axiosInstance.delete(url(params)) || {};
 
   return response.data as unknown as Promise<T>;

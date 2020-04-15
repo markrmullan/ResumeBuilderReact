@@ -1,6 +1,10 @@
 import { ApiQuery, destroy, get, patch, post } from './api';
 import { Experience, Resume, User } from './models';
 
+export const logOut = (): Promise<void> => {
+  return destroy<void>('users/sign_out');
+};
+
 export const fetchCurrentUser = (): Promise<User> => {
   return get<User>('users/current');
 };
