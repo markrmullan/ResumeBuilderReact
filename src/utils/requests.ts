@@ -38,6 +38,15 @@ export const createResume = (name: string): Promise<Resume> => {
   return post<Resume>(query, body);
 };
 
+export const deleteResume = (resumeId: Uuid): Promise<void> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId
+  };
+
+  return destroy<void>(query);
+};
+
 export const patchCurrentUser = (user: User): Promise<User> => {
   const query: Partial<ApiQuery> = {
     baseResourceId: user.uuid

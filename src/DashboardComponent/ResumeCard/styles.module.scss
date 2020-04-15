@@ -7,16 +7,36 @@
   padding: 12px;
 
   .info-container {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 
     .name {
+      font-size: 1.25em;
       line-height: 1.2;
     }
 
     .updated-time {
-      color: $gray-70;
+      color: $gray-50;
       font-size: 0.875em;
       line-height: 1.2;
+    }
+  }
+
+  .action-container {
+    @include user-select(none);
+    align-items: center;
+    display: flex;
+    margin-bottom: 4px;
+
+    .icon {
+      margin-right: 8px;
+    }
+
+    .delete-text {
+      cursor: pointer;
+
+      &:hover {
+        color: $mdc-theme-primary;
+      }
     }
   }
 }

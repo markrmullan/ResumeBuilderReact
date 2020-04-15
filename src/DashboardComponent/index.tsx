@@ -10,7 +10,7 @@ import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
-import { createResume, fetchCurrentUser, fetchResumes } from 'utils/requests';
+import { createResume, deleteResume, fetchCurrentUser, fetchResumes } from 'utils/requests';
 import { ResumeCard } from './ResumeCard';
 
 import styles from './styles.module.scss';
@@ -69,7 +69,7 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
             <Grid container spacing={3}>
               {resumes.map(resume => (
                 <Grid item xs={12} md={6} key={resume.uuid}>
-                  <ResumeCard resume={resume} />
+                  <ResumeCard resume={resume} deleteResume={this.deleteResume} />
                 </Grid>
               ))}
             </Grid>
@@ -108,6 +108,14 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
         pending: false
       });
     }
+  }
+
+  private deleteResume = async (resumeId: Uuid): Promise<void> => {
+    deleteResume(resumeId).then(_ => {
+      this.setState(prevState => ({
+        resumes: prevState.resumes.filter(({ uuid }) => uuid !== resumeId)
+      }));
+    });
   }
 }
 
