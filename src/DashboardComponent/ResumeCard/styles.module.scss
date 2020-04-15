@@ -1,0 +1,22 @@
+@import "styles/common";
+
+.container {
+  align-items: center;
+  display: flex;
+  height: 300px;
+  padding: 12px;
+
+  .info-container {
+    margin-bottom: 8px;
+
+    .name {
+      line-height: 1.2;
+    }
+
+    .updated-time {
+      color: $gray-70;
+      font-size: 0.875em;
+      line-height: 1.2;
+    }
+  }
+}

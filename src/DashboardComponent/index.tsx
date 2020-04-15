@@ -11,6 +11,7 @@ import { Spinner } from 'common/Spinner';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
 import { createResume, fetchCurrentUser, fetchResumes } from 'utils/requests';
+import { ResumeCard } from './ResumeCard';
 
 import styles from './styles.module.scss';
 
@@ -31,7 +32,7 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
 
   public render() {
     const { t } = this.props;
-    const { pending } = this.state;
+    const { pending, resumes = [] as Resume[] } = this.state;
 
     if (pending) {
       return (
@@ -63,6 +64,16 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
           </Grid>
 
           <FullWidthDivider />
+
+          <Grid container className={styles.resumesContainer}>
+            <Grid container spacing={3}>
+              {resumes.map(resume => (
+                <Grid item xs={12} md={6} key={resume.uuid}>
+                  <ResumeCard resume={resume} />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
       </div>
     );
   }

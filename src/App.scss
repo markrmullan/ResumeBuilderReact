@@ -26,6 +26,14 @@
   padding: 0 12px;
 }
 
+.dark-link {
+  color: $gray-90;
+
+  &:hover {
+    color: $mdc-theme-primary;
+  }
+}
+
 // Tiny overrides
 .tox {
   &.tox-tinymce {
@@ -36,4 +44,10 @@
 // resets
 p, h1, h2, h3, h4, h5 {
   margin: 0;
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
 }
