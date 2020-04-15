@@ -31,62 +31,65 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     const { email, error, password } = this.state;
 
     return (
-      <div className={styles.authContainer}>
-        <h1 className={styles.h1}>
-          {t('log_in')}
-        </h1>
+      <form onSubmit={e => this.allFieldsValid && this.submit(e)}>
+        <div className={styles.authContainer}>
+            <h1 className={styles.h1}>
+              {t('log_in')}
+            </h1>
 
-        <TextField
-          label={t('email')}
-          helperText={
-            <HelperText isValidationMessage validation>
-              {error || t('validation.invalid_email')}
-            </HelperText>}
-        >
-          <Input
-            id="email"
-            name="email"
-            pattern={EMAIL_REQUIRED.source}
-            value={email}
-            isValid={error ? false : undefined}
-            onChange={e => this.onChange(e)}/>
-        </TextField>
-
-        <TextField
-          label={t('password')}
-          helperText={
-            <HelperText
-              isValidationMessage
-              validation
+            <TextField
+              label={t('email')}
+              helperText={
+                <HelperText isValidationMessage validation>
+                  {error || t('validation.invalid_email')}
+                </HelperText>}
             >
-              {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
-            </HelperText>}
-        >
-          <Input
-            id="password"
-            minLength={MIN_PASSWORD_LENGTH}
-            name="password"
-            type="password"
-            autoComplete="password"
-            value={password}
-            onChange={e => this.onChange(e)}/>
-        </TextField>
+              <Input
+                id="email"
+                name="email"
+                pattern={EMAIL_REQUIRED.source}
+                value={email}
+                isValid={error ? false : undefined}
+                onChange={e => this.onChange(e)}/>
+            </TextField>
 
-        <AsyncButton
-          className="mdc-button mdc-ripple-upgraded mdc-button--raised"
-          disabled={!this.allFieldsValid}
-          text={t('submit')}
-          pendingText={t('loading_ellipsis')}
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
-        />
+            <TextField
+              label={t('password')}
+              helperText={
+                <HelperText
+                  isValidationMessage
+                  validation
+                >
+                  {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
+                </HelperText>}
+            >
+              <Input
+                id="password"
+                minLength={MIN_PASSWORD_LENGTH}
+                name="password"
+                type="password"
+                autoComplete="password"
+                value={password}
+                onChange={e => this.onChange(e)}/>
+            </TextField>
 
-        <div className={styles.switchAuthMethod}>
-          <span>{t('first_time_here')}</span>
-          <Link to="get-started">
-            {t('sign_up')}
-          </Link>
+            <AsyncButton
+              type="submit"
+              className="mdc-button mdc-ripple-upgraded mdc-button--raised"
+              disabled={!this.allFieldsValid}
+              text={t('submit')}
+              pendingText={t('loading_ellipsis')}
+              onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
+            />
+
+          <div className={styles.switchAuthMethod}>
+            <span>{t('first_time_here')}</span>
+            <Link to="get-started">
+              {t('sign_up')}
+            </Link>
+          </div>
         </div>
-      </div>
+      </form>
     );
   }
 
@@ -102,9 +105,10 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     return EMAIL_REQUIRED.test(email) && password.length >= MIN_PASSWORD_LENGTH;
   }
 
-  private submit = (_: FormEvent<HTMLButtonElement>): void => {
+  private submit = (e: FormEvent<HTMLButtonElement | HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
     this.clearError();
-    this.tryLogin();
+    return this.tryLogin();
   }
 
   private tryLogin = async (): Promise<void> => {
