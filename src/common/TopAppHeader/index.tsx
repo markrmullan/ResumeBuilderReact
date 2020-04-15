@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
-import MaterialIcon from '@material/react-material-icon';
+
 import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
@@ -21,10 +21,6 @@ class TopAppHeaderComponent extends PureComponent<RouteComponentProps & WithName
       <Fragment>
         <TopAppBar
           title={t('app_name')}
-          navigationIcon={<MaterialIcon
-            icon="menu"
-            onClick={() => undefined}
-          />}
           actionItems={this.getActionItems()}
         />
         <TopAppBarFixedAdjust />

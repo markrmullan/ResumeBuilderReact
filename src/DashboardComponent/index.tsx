@@ -3,7 +3,7 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Button, Grid } from '@material-ui/core';
-import MaterialIcon from '@material/react-material-icon';
+import { Add } from '@material-ui/icons';
 import classnames from 'classnames';
 
 import { FullWidthDivider } from 'common/FullWidthDivider';
@@ -54,7 +54,7 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
                 color="primary"
                 variant="contained"
                 className={classnames(styles.createNewButton, styles.headerEl)}
-                startIcon={<MaterialIcon icon="add" />}
+                startIcon={<Add />}
                 onClick={this.createResume}
                 >
                   {t('create_new')}

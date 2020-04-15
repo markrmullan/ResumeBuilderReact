@@ -965,14 +965,6 @@
     classnames "^2.2.5"
     react "^16.4.2"
 
-"@material/react-material-icon@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@material/react-material-icon/-/react-material-icon-0.8.0.tgz#e4200df40cea5ee3131116bd538aad39f48575cf"
-  dependencies:
-    "@material/react-ripple" "^0.8.0"
-    classnames "^2.2.5"
-    react "^16.4.2"
-
 "@material/react-notched-outline@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@material/react-notched-outline/-/react-notched-outline-0.8.0.tgz#83d9ef85b74f416da451f0381b7fc6ab19be9222"

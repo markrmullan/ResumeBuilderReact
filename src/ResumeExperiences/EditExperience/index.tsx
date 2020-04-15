@@ -2,8 +2,8 @@ import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
+import { DeleteOutlined } from '@material-ui/icons';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
-import MaterialIcon from '@material/react-material-icon';
 import classnames from 'classnames';
 import { format } from 'date-fns';
 import throttle from 'lodash.throttle';
@@ -76,9 +76,8 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               </div>
               <div className={styles.deleteIconContainer}>
                 <Tooltip arrow title={t('delete')} placement="top">
-                  <MaterialIcon
+                  <DeleteOutlined
                     className={styles.deleteIcon}
-                    icon="delete_outlined"
                     onClick={this.openDeleteConfirmationModal}
                   />
                 </Tooltip>

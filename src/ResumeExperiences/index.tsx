@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
-import MaterialIcon from '@material/react-material-icon';
+import { Add } from '@material-ui/icons';
 import { Col, Row } from 'react-bootstrap';
 
 import { EditExperience } from 'ResumeExperiences/EditExperience';
@@ -35,7 +35,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
           <Col xs={12} md={6}>
             <Button
               color="primary"
-              startIcon={<MaterialIcon icon="add" />}
+              startIcon={<Add />}
               onClick={createWorkExperience}
               >
                 {t('add_work_experience')}
