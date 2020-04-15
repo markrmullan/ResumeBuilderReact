@@ -68,7 +68,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         />
 
         <Row className={styles.mb16}>
-          <Col xs={12} md={6}>
+          <Col xs={12}>
             <div className={styles.summary}>
               <div>
                 <div className={styles.title}>{position || t('not_specified')}</div>
