@@ -8,10 +8,9 @@ import classnames from 'classnames';
 
 import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner';
-import { get, post } from 'utils/api';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
-import { fetchCurrentUser } from 'utils/requests';
+import { createResume, fetchCurrentUser, fetchResumes } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -80,19 +79,13 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
   private createResume = async (): Promise<void> => {
     const { history, t } = this.props;
 
-    const body = {
-      resume: {
-        name: t('untitled')
-      }
-    };
-
-    const createdResume: Resume = await post({ baseResource: 'resumes' }, body);
+    const createdResume: Resume = await createResume(t('untitled'));
     history.push(`/resumes/${createdResume.uuid}/edit`);
   }
 
   private fetchResumes = async (): Promise<void> => {
     try {
-      const resumes: Resume[] = await get<Resume[]>({ baseResource: 'resumes' });
+      const resumes: Resume[] = await fetchResumes();
 
       this.setState({
         resumes,

@@ -18,6 +18,26 @@ export const fetchResume = (resumeId: Uuid): Promise<Resume> => {
   return get<Resume>(query);
 };
 
+export const fetchResumes = (): Promise<Resume[]> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes'
+  };
+
+  return get<Resume[]>(query);
+};
+
+export const createResume = (name: string): Promise<Resume> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes'
+  };
+
+  const body = {
+    name
+  };
+
+  return post<Resume>(query, body);
+};
+
 export const patchCurrentUser = (user: User): Promise<User> => {
   const query: Partial<ApiQuery> = {
     baseResourceId: user.uuid
