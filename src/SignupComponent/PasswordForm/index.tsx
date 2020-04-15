@@ -76,6 +76,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
 
         <div className={styles.buttonContainer}>
           <Button
+            color="primary"
             variant="outlined"
             onClick={clickPrev}
           >

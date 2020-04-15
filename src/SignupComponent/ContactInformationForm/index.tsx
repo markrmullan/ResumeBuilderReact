@@ -75,6 +75,7 @@ class ContactInformationFormComponent extends PureComponent<TComponentProps> {
           <Button
             onClick={clickPrev}
             variant="outlined"
+            color="primary"
           >
             {t('back')}
           </Button>

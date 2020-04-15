@@ -110,8 +110,8 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
           />
         </div>
 
-        <p className={styles.p}>
-          <span>{t('already_have_account')}</span>
+        <p className={styles.switchAuthMethod}>
+          {t('already_have_account')}
           <Link to="login">
             {t('log_in')}
           </Link>

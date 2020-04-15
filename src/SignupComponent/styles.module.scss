@@ -16,12 +16,12 @@
     margin-bottom: .5rem;
     text-align: center;
   }
+}
 
-  .switch-auth-method {
-    font-size: 0.875em;
-    margin-top: 12px;
-    text-align: center;
-  }
+.switch-auth-method {
+  font-size: 0.875em;
+  margin-top: 12px;
+  text-align: center;
 }
 
 .funnel-stage {
@@ -44,6 +44,7 @@
 
 .p {
   color: $gray-60;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
