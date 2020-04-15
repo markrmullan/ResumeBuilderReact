@@ -32,7 +32,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
           />
         ))}
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12}>
             <Button
               color="primary"
               startIcon={<Add />}

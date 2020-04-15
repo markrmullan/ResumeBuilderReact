@@ -86,7 +86,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={3} className={styles.mb16}>
+          <Col xs={12} md={6} className={styles.mb16}>
             <TextField
               variant="outlined"
               label={t('job_title')}
@@ -99,7 +99,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             />
           </Col>
 
-          <Col xs={12} md={3} className={styles.mb16}>
+          <Col xs={12} md={6} className={styles.mb16}>
             <TextField
               variant="outlined"
               label={t('employer')}
@@ -114,7 +114,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         </Row>
 
         <Row className={styles.spec}>
-          <Col xs={12} md={3} className={classnames(styles.mb16, styles.startDate)}>
+          <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
             <KeyboardDatePicker
               className={styles.datePicker}
               autoOk
@@ -131,7 +131,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             />
           </Col>
 
-          <Col xs={12} md={3}>
+          <Col xs={12} md={6}>
             {doesCurrentlyWorkHere ?
               <TextField
                 variant="outlined"
@@ -176,7 +176,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         </Row>
 
         <Row>
-          <Col xs={12} md={6} className={styles.mb16}>
+          <Col xs={12} className={styles.mb16}>
             <RichTextEditor
               label={t('description')}
               onEditorChange={(e: string) => {

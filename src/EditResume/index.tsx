@@ -37,103 +37,109 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     const { experiences = [], jobTitle = '' } = resume;
 
     return (
-      <Container fluid className={styles.outerContainer}>
+      <Container fluid>
         <Row>
-          <Col md={6} className={styles.mb16}>
-            <h3>{t('personal_information')}</h3>
+          <Col xs={12} md={6}>
+            <Container fluid className={styles.outerContainer}>
+              <Row>
+                <Col xs={12} className={styles.mb16}>
+                  <h3>{t('personal_information')}</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} className={styles.mb16}>
+                  <TextField
+                    variant="outlined"
+                    label={t('job_title')}
+                    fullWidth
+                    placeholder={t('eg_teacher')}
+                    name="jobTitle"
+                    value={jobTitle}
+                    onChange={this.onChange}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="outlined"
+                    label={t('first_name')}
+                    fullWidth
+                    InputLabelProps={{ shrink: !!firstName }}
+                    name="firstName"
+                    value={firstName}
+                    onChange={this.onUserChange}
+                    onBlur={this.patchCurrentUser}
+                  />
+                </Col>
+
+                <Col xs={12} md={6} className={styles.mb16} >
+                  <TextField
+                    variant="outlined"
+                    label={t('last_name')}
+                    fullWidth
+                    InputLabelProps={{ shrink: !!lastName }}
+                    name="lastName"
+                    value={lastName}
+                    onChange={this.onUserChange}
+                    onBlur={this.patchCurrentUser}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12} md={6} className={styles.mb16}>
+                  {/* FIXME figure out how to persist email on change? or make this field RO?
+                    the email is used for sign-in so you'd need to check for uniqueness. Or,
+                    need to make the email field that appears on resumes different than the email
+                    used for your user account */}
+                  <TextField
+                    variant="outlined"
+                    label={t('email')}
+                    fullWidth
+                    InputLabelProps={{ shrink: !!email }}
+                    name="email"
+                    value={email}
+                    onChange={this.onUserChange}
+                  />
+                </Col>
+
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="outlined"
+                    label={t('phone')}
+                    fullWidth
+                    InputLabelProps={{ shrink: !!phoneNumber }}
+                    name="phoneNumber"
+                    value={phoneNumber}
+                    inputMode="tel"
+                    onChange={this.onUserChange}
+                    onBlur={this.patchCurrentUser}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12}>
+                  <h3>{t('professional_experience')}</h3>
+                </Col>
+              </Row>
+              <Row className={styles.mb16}>
+                <Col xs={12}>
+                  <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
+                </Col>
+              </Row>
+
+              <ResumeExperiences
+                createWorkExperience={this.createWorkExperience}
+                deleteWorkExperience={this.deleteWorkExperience}
+                experiences={experiences}
+                resumeId={resumeId}
+              />
+            </Container>
           </Col>
         </Row>
-        <Row>
-          <Col xs={12} md={6} className={styles.mb16}>
-            <TextField
-              variant="outlined"
-              label={t('job_title')}
-              fullWidth
-              placeholder={t('eg_teacher')}
-              name="jobTitle"
-              value={jobTitle}
-              onChange={this.onChange}
-            />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12} md={3} className={styles.mb16}>
-            <TextField
-              variant="outlined"
-              label={t('first_name')}
-              fullWidth
-              InputLabelProps={{ shrink: !!firstName }}
-              name="firstName"
-              value={firstName}
-              onChange={this.onUserChange}
-              onBlur={this.patchCurrentUser}
-            />
-          </Col>
-
-          <Col xs={12} md={3} className={styles.mb16} >
-            <TextField
-              variant="outlined"
-              label={t('last_name')}
-              fullWidth
-              InputLabelProps={{ shrink: !!lastName }}
-              name="lastName"
-              value={lastName}
-              onChange={this.onUserChange}
-              onBlur={this.patchCurrentUser}
-            />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12} md={3} className={styles.mb16}>
-            {/* FIXME figure out how to persist email on change? or make this field RO?
-              the email is used for sign-in so you'd need to check for uniqueness. Or,
-              need to make the email field that appears on resumes different than the email
-              used for your user account */}
-            <TextField
-              variant="outlined"
-              label={t('email')}
-              fullWidth
-              InputLabelProps={{ shrink: !!email }}
-              name="email"
-              value={email}
-              onChange={this.onUserChange}
-            />
-          </Col>
-
-          <Col xs={12} md={3} className={styles.mb16}>
-            <TextField
-              variant="outlined"
-              label={t('phone')}
-              fullWidth
-              InputLabelProps={{ shrink: !!phoneNumber }}
-              name="phoneNumber"
-              value={phoneNumber}
-              inputMode="tel"
-              onChange={this.onUserChange}
-              onBlur={this.patchCurrentUser}
-            />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col md={6}>
-            <h3>{t('professional_experience')}</h3>
-          </Col>
-        </Row>
-        <Row className={styles.mb16}>
-          <Col md={6}>
-            <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
-          </Col>
-        </Row>
-
-        <ResumeExperiences
-          createWorkExperience={this.createWorkExperience}
-          deleteWorkExperience={this.deleteWorkExperience}
-          experiences={experiences}
-          resumeId={resumeId}
-        />
       </Container>
     );
   }
