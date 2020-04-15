@@ -5,8 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import { deepPurple } from '@material-ui/core/colors';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
@@ -14,18 +13,13 @@ import { LoginComponent } from 'LoginComponent';
 import { SignupComponent } from 'SignupComponent';
 import { TopAppHeader } from 'common/TopAppHeader';
 
+import { theme } from 'styles/theme';
 import { ROUTES } from 'utils/constants';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
 import { fetchCurrentUser, patchCurrentUser } from 'utils/requests';
 
 import './App.scss';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: deepPurple
-  }
-});
 
 type AppState = {
   currentUser: User;

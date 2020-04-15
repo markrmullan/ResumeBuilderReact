@@ -1,14 +1,9 @@
 @import "styles/common";
 
 .outer-container {
-  @media (min-width: $md-screen-min) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  @media (min-width: $lg-screen-min) {
-    padding-left: 30px;
-    padding-right: 30px;
+  .section-header {
+    font-size: 1.375em;
+    font-weight: $bolder;
   }
 
   .mb16 {

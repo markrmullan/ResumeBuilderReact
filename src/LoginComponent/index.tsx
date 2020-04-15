@@ -108,6 +108,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
   private submit = (e: FormEvent<HTMLButtonElement | HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     this.clearError();
+
     return this.tryLogin();
   }
 

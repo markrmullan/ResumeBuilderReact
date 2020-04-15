@@ -4,23 +4,25 @@
   margin-bottom: 16px;
 }
 
+.delete-icon-container {
+  cursor: pointer;
+  margin-right: 8px;
+
+  .delete-icon {
+    color: $gray-60;
+  }
+}
+
 .summary {
   align-items: center;
   display: flex;
   font-size: 0.875em;
   line-height: 1.2;
-  justify-content: space-between;
+  margin-bottom: 16px;
+  margin-top: 16px;
 
   .title {
     font-weight: $bolder;
-  }
-
-  .delete-icon-container {
-    cursor: pointer;
-
-    .delete-icon {
-      color: $gray-60;
-    }
   }
 }
 

@@ -43,13 +43,13 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
             <Container fluid className={styles.outerContainer}>
               <Row>
                 <Col xs={12} className={styles.mb16}>
-                  <h3>{t('personal_information')}</h3>
+                  <h3 className={styles.sectionHeader}>{t('personal_information')}</h3>
                 </Col>
               </Row>
               <Row>
                 <Col xs={12} className={styles.mb16}>
                   <TextField
-                    variant="outlined"
+                    variant="filled"
                     label={t('job_title')}
                     fullWidth
                     placeholder={t('eg_teacher')}
@@ -63,10 +63,9 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="outlined"
+                    variant="filled"
                     label={t('first_name')}
                     fullWidth
-                    InputLabelProps={{ shrink: !!firstName }}
                     name="firstName"
                     value={firstName}
                     onChange={this.onUserChange}
@@ -76,10 +75,9 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
                 <Col xs={12} md={6} className={styles.mb16} >
                   <TextField
-                    variant="outlined"
+                    variant="filled"
                     label={t('last_name')}
                     fullWidth
-                    InputLabelProps={{ shrink: !!lastName }}
                     name="lastName"
                     value={lastName}
                     onChange={this.onUserChange}
@@ -95,7 +93,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                     need to make the email field that appears on resumes different than the email
                     used for your user account */}
                   <TextField
-                    variant="outlined"
+                    variant="filled"
                     label={t('email')}
                     fullWidth
                     InputLabelProps={{ shrink: !!email }}
@@ -107,7 +105,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="outlined"
+                    variant="filled"
                     label={t('phone')}
                     fullWidth
                     InputLabelProps={{ shrink: !!phoneNumber }}
@@ -122,7 +120,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
               <Row>
                 <Col xs={12}>
-                  <h3>{t('professional_experience')}</h3>
+                  <h3 className={styles.sectionHeader}>{t('professional_experience')}</h3>
                 </Col>
               </Row>
               <Row className={styles.mb16}>

@@ -48,6 +48,7 @@
   "personal_information": "Personal Information",
   "phone": "Phone",
   "phone_number": "Phone Number",
+  "position_at_company": "{{position}} at {{company}}",
   "prefill_your_resume_with_social_profile": "Prefill your resume with info from your social profile",
   "present": "Present",
   "professional_experience": "Professional Experience",

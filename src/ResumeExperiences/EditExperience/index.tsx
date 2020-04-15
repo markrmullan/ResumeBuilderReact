@@ -1,8 +1,8 @@
-import React, { ChangeEvent, Fragment, PureComponent } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
-import { DeleteOutlined } from '@material-ui/icons';
+import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
+import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
 import classnames from 'classnames';
 import { format } from 'date-fns';
@@ -67,128 +67,144 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           open={isDeleteConfirmationModalOpen}
         />
 
-        <Row className={styles.mb16}>
-          <Col xs={12}>
-            <div className={styles.summary}>
-              <div>
-                <div className={styles.title}>{position || t('not_specified')}</div>
-                <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
-              </div>
-              <div className={styles.deleteIconContainer}>
-                <Tooltip arrow title={t('delete')} placement="top">
-                  <DeleteOutlined
-                    className={styles.deleteIcon}
-                    onClick={this.openDeleteConfirmationModal}
-                  />
-                </Tooltip>
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={6} className={styles.mb16}>
-            <TextField
-              variant="outlined"
-              label={t('job_title')}
-              fullWidth
-              InputLabelProps={{ shrink: !!position }}
-              name="position"
-              value={position}
-              onChange={this.onWorkExperienceChange}
-              onBlur={this.patchWorkExperience}
-            />
-          </Col>
+        <ExpansionPanel className={styles.mb16}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMore />}
+          >
+            <Row>
+              <Col xs={12}>
+                <div className={styles.summary}>
+                  <div className={styles.deleteIconContainer}>
+                    <Tooltip arrow title={t('delete')} placement="top">
+                      <DeleteOutlined
+                        className={styles.deleteIcon}
+                        onClick={this.openDeleteConfirmationModal}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div>
+                    <div className={styles.title}>{this.getFullTitle()}</div>
+                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </ExpansionPanelSummary>
 
-          <Col xs={12} md={6} className={styles.mb16}>
-            <TextField
-              variant="outlined"
-              label={t('employer')}
-              fullWidth
-              InputLabelProps={{ shrink: !!company }}
-              name="company"
-              value={company}
-              onChange={this.onWorkExperienceChange}
-              onBlur={this.patchWorkExperience}
-            />
-          </Col>
-        </Row>
-
-        <Row className={styles.spec}>
-          <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
-            <KeyboardDatePicker
-              className={styles.datePicker}
-              autoOk
-              disableToolbar
-              disableFuture
-              inputVariant="outlined"
-              variant="inline"
-              label={t('start_date')}
-              format={DATE_PICKER_FORMAT}
-              openTo="year"
-              views={DATE_PICKER_VIEWS}
-              value={startDate}
-              onChange={this.onWorkExperienceStartDateChange}
-            />
-          </Col>
-
-          <Col xs={12} md={6}>
-            {doesCurrentlyWorkHere ?
+          <Row>
+            <Col xs={12} md={6} className={styles.mb16}>
               <TextField
-                variant="outlined"
-                label={t('end_date')}
+                variant="filled"
+                label={t('job_title')}
                 fullWidth
-                InputProps={{
-                  readOnly: true
-                }}
-                value={t('present')}
-              /> :
+                name="position"
+                value={position}
+                onChange={this.onWorkExperienceChange}
+                onBlur={this.patchWorkExperience}
+              />
+            </Col>
+
+            <Col xs={12} md={6} className={styles.mb16}>
+              <TextField
+                variant="filled"
+                label={t('employer')}
+                fullWidth
+                name="company"
+                value={company}
+                onChange={this.onWorkExperienceChange}
+                onBlur={this.patchWorkExperience}
+              />
+            </Col>
+          </Row>
+
+          <Row className={styles.spec}>
+            <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
               <KeyboardDatePicker
                 className={styles.datePicker}
                 autoOk
                 disableToolbar
-                inputVariant="outlined"
+                disableFuture
+                inputVariant="filled"
                 variant="inline"
-                label={t('end_date')}
+                label={t('start_date')}
                 format={DATE_PICKER_FORMAT}
                 openTo="year"
                 views={DATE_PICKER_VIEWS}
-                minDate={startDate}
-                value={endDate}
-                onChange={this.onWorkExperienceEndDateChange}
+                value={startDate}
+                onChange={this.onWorkExperienceStartDateChange}
               />
-            }
+            </Col>
 
-            <FormControlLabel
-              classes={{
-                label: styles.currentlyWorkHere,
-                root: styles.currentlyWorkHereRoot
-              }}
-              control={
-                <Switch
-                  checked={doesCurrentlyWorkHere}
-                  onChange={this.toggleDoesCurrentlyWorkHere}
-                  color="primary"
+            <Col xs={12} md={6}>
+              {doesCurrentlyWorkHere ?
+                <TextField
+                  variant="filled"
+                  label={t('end_date')}
+                  fullWidth
+                  InputProps={{
+                    readOnly: true
+                  }}
+                  value={t('present')}
+                /> :
+                <KeyboardDatePicker
+                  className={styles.datePicker}
+                  autoOk
+                  disableToolbar
+                  inputVariant="filled"
+                  variant="inline"
+                  label={t('end_date')}
+                  format={DATE_PICKER_FORMAT}
+                  openTo="year"
+                  views={DATE_PICKER_VIEWS}
+                  minDate={startDate}
+                  value={endDate}
+                  onChange={this.onWorkExperienceEndDateChange}
                 />
               }
-              label={t('currently_work_here')}
-            />
-          </Col>
-        </Row>
 
-        <Row>
-          <Col xs={12} className={styles.mb16}>
-            <RichTextEditor
-              label={t('description')}
-              onEditorChange={(e: string) => {
-                this.updateWorkExperienceState('description', e);
-                this.throttledPatchWorkExperienceDescription();
-              }}
-              value={description}
-            />
-          </Col>
-        </Row>
+              <FormControlLabel
+                classes={{
+                  label: styles.currentlyWorkHere,
+                  root: styles.currentlyWorkHereRoot
+                }}
+                control={
+                  <Switch
+                    checked={doesCurrentlyWorkHere}
+                    onChange={this.toggleDoesCurrentlyWorkHere}
+                    color="primary"
+                  />
+                }
+                label={t('currently_work_here')}
+              />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={12} className={styles.mb16}>
+              <RichTextEditor
+                label={t('description')}
+                onEditorChange={(e: string) => {
+                  this.updateWorkExperienceState('description', e);
+                  this.throttledPatchWorkExperienceDescription();
+                }}
+                value={description}
+              />
+            </Col>
+          </Row>
+        </ExpansionPanel>
       </Fragment>
     );
+  }
+
+  private getFullTitle = (): string => {
+    const { t } = this.props;
+    const { company = '', position = '' } = this.state.experience;
+
+    if (company && position) {
+      return t('position_at_company', { position, company });
+    }
+
+    return position || company || t('not_specified');
   }
 
   private toggleDoesCurrentlyWorkHere = (): void => {
@@ -261,7 +277,9 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
     });
   }
 
-  private openDeleteConfirmationModal = (): void => {
+  private openDeleteConfirmationModal = (e: MouseEvent): void => {
+    e.preventDefault();
+    e.stopPropagation();
     this.setState({ isDeleteConfirmationModalOpen: true });
   }
 
