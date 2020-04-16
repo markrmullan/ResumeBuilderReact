@@ -41,3 +41,11 @@
     border-radius: 8px;
   }
 }
+
+.gpa-container {
+  margin-bottom: 16px;
+
+  @media (min-width: $md-screen-min) {
+    margin-bottom: 0;
+  }
+}

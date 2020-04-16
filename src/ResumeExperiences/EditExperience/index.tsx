@@ -4,7 +4,6 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePicker, DatePickerView } from '@material-ui/pickers';
-import classnames from 'classnames';
 import { format } from 'date-fns';
 import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
@@ -118,7 +117,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           </Row>
 
           <Row className={styles.spec}>
-            <Col xs={6} md={3} className={classnames(styles.startDate)}>
+            <Col xs={6} md={3} className={styles.startDate}>
               <DatePicker
                 className={styles.datePicker}
                 autoOk
@@ -138,6 +137,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             <Col xs={6} md={3}>
               {doesCurrentlyWorkHere ?
                 <TextField
+                  disabled
                   variant="filled"
                   label={t('end_date')}
                   fullWidth
@@ -176,7 +176,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               />
             </Col>
 
-            <Col xs={{ span: 12, offset: 6, order: 3 }} md={{ offset: 0, order: 4 }} className={styles.toggleCurrentlyWorkHere}>
+            <Col xs={{ span: 12, offset: 6, order: 3 }} md={{ offset: 0, order: 4 }}>
               <FormControlLabel
                 control={
                   <Switch

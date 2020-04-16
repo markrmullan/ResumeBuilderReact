@@ -31,7 +31,7 @@ export interface Experience extends BaseModel {
 export interface Education extends BaseModel {
   degree: string;
   description: string;
-  location: string;
+  gpa: string;
   school: string;
   startDate: string;
   endDate: Maybe<string>;

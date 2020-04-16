@@ -4,7 +4,6 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePicker, DatePickerView } from '@material-ui/pickers';
-import classnames from 'classnames';
 import { format } from 'date-fns';
 import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
@@ -14,8 +13,8 @@ import { RichTextEditor } from 'common/RichTextEditor';
 import { Education } from 'utils/models';
 import { patchEducation } from 'utils/requests';
 
-const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
-const DATE_PICKER_FORMAT = 'MMM yyyy';
+const DATE_PICKER_VIEWS: DatePickerView[] = ['year'];
+const DATE_PICKER_FORMAT = 'yyyy';
 
 import styles from './styles.module.scss';
 
@@ -53,7 +52,7 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
     const now = new Date();
     const { t } = this.props;
     const { doesCurrentlyAttend, education, isDeleteConfirmationModalOpen } = this.state;
-    const { degree = '', description = '', endDate = now, school = '', startDate = now } = education;
+    const { degree = '', description = '', endDate = now, gpa = '', school = '', startDate = now } = education;
 
     return (
       <Fragment>
@@ -119,7 +118,7 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
           </Row>
 
           <Row className={styles.spec}>
-            <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
+            <Col xs={6} md={3} className={styles.startDate}>
               <DatePicker
                 className={styles.datePicker}
                 autoOk
@@ -136,9 +135,10 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
               />
             </Col>
 
-            <Col xs={12} md={6}>
+            <Col xs={6} md={3}>
               {doesCurrentlyAttend ?
                 <TextField
+                  disabled
                   variant="filled"
                   label={t('end_date')}
                   fullWidth
@@ -162,7 +162,21 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
                   onChange={this.onEducationEndDateChange}
                 />
               }
+            </Col>
 
+            <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.gpaContainer}>
+              <TextField
+                variant="filled"
+                label={t('gpa')}
+                fullWidth
+                name="gpa"
+                value={gpa}
+                onChange={this.onEducationChange}
+                onBlur={this.patchEducation}
+              />
+            </Col>
+
+            <Col xs={{ span: 12, offset: 6, order: 3 }} md={{ offset: 0, order: 4 }}>
               <FormControlLabel
                 control={
                   <Switch
