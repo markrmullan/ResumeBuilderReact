@@ -167,6 +167,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               <TextField
                 variant="filled"
                 label={t('location')}
+                placeholder={t('location_placeholder')}
                 fullWidth
                 name="location"
                 value={location}
