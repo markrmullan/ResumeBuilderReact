@@ -3,7 +3,7 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
-import { DatePickerView, KeyboardDatePicker } from '@material-ui/pickers';
+import { DatePicker, DatePickerView } from '@material-ui/pickers';
 import classnames from 'classnames';
 import { format } from 'date-fns';
 import throttle from 'lodash.throttle';
@@ -119,7 +119,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
 
           <Row className={styles.spec}>
             <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
-              <KeyboardDatePicker
+              <DatePicker
                 className={styles.datePicker}
                 autoOk
                 disableToolbar
@@ -146,7 +146,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                   }}
                   value={t('present')}
                 /> :
-                <KeyboardDatePicker
+                <DatePicker
                   className={styles.datePicker}
                   autoOk
                   disableToolbar
