@@ -3,6 +3,8 @@ import React, { Fragment, SFC } from 'react';
 import { InputLabel } from '@material-ui/core';
 import { Editor } from '@tinymce/tinymce-react';
 
+import styles from './styles.module.scss';
+
 type TComponentProps = {
   label?: string;
   onEditorChange?: (e: string) => void; // on change
@@ -18,7 +20,7 @@ const TOOLBAR: string = 'undo redo | bold italic underline | bullist numlist';
 export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorChange, value }) => (
   <Fragment>
     {label &&
-      <InputLabel color="primary">
+      <InputLabel color="primary" className={styles.label}>
         {label}
       </InputLabel>
     }
