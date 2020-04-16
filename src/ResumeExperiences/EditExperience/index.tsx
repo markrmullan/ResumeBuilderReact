@@ -53,7 +53,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
     const now = new Date();
     const { t } = this.props;
     const { doesCurrentlyWorkHere, experience, isDeleteConfirmationModalOpen } = this.state;
-    const { company = '', description = '', endDate = now, position = '', startDate = now } = experience;
+    const { company = '', description = '', endDate = now, location = '', position = '', startDate = now } = experience;
 
     return (
       <Fragment>
@@ -118,7 +118,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
           </Row>
 
           <Row className={styles.spec}>
-            <Col xs={12} md={6} className={classnames(styles.mb16, styles.startDate)}>
+            <Col xs={6} md={3} className={classnames(styles.startDate)}>
               <DatePicker
                 className={styles.datePicker}
                 autoOk
@@ -135,7 +135,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               />
             </Col>
 
-            <Col xs={12} md={6}>
+            <Col xs={6} md={3}>
               {doesCurrentlyWorkHere ?
                 <TextField
                   variant="filled"
@@ -161,12 +161,22 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                   onChange={this.onWorkExperienceEndDateChange}
                 />
               }
+            </Col>
 
+            <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.locationContainer}>
+              <TextField
+                variant="filled"
+                label={t('location')}
+                fullWidth
+                name="location"
+                value={location}
+                onChange={this.onWorkExperienceChange}
+                onBlur={this.patchWorkExperience}
+              />
+            </Col>
+
+            <Col xs={{ span: 12, offset: 6, order: 3 }} md={{ offset: 0, order: 4 }} className={styles.toggleCurrentlyWorkHere}>
               <FormControlLabel
-                classes={{
-                  label: styles.currentlyWorkHere,
-                  root: styles.currentlyWorkHereRoot
-                }}
                 control={
                   <Switch
                     checked={doesCurrentlyWorkHere}

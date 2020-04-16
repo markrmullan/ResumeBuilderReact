@@ -40,7 +40,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     return (
       <Container fluid>
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6}>
             <Container fluid className={styles.outerContainer}>
               <Row>
                 <Col xs={12} className={styles.mb16}>

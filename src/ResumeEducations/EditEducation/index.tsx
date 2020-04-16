@@ -164,10 +164,6 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
               }
 
               <FormControlLabel
-                classes={{
-                  label: styles.currentlyWorkHere,
-                  root: styles.currentlyWorkHereRoot
-                }}
                 control={
                   <Switch
                     checked={doesCurrentlyAttend}
