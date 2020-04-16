@@ -8,6 +8,8 @@ import { Col, Row } from 'react-bootstrap';
 import { EditExperience } from 'ResumeExperiences/EditExperience';
 import { Experience } from 'utils/models';
 
+import styles from './styles.module.scss';
+
 type TOwnProps = {
   createWorkExperience: () => void;
   deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
@@ -31,7 +33,7 @@ class ResumeExperiencesComponent extends PureComponent<TComponentProps> {
             resumeId={resumeId}
           />
         ))}
-        <Row>
+        <Row className={styles.mb16}>
           <Col xs={12}>
             <Button
               color="primary"

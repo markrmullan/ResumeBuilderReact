@@ -1,0 +1,52 @@
+@import "styles/common";
+
+.mb16 {
+  margin-bottom: 16px;
+}
+
+.delete-icon-container {
+  cursor: pointer;
+  margin-right: 8px;
+
+  .delete-icon {
+    color: $gray-60;
+  }
+}
+
+.summary {
+  align-items: center;
+  display: flex;
+  font-size: 0.875em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  margin-top: 16px;
+
+  .title {
+    font-weight: $bolder;
+  }
+}
+
+.date-picker {
+  width: 100%;
+}
+
+.spec {
+  .currently-work-here {
+    color: $gray-80;
+    font-size: 0.875em;
+
+    &-root {
+      margin-bottom: 0;
+    }
+  }
+
+  .start-date {
+    @media (min-width: $md-screen-min) {
+      margin-bottom: 0;
+    }
+  }
+
+  .editor {
+    border-radius: 8px;
+  }
+}

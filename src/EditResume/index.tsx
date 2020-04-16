@@ -5,10 +5,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { ResumeEducations } from 'ResumeEducations';
 import { ResumeExperiences } from 'ResumeExperiences';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
-import { createWorkExperience, deleteWorkExperience, fetchResume } from 'utils/requests';
+import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -34,7 +35,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     const { user } = this.context;
     const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
     const { resume } = this.state;
-    const { experiences = [], jobTitle = '' } = resume;
+    const { educations = [], experiences = [], jobTitle = '' } = resume;
 
     return (
       <Container fluid>
@@ -135,6 +136,24 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                 experiences={experiences}
                 resumeId={resumeId}
               />
+
+              <Row>
+                <Col xs={12}>
+                  <h3 className={styles.sectionHeader}>{t('education')}</h3>
+                </Col>
+              </Row>
+              <Row className={styles.mb16}>
+                <Col xs={12}>
+                  <p className={styles.supportingInfo}>{t('education_supporting_info')}</p>
+                </Col>
+              </Row>
+
+              <ResumeEducations
+                createEducation={this.createEducation}
+                deleteEducation={this.deleteEducation}
+                educations={educations}
+                resumeId={resumeId}
+              />
             </Container>
           </Col>
         </Row>
@@ -181,6 +200,30 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
       resume: {
         ...resume,
         experiences: [...(resume.experiences || []).filter(exp => exp.uuid !== experienceId)]
+      }
+    }));
+  }
+
+  private createEducation = async () => {
+    const { rId: resumeId } = this.props.match.params;
+
+    const education = await createEducation(resumeId);
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        educations: [...(resume.educations || []), education]
+      }
+    }));
+  }
+
+  private deleteEducation = async (educationId: Uuid): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    await deleteEducation(resumeId, educationId);
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        educations: [...(resume.educations || []).filter(exp => exp.uuid !== educationId)]
       }
     }));
   }

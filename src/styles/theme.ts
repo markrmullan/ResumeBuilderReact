@@ -16,6 +16,13 @@ export const theme = createMuiTheme({
         }
       }
     },
+    MuiExpansionPanel: {
+      root: {
+        '&&:before': {
+          backgroundColor: 'transparent'
+        }
+      }
+    },
     MuiExpansionPanelSummary: {
       root: {
         padding: '0 16px'

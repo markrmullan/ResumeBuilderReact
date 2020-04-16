@@ -1,5 +1,5 @@
 import { ApiQuery, destroy, get, patch, post } from './api';
-import { Experience, Resume, User } from './models';
+import { Education, Experience, Resume, User } from './models';
 
 export const logOut = (): Promise<void> => {
   return destroy<void>('users/sign_out');
@@ -82,6 +82,38 @@ export const deleteWorkExperience = (resumeId: Uuid, experienceId: Uuid): Promis
     baseResourceId: resumeId,
     nestedResources: ['experiences'],
     nestedResourceIds: [experienceId]
+  };
+
+  return destroy<void>(query);
+};
+
+export const createEducation = (resumeId: Uuid, education: Partial<Education> = {}): Promise<Education> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId,
+    nestedResources: ['educations']
+  };
+
+  return post<Education>(query, education);
+};
+
+export const patchEducation = (resumeId: Uuid, education: Partial<Education> = {}): Promise<Education> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId,
+    nestedResources: ['educations'],
+    nestedResourceIds: [education.uuid!]
+  };
+
+  return patch<Education>(query, education);
+};
+
+export const deleteEducation = (resumeId: Uuid, educationId: Uuid): Promise<void> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'resumes',
+    baseResourceId: resumeId,
+    nestedResources: ['educations'],
+    nestedResourceIds: [educationId]
   };
 
   return destroy<void>(query);

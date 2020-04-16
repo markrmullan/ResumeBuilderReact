@@ -11,8 +11,8 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
-import { Experience } from 'utils/models';
-import { patchWorkExperience } from 'utils/requests';
+import { Education } from 'utils/models';
+import { patchEducation } from 'utils/requests';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
 const DATE_PICKER_FORMAT = 'MMM yyyy';
@@ -20,47 +20,47 @@ const DATE_PICKER_FORMAT = 'MMM yyyy';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
-  experience: Experience;
-  deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
+  education: Education;
+  deleteEducation: (educationId: Uuid) => Promise<void>;
   resumeId: Uuid;
 };
 
 type TComponentState = {
-  doesCurrentlyWorkHere: boolean;
-  experience: Experience;
+  doesCurrentlyAttend: boolean;
+  education: Education;
   isDeleteConfirmationModalOpen: boolean;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
-  private throttledPatchWorkExperienceDescription: Function;
+class EditEducationComponent extends PureComponent<TComponentProps, TComponentState> {
+  private throttledPatchEducationDescription: Function;
 
   public constructor(props: TComponentProps) {
     super(props);
-    const { experience } = this.props;
-    const { endDate, startDate } = experience;
+    const { education } = this.props;
+    const { endDate, startDate } = education;
 
     this.state = {
-      doesCurrentlyWorkHere: !!startDate && !endDate,
-      experience,
+      doesCurrentlyAttend: !!startDate && !endDate,
+      education,
       isDeleteConfirmationModalOpen: false
     };
-    this.throttledPatchWorkExperienceDescription = throttle(this.patchWorkExperienceDescription, 2000);
+    this.throttledPatchEducationDescription = throttle(this.patchEducationDescription, 2000);
   }
 
   public render() {
     const now = new Date();
     const { t } = this.props;
-    const { doesCurrentlyWorkHere, experience, isDeleteConfirmationModalOpen } = this.state;
-    const { company = '', description = '', endDate = now, position = '', startDate = now } = experience;
+    const { doesCurrentlyAttend, education, isDeleteConfirmationModalOpen } = this.state;
+    const { degree = '', description = '', endDate = now, school = '', startDate = now } = education;
 
     return (
       <Fragment>
         <ConfirmationDialog
           title={t('delete_entry')}
           description={t('are_you_sure_you_want_to_delete_this_entry')}
-          secondaryButtonAction={this.deleteWorkExperience}
+          secondaryButtonAction={this.deleteEducation}
           secondaryButtonText={t('delete')}
           primaryButtonAction={this.closeDeleteConfirmationModal}
           primaryButtonText={t('cancel')}
@@ -69,6 +69,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
 
         <ExpansionPanel className={styles.mb16} elevation={0} variant="outlined">
           <ExpansionPanelSummary
+
             expandIcon={<ExpandMore />}
           >
             <Row>
@@ -84,7 +85,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                   </div>
                   <div>
                     <div className={styles.title}>{this.getFullTitle()}</div>
-                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
+                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
                   </div>
                 </div>
               </Col>
@@ -95,24 +96,24 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
                 variant="filled"
-                label={t('job_title')}
+                label={t('school')}
                 fullWidth
-                name="position"
-                value={position}
-                onChange={this.onWorkExperienceChange}
-                onBlur={this.patchWorkExperience}
+                name="school"
+                value={school}
+                onChange={this.onEducationChange}
+                onBlur={this.patchEducation}
               />
             </Col>
 
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
                 variant="filled"
-                label={t('employer')}
+                label={t('degree')}
                 fullWidth
-                name="company"
-                value={company}
-                onChange={this.onWorkExperienceChange}
-                onBlur={this.patchWorkExperience}
+                name="degree"
+                value={degree}
+                onChange={this.onEducationChange}
+                onBlur={this.patchEducation}
               />
             </Col>
           </Row>
@@ -131,12 +132,12 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 openTo="year"
                 views={DATE_PICKER_VIEWS}
                 value={startDate}
-                onChange={this.onWorkExperienceStartDateChange}
+                onChange={this.onEducationStartDateChange}
               />
             </Col>
 
             <Col xs={12} md={6}>
-              {doesCurrentlyWorkHere ?
+              {doesCurrentlyAttend ?
                 <TextField
                   variant="filled"
                   label={t('end_date')}
@@ -158,7 +159,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                   views={DATE_PICKER_VIEWS}
                   minDate={startDate}
                   value={endDate}
-                  onChange={this.onWorkExperienceEndDateChange}
+                  onChange={this.onEducationEndDateChange}
                 />
               }
 
@@ -169,12 +170,12 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 }}
                 control={
                   <Switch
-                    checked={doesCurrentlyWorkHere}
+                    checked={doesCurrentlyAttend}
                     onChange={this.toggleDoesCurrentlyWorkHere}
                     color="primary"
                   />
                 }
-                label={t('currently_work_here')}
+                label={t('currently_attending')}
               />
             </Col>
           </Row>
@@ -184,8 +185,8 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               <RichTextEditor
                 label={t('description')}
                 onEditorChange={(e: string) => {
-                  this.updateWorkExperienceState('description', e);
-                  this.throttledPatchWorkExperienceDescription();
+                  this.updateEducationState('description', e);
+                  this.throttledPatchEducationDescription();
                 }}
                 value={description}
               />
@@ -198,84 +199,84 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
 
   private getFullTitle = (): string => {
     const { t } = this.props;
-    const { company = '', position = '' } = this.state.experience;
+    const { school = '', degree = '' } = this.state.education;
 
-    if (company && position) {
+    if (school && degree) {
       return t('role_at_place', {
-        role: position,
-        place: company
+        role: degree,
+        place: school
       });
     }
 
-    return position || company || t('not_specified');
+    return degree || school || t('not_specified');
   }
 
   private toggleDoesCurrentlyWorkHere = (): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+    const { education: { uuid: educationUuid }, resumeId } = this.props;
 
     this.setState(prevState => ({
-      doesCurrentlyWorkHere: !prevState.doesCurrentlyWorkHere,
-      experience: {
-        ...prevState.experience,
-        endDate: prevState.doesCurrentlyWorkHere ? new Date() : undefined
+      doesCurrentlyAttend: !prevState.doesCurrentlyAttend,
+      education: {
+        ...prevState.education,
+        endDate: prevState.doesCurrentlyAttend ? new Date() : undefined
       }
     } as TComponentState), () => {
-      patchWorkExperience(resumeId, {
-        uuid: experienceUuid,
-        endDate: (this.state.experience.endDate || null) as string
+      patchEducation(resumeId, {
+        uuid: educationUuid,
+        endDate: (this.state.education.endDate || null) as string
       });
     });
   }
 
-  private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  private onEducationChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.updateWorkExperienceState(name, value);
+    this.updateEducationState(name, value);
   }
 
-  private onWorkExperienceStartDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('startDate', val);
+  private onEducationStartDateChange = (val: unknown): void => {
+    this.onEducationDateChange('startDate', val);
   }
 
-  private onWorkExperienceEndDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('endDate', val);
+  private onEducationEndDateChange = (val: unknown): void => {
+    this.onEducationDateChange('endDate', val);
   }
 
-  private updateWorkExperienceState = (name: string, value: string | Date): void => {
-    this.setState(({ experience }) => ({
-      experience: {
-        ...experience,
+  private updateEducationState = (name: string, value: string | Date): void => {
+    this.setState(({ education }) => ({
+      education: {
+        ...education,
         [name]: value
       }
     } as TComponentState));
   }
 
-  private onWorkExperienceDateChange = (key: string, val: unknown): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+  private onEducationDateChange = (key: string, val: unknown): void => {
+    const { education: { uuid: educationUuid }, resumeId } = this.props;
 
-    this.updateWorkExperienceState(key, val as Date);
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
+    this.updateEducationState(key, val as Date);
+    patchEducation(resumeId, {
+      uuid: educationUuid,
       [key]: val as Date
     });
   }
 
-  private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  private patchEducation = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+    const { education: { uuid: educationUuid }, resumeId } = this.props;
 
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
+    patchEducation(resumeId, {
+      uuid: educationUuid,
       [name]: value
     });
   }
 
-  private patchWorkExperienceDescription = (): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
-    const { experience: { description } } = this.state;
+  private patchEducationDescription = (): void => {
+    const { education: { uuid: educationUuid }, resumeId } = this.props;
+    const { education: { description } } = this.state;
 
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
+    patchEducation(resumeId, {
+      uuid: educationUuid,
       description
     });
   }
@@ -290,13 +291,13 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
     this.setState({ isDeleteConfirmationModalOpen: false });
   }
 
-  private deleteWorkExperience = async (): Promise<void> => {
-    const { deleteWorkExperience } = this.props;
-    const { uuid: experienceId } = this.state.experience;
+  private deleteEducation = async (): Promise<void> => {
+    const { deleteEducation } = this.props;
+    const { uuid: educationId } = this.state.education;
 
-    await deleteWorkExperience(experienceId);
+    await deleteEducation(educationId);
     this.closeDeleteConfirmationModal();
   }
 }
 
-export const EditExperience = withNamespaces()(EditExperienceComponent);
+export const EditEducation = withNamespaces()(EditEducationComponent);
