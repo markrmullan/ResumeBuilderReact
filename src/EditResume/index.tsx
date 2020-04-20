@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { ResumeEducations } from 'ResumeEducations';
 import { ResumeExperiences } from 'ResumeExperiences';
+import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
 import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume } from 'utils/requests';
@@ -156,6 +157,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
               />
             </Container>
           </Col>
+          <ResumePreview resume={resume} />
         </Row>
       </Container>
     );

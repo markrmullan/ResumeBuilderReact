@@ -11,11 +11,18 @@ import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
 import { logOut } from 'utils/requests';
 
+const PATHS_TO_HIDE_HEADER: RegExp[] = [
+  new RegExp('/resumes/\.+/edit')
+];
+
 class TopAppHeaderComponent extends PureComponent<RouteComponentProps & WithNamespaces> {
   public static contextType = CurrentUserContextImpl;
 
   public render() {
-    const { t } = this.props;
+    const { history, t } = this.props;
+    const { pathname } = history.location;
+
+    if (PATHS_TO_HIDE_HEADER.some(path => path.test(pathname))) return null;
 
     return (
       <Fragment>

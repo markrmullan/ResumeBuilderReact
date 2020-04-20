@@ -1,0 +1,24 @@
+@import "styles/common";
+
+.resume-preview {
+  align-items: center;
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 41.6666666666667%;
+
+  @media (min-width: $xl-screen-min) {
+    width: 50%;
+  }
+}
+
+.pdf-viewer-wrapper {
+  zoom: 0.62;
+
+  @media (min-width: $xl-screen-min) {
+    zoom: 0.75;
+  }
+}

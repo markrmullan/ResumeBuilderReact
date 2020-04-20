@@ -14,6 +14,7 @@
     "@material/react-button": "^0.8.0",
     "@material/react-text-field": "^0.8.0",
     "@material/react-top-app-bar": "^0.8.0",
+    "@react-pdf/renderer": "^1.6.8",
     "@svgr/webpack": "2.4.1",
     "@tinymce/tinymce-react": "^3.5.0",
     "@types/classnames": "^2.2.10",
@@ -77,6 +78,7 @@
     "react-facebook-login": "^4.1.1",
     "react-i18next": "^9.0.4",
     "react-modal": "^3.8.1",
+    "react-pdf": "^4.1.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "resolve": "1.8.1",
@@ -166,6 +168,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-pdf": "^4.0.3",
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
