@@ -19,7 +19,7 @@ interface Window {
   FB: any;
 }
 
-declare module "*.ttf" {
+declare module '*.ttf' {
     const content: any;
     export default content;
 }

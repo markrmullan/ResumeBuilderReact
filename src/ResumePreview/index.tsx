@@ -2,18 +2,18 @@ import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { blueGrey } from '@material-ui/core/colors';
+import { Document, Font, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import classnames from 'classnames';
 import { Col } from 'react-bootstrap';
-import { Document, Font, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
-import { PDFViewer } from './PDFViewer';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
+import { PDFViewer } from './PDFViewer';
 
-import roboto from 'styles/fonts/Roboto-Light.ttf'
-import robotoBold from 'styles/fonts/Roboto-Regular.ttf';
-import robotoItalic from 'styles/fonts/Roboto-LightItalic.ttf';
 import robotoBoldItalic from 'styles/fonts/Roboto-Italic.ttf';
+import roboto from 'styles/fonts/Roboto-Light.ttf';
+import robotoItalic from 'styles/fonts/Roboto-LightItalic.ttf';
+import robotoBold from 'styles/fonts/Roboto-Regular.ttf';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
@@ -43,7 +43,7 @@ const pdfStyles = StyleSheet.create({
   detailsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    fontSize: 12,
+    fontSize: 12
   },
   page: {
     fontFamily: 'Roboto',

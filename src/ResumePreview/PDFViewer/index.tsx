@@ -4,11 +4,11 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import pdfjs from 'pdfjs-dist';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-import { pdf } from '@react-pdf/renderer'
 import { Button } from '@material-ui/core';
+import { pdf } from '@react-pdf/renderer';
+import throttle from 'lodash.throttle';
 import { Document, Page } from 'react-pdf';
 import { CurrentUserContextImpl } from 'utils/contexts';
-import throttle from 'lodash.throttle';
 
 import styles from './styles.module.scss';
 
@@ -23,8 +23,8 @@ type PDFViewerState = {
 type TComponentProps = PDFViewerProps & WithNamespaces;
 
 class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> {
-  private throttledRenderDocument: Function;
   public static contextType = CurrentUserContextImpl;
+  private throttledRenderDocument: Function;
 
   public constructor(props: TComponentProps) {
     super(props);
@@ -33,7 +33,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
 
     this.state = {
       document: ''
-    }
+    };
   }
 
   public render() {
@@ -60,13 +60,12 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   public componentDidMount() {
     const { document } = this.props;
 
-    this.throttledRenderDocument(document)
+    this.throttledRenderDocument(document);
   }
 
   public componentDidUpdate(prevProps: PDFViewerProps) {
     const { document } = this.props;
-    // Don't update if document didn't change
-    if (document === prevProps.document) return
+    if (document === prevProps.document) return;
 
     this.throttledRenderDocument(document);
   }
@@ -75,10 +74,10 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
     pdf(doc)
       .toBlob()
       .then(blob => {
-        const url = URL.createObjectURL(blob)
+        const url = URL.createObjectURL(blob);
 
-        this.setState({ document: url })
-      })
+        this.setState({ document: url });
+      });
   }
 
   private getResumeName = (): string => {
