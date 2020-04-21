@@ -29,7 +29,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   public constructor(props: TComponentProps) {
     super(props);
 
-    this.throttledRenderDocument = throttle(this.renderDocument, 4000);
+    this.throttledRenderDocument = throttle(this.renderDocument, 4000, { leading: false });
 
     this.state = {
       document: ''

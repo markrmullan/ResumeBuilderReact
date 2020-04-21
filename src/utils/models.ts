@@ -25,7 +25,7 @@ export interface Experience extends BaseModel {
   location: string;
   position: string;
   startDate: string;
-  endDate: Maybe<string>;
+  endDate: Nullable<string>;
 }
 
 export interface Education extends BaseModel {

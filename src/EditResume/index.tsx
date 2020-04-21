@@ -3,14 +3,15 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { TextField } from '@material-ui/core';
+import throttle from 'lodash.throttle';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { ResumeEducations } from 'ResumeEducations';
 import { ResumeExperiences } from 'ResumeExperiences';
 import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
-import { Resume } from 'utils/models';
-import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume } from 'utils/requests';
+import { Experience, Resume } from 'utils/models';
+import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchWorkExperience } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -26,11 +27,19 @@ type TComponentState = {
 type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 
 class EditResumeComponent extends PureComponent<TComponentProps, TComponentState> {
+
   public static contextType = CurrentUserContextImpl;
-  public state = {
-    resume: {} as Resume,
-    showResumePreview: false
-  };
+  private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
+  public constructor(props: TComponentProps) {
+    super(props);
+
+    this.throttledPatchExperience = throttle(patchWorkExperience, 4000, { leading: false });
+
+    this.state = {
+      resume: {} as Resume,
+      showResumePreview: false
+    };
+  }
 
   public render() {
     const { match, t } = this.props;
@@ -100,7 +109,6 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                     variant="filled"
                     label={t('email')}
                     fullWidth
-                    InputLabelProps={{ shrink: !!email }}
                     name="email"
                     value={email}
                     onChange={this.onUserChange}
@@ -112,7 +120,6 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
                     variant="filled"
                     label={t('phone')}
                     fullWidth
-                    InputLabelProps={{ shrink: !!phoneNumber }}
                     name="phoneNumber"
                     value={phoneNumber}
                     inputMode="tel"
@@ -135,6 +142,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
               <ResumeExperiences
                 createWorkExperience={this.createWorkExperience}
+                updateWorkExperience={this.updateWorkExperience}
                 deleteWorkExperience={this.deleteWorkExperience}
                 experiences={experiences}
                 resumeId={resumeId}
@@ -167,6 +175,10 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     );
   }
 
+  public shouldComponentUpdate() {
+    return true;
+  }
+
   public async componentDidMount() {
     const { rId: resumeId } = this.props.match.params;
 
@@ -197,6 +209,23 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
         experiences: [...(resume.experiences || []), experience]
       }
     }));
+  }
+
+  private updateWorkExperience = async (experience: Partial<Experience>): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        experiences: (resume.experiences || []).map(prevExp => prevExp.uuid === experience.uuid ? { ...prevExp, ...experience } : prevExp)
+      }
+    }), () => {
+      const toUpdate: Maybe<Experience> = (this.state.resume.experiences || []).find(exp => exp.uuid === experience.uuid);
+
+      if (toUpdate) {
+        this.throttledPatchExperience(resumeId, toUpdate);
+      }
+    });
   }
 
   private deleteWorkExperience = async (experienceId: Uuid): Promise<void> => {

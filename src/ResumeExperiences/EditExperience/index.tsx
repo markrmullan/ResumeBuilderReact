@@ -5,13 +5,11 @@ import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextFi
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePicker, DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
-import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
 import { Experience } from 'utils/models';
-import { patchWorkExperience } from 'utils/requests';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
 const DATE_PICKER_FORMAT = 'MMM yyyy';
@@ -20,38 +18,26 @@ import styles from './styles.module.scss';
 
 type TOwnProps = {
   experience: Experience;
+  updateWorkExperience: (experience: Partial<Experience>) => Promise<void>;
   deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
   resumeId: Uuid;
 };
 
 type TComponentState = {
-  doesCurrentlyWorkHere: boolean;
-  experience: Experience;
   isDeleteConfirmationModalOpen: boolean;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
 class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
-  private throttledPatchWorkExperienceDescription: Function;
-
-  public constructor(props: TComponentProps) {
-    super(props);
-    const { experience } = this.props;
-    const { endDate, startDate } = experience;
-
-    this.state = {
-      doesCurrentlyWorkHere: !!startDate && !endDate,
-      experience,
-      isDeleteConfirmationModalOpen: false
-    };
-    this.throttledPatchWorkExperienceDescription = throttle(this.patchWorkExperienceDescription, 2000);
-  }
+  public state = {
+    isDeleteConfirmationModalOpen: false
+  };
 
   public render() {
     const now = new Date();
-    const { t } = this.props;
-    const { doesCurrentlyWorkHere, experience, isDeleteConfirmationModalOpen } = this.state;
+    const { experience, t } = this.props;
+    const { isDeleteConfirmationModalOpen } = this.state;
     const { company = '', description = '', endDate = now, location = '', position = '', startDate = now } = experience;
 
     return (
@@ -83,7 +69,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                   </div>
                   <div>
                     <div className={styles.title}>{this.getFullTitle()}</div>
-                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
+                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {this.doesCurrentlyWorkHere() ? t('present') : format(new Date(endDate!), DATE_PICKER_FORMAT)}</div>
                   </div>
                 </div>
               </Col>
@@ -99,7 +85,6 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 name="position"
                 value={position}
                 onChange={this.onWorkExperienceChange}
-                onBlur={this.patchWorkExperience}
               />
             </Col>
 
@@ -111,7 +96,6 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 name="company"
                 value={company}
                 onChange={this.onWorkExperienceChange}
-                onBlur={this.patchWorkExperience}
               />
             </Col>
           </Row>
@@ -135,7 +119,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             </Col>
 
             <Col xs={6} md={3}>
-              {doesCurrentlyWorkHere ?
+              {this.doesCurrentlyWorkHere() ?
                 <TextField
                   disabled
                   variant="filled"
@@ -172,7 +156,6 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
                 name="location"
                 value={location}
                 onChange={this.onWorkExperienceChange}
-                onBlur={this.patchWorkExperience}
               />
             </Col>
 
@@ -180,7 +163,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
               <FormControlLabel
                 control={
                   <Switch
-                    checked={doesCurrentlyWorkHere}
+                    checked={this.doesCurrentlyWorkHere()}
                     onChange={this.toggleDoesCurrentlyWorkHere}
                     color="primary"
                   />
@@ -194,10 +177,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
             <Col xs={12} className={styles.mb16}>
               <RichTextEditor
                 label={t('description')}
-                onEditorChange={(e: string) => {
-                  this.updateWorkExperienceState('description', e);
-                  this.throttledPatchWorkExperienceDescription();
-                }}
+                onEditorChange={this.updateWorkExperienceDescription}
                 value={description}
               />
             </Col>
@@ -207,9 +187,15 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
     );
   }
 
+  private doesCurrentlyWorkHere = (): boolean => {
+    const { experience: { startDate, endDate } } = this.props;
+
+    return !!startDate && !endDate;
+  }
+
   private getFullTitle = (): string => {
     const { t } = this.props;
-    const { company = '', position = '' } = this.state.experience;
+    const { company = '', position = '' } = this.props.experience;
 
     if (company && position) {
       return t('role_at_place', {
@@ -222,72 +208,42 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
   }
 
   private toggleDoesCurrentlyWorkHere = (): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
+    const { experience: { uuid }, updateWorkExperience } = this.props;
 
-    this.setState(prevState => ({
-      doesCurrentlyWorkHere: !prevState.doesCurrentlyWorkHere,
-      experience: {
-        ...prevState.experience,
-        endDate: prevState.doesCurrentlyWorkHere ? new Date() : undefined
-      }
-    } as TComponentState), () => {
-      patchWorkExperience(resumeId, {
-        uuid: experienceUuid,
-        endDate: (this.state.experience.endDate || null) as string
-      });
+    updateWorkExperience({
+      uuid,
+      endDate: (this.doesCurrentlyWorkHere() ? new Date() : null) as any
     });
   }
 
   private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { experience: { uuid }, updateWorkExperience } = this.props;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.updateWorkExperienceState(name, value);
-  }
-
-  private onWorkExperienceStartDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('startDate', val);
-  }
-
-  private onWorkExperienceEndDateChange = (val: unknown): void => {
-    this.onWorkExperienceDateChange('endDate', val);
-  }
-
-  private updateWorkExperienceState = (name: string, value: string | Date): void => {
-    this.setState(({ experience }) => ({
-      experience: {
-        ...experience,
-        [name]: value
-      }
-    } as TComponentState));
-  }
-
-  private onWorkExperienceDateChange = (key: string, val: unknown): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
-
-    this.updateWorkExperienceState(key, val as Date);
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
-      [key]: val as Date
-    });
-  }
-
-  private patchWorkExperience = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { name, value }: { name: string; value: string } = e.currentTarget;
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
-
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
+    updateWorkExperience({
+      uuid,
       [name]: value
     });
   }
 
-  private patchWorkExperienceDescription = (): void => {
-    const { experience: { uuid: experienceUuid }, resumeId } = this.props;
-    const { experience: { description } } = this.state;
+  private onWorkExperienceStartDateChange = (val: unknown): void => {
+    this.updateWorkExperienceState('startDate', val as Date);
+  }
 
-    patchWorkExperience(resumeId, {
-      uuid: experienceUuid,
-      description
+  private onWorkExperienceEndDateChange = (val: unknown): void => {
+    this.updateWorkExperienceState('endDate', val as Date);
+  }
+
+  private updateWorkExperienceDescription = (value: string): void => {
+    return this.updateWorkExperienceState('description', value);
+  }
+
+  private updateWorkExperienceState = (name: string, value: string | Date): void => {
+    const { experience: { uuid }, updateWorkExperience } = this.props;
+
+    updateWorkExperience({
+      uuid,
+      [name]: value
     });
   }
 
@@ -302,8 +258,7 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
   }
 
   private deleteWorkExperience = async (): Promise<void> => {
-    const { deleteWorkExperience } = this.props;
-    const { uuid: experienceId } = this.state.experience;
+    const { deleteWorkExperience, experience: { uuid: experienceId } } = this.props;
 
     await deleteWorkExperience(experienceId);
     this.closeDeleteConfirmationModal();
