@@ -14,11 +14,3 @@
     width: 50%;
   }
 }
-
-.pdf-viewer-wrapper {
-  zoom: 0.62;
-
-  @media (min-width: $xl-screen-min) {
-    zoom: 0.75;
-  }
-}

@@ -3,6 +3,13 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   overrides: {
+    MuiButton: {
+      containedPrimary: {
+        '&&:hover': {
+          color: '#fff'
+        }
+      }
+    },
     MuiFormControlLabel: {
       label: {
         color: grey[700],

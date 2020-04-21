@@ -104,9 +104,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
     return (
       <Col className={classnames(styles.resumePreview, 'd-lg-flex')} style={{ backgroundColor: blueGrey[200] }} id="pdf">
-        <div className={styles.pdfViewerWrapper}>
-          <PDFViewer document={<MyDocument />} />
-        </div>
+        <PDFViewer document={<MyDocument />} />
       </Col>
     );
   }
