@@ -18,3 +18,8 @@ declare module 'react-async-button';
 interface Window {
   FB: any;
 }
+
+declare module "*.ttf" {
+    const content: any;
+    export default content;
+}

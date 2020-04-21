@@ -4,29 +4,59 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { blueGrey } from '@material-ui/core/colors';
 import classnames from 'classnames';
 import { Col } from 'react-bootstrap';
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { Document, Font, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import { PDFViewer } from './PDFViewer';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
 
+import roboto from 'styles/fonts/Roboto-Light.ttf'
+import robotoBold from 'styles/fonts/Roboto-Regular.ttf';
+import robotoItalic from 'styles/fonts/Roboto-LightItalic.ttf';
+import robotoBoldItalic from 'styles/fonts/Roboto-Italic.ttf';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
   resume: Resume;
 };
 
+// TODO register fonts earlier on?
+Font.register({
+  family: 'Roboto',
+  fonts: [
+    { src: roboto },
+    { src: robotoBold, fontWeight: 700 },
+    { src: robotoItalic, fontStyle: 'italic' },
+    { src: robotoBoldItalic, fontStyle: 'italic', fontWeight: 700 }
+  ]
+});
+
+Font.registerHyphenationCallback(word => [word]); // disable word wrapping hyphenation
+
 const pdfStyles = StyleSheet.create({
-  page: {
-    flexDirection: 'row'
+  informationContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
+  detailsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    fontSize: 12,
+  },
+  page: {
+    fontFamily: 'Roboto',
+    paddingBottom: 65,
+    paddingHorizontal: 35,
+    paddingTop: 35
   },
   name: {
-    fontSize: 40
+    fontSize: 32,
+    fontWeight: 700
+  },
+  bold: {
+    fontWeight: 700
   }
 });
 
@@ -36,19 +66,37 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   public static contextType = CurrentUserContextImpl;
 
   public render() {
-    const { resume } = this.props;
+    const { t } = this.props;
     const { user } = this.context;
+    const { email, phoneNumber } = user;
 
     const MyDocument = () => (
       <Document>
         <Page size="A4" style={pdfStyles.page}>
-          <View style={pdfStyles.section}>
+          <View style={pdfStyles.informationContainer}>
             <View style={pdfStyles.name}>
               <Text>{user.firstName} {user.lastName}</Text>
             </View>
-          </View>
-          <View style={pdfStyles.section}>
-            <Text>{resume.uuid}</Text>
+
+            {this.shouldShowDetails() &&
+              <View style={pdfStyles.detailsContainer}>
+                <Text style={pdfStyles.bold}>
+                  {t('contact_details')}
+                </Text>
+                {phoneNumber &&
+                  <Text>
+                    {phoneNumber}
+                  </Text>
+                }
+
+                {email &&
+                  <Text>
+                    {email}
+                  </Text>
+                }
+              </View>
+            }
+
           </View>
         </Page>
       </Document>
@@ -61,6 +109,13 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
         </div>
       </Col>
     );
+  }
+
+  private shouldShowDetails = (): boolean => {
+    const { user } = this.context;
+    const { email, phoneNumber } = user;
+
+    return !!(email || phoneNumber);
   }
 }
 

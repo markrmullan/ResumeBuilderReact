@@ -19,6 +19,7 @@ type PathParams = {
 };
 
 type TComponentState = {
+  showResumePreview: boolean;
   resume: Resume;
 };
 
@@ -27,7 +28,8 @@ type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 class EditResumeComponent extends PureComponent<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   public state = {
-    resume: {} as Resume
+    resume: {} as Resume,
+    showResumePreview: false
   };
 
   public render() {
@@ -35,7 +37,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     const { rId: resumeId } = match.params;
     const { user } = this.context;
     const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
-    const { resume } = this.state;
+    const { resume, showResumePreview } = this.state;
     const { educations = [], experiences = [], jobTitle = '' } = resume;
 
     return (
@@ -157,7 +159,9 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
               />
             </Container>
           </Col>
-          <ResumePreview resume={resume} />
+          {showResumePreview &&
+            <ResumePreview resume={resume} />
+          }
         </Row>
       </Container>
     );
@@ -168,6 +172,7 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
 
     const resume: Resume = await fetchResume(resumeId);
     this.setState({ resume });
+    setTimeout(() => this.setState({ showResumePreview: true }), 500);
   }
 
   private onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
