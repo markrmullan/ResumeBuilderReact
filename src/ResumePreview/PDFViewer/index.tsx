@@ -13,7 +13,7 @@ import { Document, Page } from 'react-pdf';
 import styles from './styles.module.scss';
 
 type PDFViewerProps = {
-  document?: ReactElement;
+  document: ReactElement;
 };
 
 type PDFViewerState = {
@@ -64,7 +64,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
     this.renderDocument(document);
   }
 
-  private renderDocument(doc: any) {
+  private renderDocument(doc: ReactElement) {
     pdf(doc)
       .toBlob()
       .then(blob => {
