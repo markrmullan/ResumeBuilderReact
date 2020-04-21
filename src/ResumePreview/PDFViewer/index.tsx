@@ -1,14 +1,14 @@
 import React, { PureComponent, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { pdf } from '@react-pdf/renderer'
-import { CurrentUserContextImpl } from 'utils/contexts';
-
 import pdfjs from 'pdfjs-dist';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+import { pdf } from '@react-pdf/renderer'
 import { Button } from '@material-ui/core';
 import { Document, Page } from 'react-pdf';
+import { CurrentUserContextImpl } from 'utils/contexts';
+import throttle from 'lodash.throttle';
 
 import styles from './styles.module.scss';
 
@@ -23,10 +23,17 @@ type PDFViewerState = {
 type TComponentProps = PDFViewerProps & WithNamespaces;
 
 class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> {
+  private throttledRenderDocument: Function;
   public static contextType = CurrentUserContextImpl;
 
-  public state = {
-    document: ''
+  public constructor(props: TComponentProps) {
+    super(props);
+
+    this.throttledRenderDocument = throttle(this.renderDocument, 4000);
+
+    this.state = {
+      document: ''
+    }
   }
 
   public render() {
@@ -53,7 +60,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   public componentDidMount() {
     const { document } = this.props;
 
-    this.renderDocument(document)
+    this.throttledRenderDocument(document)
   }
 
   public componentDidUpdate(prevProps: PDFViewerProps) {
@@ -61,7 +68,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
     // Don't update if document didn't change
     if (document === prevProps.document) return
 
-    this.renderDocument(document);
+    this.throttledRenderDocument(document);
   }
 
   private renderDocument(doc: ReactElement) {
