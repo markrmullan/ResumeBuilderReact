@@ -47,7 +47,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const { resume, t } = this.props;
     const { user } = this.context;
     const { email, phoneNumber } = user;
-    const { experiences = [] } = resume;
+    const { educations = [], experiences = [] } = resume;
 
     const MyDocument = () => (
       <Document>
@@ -95,6 +95,27 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                   </View>
                 );
               })}
+            </View>
+          }
+
+          {!!educations.length &&
+            <View>
+              <Text style={pdfStyles.section}>
+                {t('education')}
+              </Text>
+
+                {educations.map(({ degree, endDate, school, startDate, uuid }) => {
+                  const doesCurrentlyAttend = !!startDate && !endDate;
+
+                  return (
+                    <View key={uuid} style={{ marginBottom: 12 }}>
+                      {this.getRoleAndPlace(degree, school)}
+                      <Text style={pdfStyles.date}>
+                        {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
+                      </Text>
+                    </View>
+                  );
+                })}
             </View>
           }
         </Page>
