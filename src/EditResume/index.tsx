@@ -49,7 +49,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { user } = this.context;
     const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
     const { resume, showResumePreview } = this.state;
-    const { educations = [], experiences = [], jobTitle = '', name = '' } = resume;
+    const { educations = [], experiences = [], name = '' } = resume;
 
     return (
       <Container fluid className={styles.backContainer}>
@@ -82,19 +82,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
               <Row>
                 <Col xs={12} className={styles.mb16}>
                   <h3 className={styles.sectionHeader}>{t('personal_information')}</h3>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} className={styles.mb16}>
-                  <TextField
-                    variant="filled"
-                    label={t('job_title')}
-                    fullWidth
-                    placeholder={t('eg_teacher')}
-                    name="jobTitle"
-                    value={jobTitle}
-                    onChange={this.onChange}
-                  />
                 </Col>
               </Row>
 
