@@ -1,5 +1,18 @@
 @import "styles/common";
 
+.back-container {
+  position: relative;
+
+  .back {
+    border-radius: 20px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: black;
+    z-index: 9999;
+  }
+}
+
 .outer-container {
   margin-top: 32px;
 

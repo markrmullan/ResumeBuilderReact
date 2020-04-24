@@ -1,9 +1,10 @@
 import React, { ChangeEvent, Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { InputAdornment, TextField } from '@material-ui/core';
-import { Edit } from '@material-ui/icons';
+import { deepPurple, grey } from '@material-ui/core/colors';
+import { ArrowBackRounded, EditOutlined } from '@material-ui/icons';
 import throttle from 'lodash.throttle';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -51,7 +52,10 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { educations = [], experiences = [], jobTitle = '', name = '' } = resume;
 
     return (
-      <Container fluid>
+      <Container fluid className={styles.backContainer}>
+        <Link to="/dashboard" className={styles.back}>
+          <ArrowBackRounded fontSize="large" style={{ color: deepPurple[500] }} />
+        </Link>
         <Row>
           <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6}>
             <Container fluid className={styles.outerContainer}>
@@ -67,8 +71,8 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     InputProps={{
                       endAdornment: (
                         name === t('untitled') &&
-                          <InputAdornment position="end">
-                            <Edit />
+                          <InputAdornment position="end" style={{ color: grey[400] }}>
+                            <EditOutlined />
                           </InputAdornment>
                       )
                     }}
