@@ -1,8 +1,9 @@
-import React, { ChangeEvent, PureComponent } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { TextField } from '@material-ui/core';
+import { InputAdornment, TextField } from '@material-ui/core';
+import { Edit } from '@material-ui/icons';
 import throttle from 'lodash.throttle';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -11,7 +12,7 @@ import { ResumeExperiences } from 'ResumeExperiences';
 import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Experience, Resume } from 'utils/models';
-import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchWorkExperience } from 'utils/requests';
+import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchResume, patchWorkExperience } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -26,10 +27,10 @@ type TComponentState = {
 
 type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 
-class EditResumeComponent extends PureComponent<TComponentProps, TComponentState> {
-
+class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
+
   public constructor(props: TComponentProps) {
     super(props);
 
@@ -47,13 +48,33 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
     const { user } = this.context;
     const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
     const { resume, showResumePreview } = this.state;
-    const { educations = [], experiences = [], jobTitle = '' } = resume;
+    const { educations = [], experiences = [], jobTitle = '', name = '' } = resume;
 
     return (
       <Container fluid>
         <Row>
           <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6}>
             <Container fluid className={styles.outerContainer}>
+              <Row className={`${styles.resumeNameContainer} ${styles.mb16}`}>
+                <Col xs={8} sm={5} md={4} xl={3}>
+                  <TextField
+                    fullWidth
+                    label={t('resume_name')}
+                    name="name"
+                    onChange={this.onChange}
+                    value={name}
+                    onBlur={this.patchResume}
+                    InputProps={{
+                      endAdornment: (
+                        name === t('untitled') &&
+                          <InputAdornment position="end">
+                            <Edit />
+                          </InputAdornment>
+                      )
+                    }}
+                  />
+                </Col>
+              </Row>
               <Row>
                 <Col xs={12} className={styles.mb16}>
                   <h3 className={styles.sectionHeader}>{t('personal_information')}</h3>
@@ -282,6 +303,24 @@ class EditResumeComponent extends PureComponent<TComponentProps, TComponentState
       ...user,
       [name]: value
     });
+  }
+
+  private patchResume = (): void => {
+    const { resume } = this.state;
+    const { name } = resume;
+
+    if (!name) {
+      const { t } = this.props;
+
+      return this.setState(prevState => ({
+        resume: {
+          ...prevState.resume,
+          name: t('untitled')
+        }
+      }), () => patchResume(this.state.resume));
+    }
+
+    patchResume(resume);
   }
 }
 

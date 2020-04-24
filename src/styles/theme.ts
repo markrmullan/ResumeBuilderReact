@@ -41,6 +41,11 @@ export const theme = createMuiTheme({
       root: {
         padding: '0 16px'
       }
+    },
+    MuiInputBase: {
+      root: {
+        caretColor: deepPurple[500]
+      }
     }
   },
   palette: {

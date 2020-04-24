@@ -3,6 +3,10 @@
 .outer-container {
   margin-top: 32px;
 
+  .resume-name-container {
+    justify-content: center;
+  }
+
   .section-header {
     font-size: 1.375em;
     font-weight: $bolder;

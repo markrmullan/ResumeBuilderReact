@@ -62,6 +62,7 @@
   "present": "Present",
   "professional_experience": "Professional Experience",
   "professional_experience_supporting_info": "Include your last 10 years of relevant experience. List your most recent position first.",
+  "resume_name": "Resume Name",
   "resumes": "Resumes",
   "role_at_place": "{{role}} at {{place}}",
   "save": "Save",
