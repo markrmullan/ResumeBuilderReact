@@ -36,7 +36,8 @@ Font.register({
 
 Font.registerHyphenationCallback(word => [word]); // disable word wrapping hyphenation
 
-const DATE_FORMAT = 'MMM yyyy';
+const DATE_FORMAT_MONTH_YEAR = 'MMM yyyy';
+const DATE_FORMAT_YEAR = 'yyyy';
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
@@ -91,7 +92,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                   <View key={uuid} style={{ marginBottom: 12 }}>
                     {this.getRoleAndPlace(position, company)}
                     <Text style={pdfStyles.date}>
-                      {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
+                      {format(new Date(startDate), DATE_FORMAT_MONTH_YEAR)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT_MONTH_YEAR)}
                     </Text>
 
                     <View style={pdfStyles.description}>
@@ -116,7 +117,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                     <View key={uuid} style={{ marginBottom: 12 }}>
                       {this.getRoleAndPlace(degree, school)}
                       <Text style={pdfStyles.date}>
-                        {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
+                        {format(new Date(startDate), DATE_FORMAT_YEAR)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT_YEAR)}
                       </Text>
 
                       <View style={pdfStyles.description}>
@@ -165,6 +166,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     }
   }
 
+  /**
+   * please forgive me
+   */
   private convertRichTextToTsx = (richText: string = ''): ReactNode => {
     return ` ${richText.trim().replace(/\n|&nbsp;/ig, '')}`
       .split(/<ul>|<\/ul>/)
