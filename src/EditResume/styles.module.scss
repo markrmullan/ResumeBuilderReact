@@ -5,11 +5,14 @@
 
   .back {
     border-radius: 20px;
-    color: black;
     left: 20px;
     position: absolute;
     top: 20px;
     z-index: 9999;
+
+    &:hover {
+      background-color: $grey-200;
+    }
   }
 }
 

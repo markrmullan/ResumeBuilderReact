@@ -2,9 +2,9 @@ import React, { ChangeEvent, Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { InputAdornment, TextField } from '@material-ui/core';
+import { InputAdornment, TextField, Tooltip } from '@material-ui/core';
 import { deepPurple, grey } from '@material-ui/core/colors';
-import { ArrowBackRounded, EditOutlined } from '@material-ui/icons';
+import { ArrowBackRounded, EditOutlined, HelpOutline } from '@material-ui/icons';
 import throttle from 'lodash.throttle';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -47,7 +47,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { match, t } = this.props;
     const { rId: resumeId } = match.params;
     const { user } = this.context;
-    const { email = '', firstName = '', lastName = '', phoneNumber = '' } = user;
+    const { email = '', firstName = '', lastName = '', phoneNumber = '', resumeEmail = '' } = user;
     const { resume, showResumePreview } = this.state;
     const { educations = [], experiences = [], name = '' } = resume;
 
@@ -113,17 +113,23 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
 
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
-                  {/* FIXME figure out how to persist email on change? or make this field RO?
-                    the email is used for sign-in so you'd need to check for uniqueness. Or,
-                    need to make the email field that appears on resumes different than the email
-                    used for your user account */}
                   <TextField
                     variant="filled"
                     label={t('email')}
                     fullWidth
-                    name="email"
-                    value={email}
+                    name="resumeEmail"
+                    value={resumeEmail || email}
                     onChange={this.onUserChange}
+                    onBlur={this.patchCurrentUser}
+                    InputProps={{
+                      endAdornment: (
+                        <Tooltip arrow title={t('use_best_email_for_resume', { email })} placement="top">
+                          <InputAdornment position="end" style={{ color: grey[400] }}>
+                            <HelpOutline />
+                          </InputAdornment>
+                        </Tooltip>
+                      )
+                    }}
                   />
                 </Col>
 

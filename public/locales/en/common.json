@@ -71,8 +71,9 @@
   "sign_up": "Sign Up",
   "skip": "Skip",
   "submit": "Submit",
-  "updated_timestamp": "Updated {{timestamp}}",
   "untitled": "Untitled",
+  "updated_timestamp": "Updated {{timestamp}}",
+  "use_best_email_for_resume": "Choose the best email for your resume. You will still use {{email}} to login to your account.",
   "validation": {
     "invalid_email": "Invalid email",
     "passwords_do_not_match": "Passwords do not match",

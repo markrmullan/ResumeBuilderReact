@@ -6,6 +6,7 @@ type BaseModel = Readonly<{
 
 export interface User extends BaseModel {
   email: string;
+  resumeEmail?: string;
   password: string;
   firstName: string;
   lastName: string;

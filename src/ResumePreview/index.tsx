@@ -47,7 +47,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   public render() {
     const { resume, t } = this.props;
     const { user } = this.context;
-    const { email, phoneNumber } = user;
+    const { email, phoneNumber, resumeEmail } = user;
     const { educations = [], experiences = [] } = resume;
     const now = Date.now();
 
@@ -70,9 +70,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                   </Text>
                 }
 
-                {email &&
+                {(resumeEmail || email) &&
                   <Text>
-                    {email}
+                    {(resumeEmail || email)}
                   </Text>
                 }
               </View>
