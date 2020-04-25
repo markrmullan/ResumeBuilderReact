@@ -16,7 +16,7 @@ type TComponentProps = {
 const CONTENT_STYLE: string = 'ul, ol { padding-inline-start: 30px; } p, ul, ol { margin: 0; }';
 const KEY: string = 'vw2o44ss6yxeeus1sui02suy8d9qr62ht06rit7qfwn0uj6f';
 const PLUGINS: string[] = ['lists link'];
-const TOOLBAR: string = 'undo redo | bold italic underline | bullist numlist';
+const TOOLBAR: string = 'undo redo | bold italic | bullist numlist';
 
 export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorChange, value }) => (
   <Fragment>
