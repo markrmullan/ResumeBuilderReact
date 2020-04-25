@@ -12,7 +12,7 @@ import { ResumeEducations } from 'ResumeEducations';
 import { ResumeExperiences } from 'ResumeExperiences';
 import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
-import { Experience, Resume } from 'utils/models';
+import { Experience, Resume, User } from 'utils/models';
 import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchResume, patchWorkExperience } from 'utils/requests';
 
 import styles from './styles.module.scss';
@@ -31,6 +31,7 @@ type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
+  private throttledPatchCurrentUser: Nullable<(user: Partial<User>) => Promise<User>> = null;
 
   public constructor(props: TComponentProps) {
     super(props);
@@ -94,7 +95,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     name="firstName"
                     value={firstName}
                     onChange={this.onUserChange}
-                    onBlur={this.patchCurrentUser}
                   />
                 </Col>
 
@@ -106,7 +106,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     name="lastName"
                     value={lastName}
                     onChange={this.onUserChange}
-                    onBlur={this.patchCurrentUser}
                   />
                 </Col>
               </Row>
@@ -120,7 +119,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     name="resumeEmail"
                     value={resumeEmail || email}
                     onChange={this.onUserChange}
-                    onBlur={this.patchCurrentUser}
                     InputProps={{
                       endAdornment: (
                         <Tooltip arrow title={t('use_best_email_for_resume', { email })} placement="top">
@@ -142,7 +140,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     value={phoneNumber}
                     inputMode="tel"
                     onChange={this.onUserChange}
-                    onBlur={this.patchCurrentUser}
                   />
                 </Col>
               </Row>
@@ -203,6 +200,9 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const resume: Resume = await fetchResume(resumeId);
     this.setState({ resume });
     setTimeout(() => this.setState({ showResumePreview: true }), 500);
+
+    const { patchCurrentUser } = this.context;
+    this.throttledPatchCurrentUser = throttle(patchCurrentUser, 2000, { leading: false });
   }
 
   private onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -286,19 +286,13 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { updateUser, user } = this.context;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    updateUser({
+    const newUser = {
       ...user,
       [name]: value
-    });
-  }
+    };
 
-  private patchCurrentUser = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { patchCurrentUser, user } = this.context;
-    const { name, value }: { name: string; value: string } = e.currentTarget;
-
-    patchCurrentUser({
-      ...user,
-      [name]: value
+    updateUser(newUser, () => {
+      this.throttledPatchCurrentUser!(newUser);
     });
   }
 

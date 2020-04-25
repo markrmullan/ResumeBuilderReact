@@ -3,7 +3,7 @@ import { User } from './models';
 
 export interface CurrentUserContext {
   user: User;
-  updateUser: (currentUser: User) => void;
+  updateUser: (currentUser: User, cb?: Function) => void;
   patchCurrentUser: (toUpdate: User) => Promise<User>;
 }
 

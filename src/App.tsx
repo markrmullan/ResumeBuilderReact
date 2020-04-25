@@ -38,7 +38,7 @@ class App extends Component<WithNamespaces, AppState> {
         <ThemeProvider theme={theme}>
           <CurrentUserContextImpl.Provider value={{
             user: currentUser,
-            updateUser: (currentUser: User) => this.setState({ currentUser }),
+            updateUser: (currentUser: User, cb?: Function) => this.setState({ currentUser }, () => cb && cb()),
             patchCurrentUser: async (toUpdate: User) => patchCurrentUser(toUpdate)
           }}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
