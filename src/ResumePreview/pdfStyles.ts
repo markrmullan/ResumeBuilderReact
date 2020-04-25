@@ -52,5 +52,8 @@ export const pdfStyles = StyleSheet.create({
   bulletPoint: {
     fontSize: 14,
     marginRight: 10
+  },
+  strong: {
+    fontWeight: 700
   }
 });
