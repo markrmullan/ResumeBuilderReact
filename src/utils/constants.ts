@@ -6,3 +6,7 @@ export const ROUTES = {
   dashboard: '/dashboard',
   login: '/login'
 };
+
+export const KEY_CODES = {
+  TAB: 9
+};

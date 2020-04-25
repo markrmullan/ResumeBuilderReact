@@ -1,4 +1,4 @@
-import React, { PureComponent, ReactElement } from 'react';
+import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { blueGrey } from '@material-ui/core/colors';
@@ -48,6 +48,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const { user } = this.context;
     const { email, phoneNumber } = user;
     const { educations = [], experiences = [] } = resume;
+    const now = Date.now();
 
     const MyDocument = () => (
       <Document>
@@ -83,7 +84,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('professional_experience')}
               </Text>
 
-              {experiences.map(({ company, endDate, position, startDate, uuid }) => {
+              {experiences.map(({ company, description, endDate = now, position, startDate = now, uuid }) => {
                 const doesCurrentlyWorkHere = !!startDate && !endDate;
 
                 return (
@@ -91,6 +92,10 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                     {this.getRoleAndPlace(position, company)}
                     <Text style={pdfStyles.date}>
                       {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
+                    </Text>
+
+                    <Text>
+                      {this.convertRichTextToTsx(description)}
                     </Text>
                   </View>
                 );
@@ -104,7 +109,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('education')}
               </Text>
 
-                {educations.map(({ degree, endDate, school, startDate, uuid }) => {
+                {educations.map(({ degree, endDate = now, school, startDate = now, uuid }) => {
                   const doesCurrentlyAttend = !!startDate && !endDate;
 
                   return (
@@ -154,6 +159,11 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
         </Text>
       );
     }
+  }
+
+  private convertRichTextToTsx = (richText: string = ''): ReactNode => {
+    richText = richText.replace('&nbsp;', '');
+    return richText;
   }
 }
 

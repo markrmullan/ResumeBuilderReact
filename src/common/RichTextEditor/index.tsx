@@ -2,6 +2,7 @@ import React, { Fragment, SFC } from 'react';
 
 import { InputLabel } from '@material-ui/core';
 import { Editor } from '@tinymce/tinymce-react';
+import { KEY_CODES } from 'utils/constants';
 
 import styles from './styles.module.scss';
 
@@ -31,6 +32,7 @@ export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorCh
         browser_spellcheck: true,
         content_style: CONTENT_STYLE,
         height: 200,
+        lists_indent_on_tab: false, // prevent multiple levels of indentation, for now. Translating nested indentation to the PDF will be difficult. figure out support for that later.
         statusbar: false,
         menubar: false,
         plugins: PLUGINS,
@@ -39,6 +41,7 @@ export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorCh
       onBlur={onBlur}
       onEditorChange={onEditorChange}
       value={value}
+      onKeyDown={e => { if (e.keyCode === KEY_CODES.TAB) e.preventDefault(); }} // since lists_indent_on_tab = false, prevent Tab from hopping to the next HTML element
     />
   </Fragment>
 );
