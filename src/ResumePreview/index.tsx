@@ -94,9 +94,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                       {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
                     </Text>
 
-                    <Text>
+                    <View style={pdfStyles.description}>
                       {this.convertRichTextToTsx(description)}
-                    </Text>
+                    </View>
                   </View>
                 );
               })}
@@ -109,7 +109,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('education')}
               </Text>
 
-                {educations.map(({ degree, endDate = now, school, startDate = now, uuid }) => {
+                {educations.map(({ degree, description, endDate = now, school, startDate = now, uuid }) => {
                   const doesCurrentlyAttend = !!startDate && !endDate;
 
                   return (
@@ -118,6 +118,10 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                       <Text style={pdfStyles.date}>
                         {format(new Date(startDate), DATE_FORMAT)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT)}
                       </Text>
+
+                      <View style={pdfStyles.description}>
+                        {this.convertRichTextToTsx(description)}
+                      </View>
                     </View>
                   );
                 })}
@@ -162,8 +166,32 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   }
 
   private convertRichTextToTsx = (richText: string = ''): ReactNode => {
-    richText = richText.replace('&nbsp;', '');
-    return richText;
+    return ` ${richText.trim().replace(/\n|&nbsp;/ig, '')}`
+      .split(/<ul>|<\/ul>/)
+      .map((ul, idx) => {
+        // TODO handle <p>
+        if (idx % 2 === 0) return <Text key={idx}>{ul}</Text>;
+
+        return (
+          <View key={idx} style={pdfStyles.ul}>
+            {ul.split(/<li>|<\/li>/)
+              .filter(e => e)                                       // rm empty strings
+              .map((li, idx2) => (
+                <View key={idx2} style={pdfStyles.li}>
+                  <Text style={pdfStyles.bulletPoint}>
+                    •
+                  </Text>
+
+                  <Text>
+                    {li}
+                  </Text>
+                </View>
+              ))
+            }
+          </View>
+        );
+      })
+      .flat(Infinity);
   }
 }
 

@@ -36,5 +36,21 @@ export const pdfStyles = StyleSheet.create({
   roleAndPlace: {
     fontSize: 16,
     fontWeight: 700
+  },
+  description: {
+    fontSize: 12
+  },
+  ul: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  li: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  bulletPoint: {
+    fontSize: 14,
+    marginRight: 10
   }
 });
