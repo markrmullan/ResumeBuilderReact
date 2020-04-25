@@ -2,7 +2,7 @@ import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { blueGrey } from '@material-ui/core/colors';
-import { Document, Font, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Font, Link, Page, Text, View } from '@react-pdf/renderer';
 import classnames from 'classnames';
 import { format } from 'date-fns';
 import { Col } from 'react-bootstrap';
@@ -71,9 +71,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 }
 
                 {(resumeEmail || email) &&
-                  <Text>
+                  <Link style={pdfStyles.link} src={`mailto:${resumeEmail || email}`}>
                     {(resumeEmail || email)}
-                  </Text>
+                  </Link>
                 }
               </View>
             }

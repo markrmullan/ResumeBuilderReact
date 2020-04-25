@@ -1,11 +1,18 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
+import { lightBlue } from '@material-ui/core/colors';
+
 export const pdfStyles = StyleSheet.create({
   informationContainer: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 16
+  },
+  link: {
+    color: lightBlue[900],
+    textDecoration: 'none'
   },
   detailsContainer: {
     display: 'flex',
