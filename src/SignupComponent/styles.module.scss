@@ -56,10 +56,12 @@
 
   .form-funnel {
     margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
     width: 100%;
 
     @media (min-width: 540px) {
-      width: 480px;
+      width: 520px;
     }
 
     .h1 {
