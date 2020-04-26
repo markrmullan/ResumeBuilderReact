@@ -15,9 +15,10 @@ export const pdfStyles = StyleSheet.create({
     textDecoration: 'none'
   },
   detailsContainer: {
+    alignItems: 'flex-end',
     display: 'flex',
     flexDirection: 'column',
-    fontSize: 12
+    fontSize: 11
   },
   page: {
     fontFamily: 'Roboto',
