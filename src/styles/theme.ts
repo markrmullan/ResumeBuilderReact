@@ -42,7 +42,7 @@ export const theme = createMuiTheme({
         padding: '0 16px'
       },
       content: {
-        margin: '6px 0',
+        "margin": '6px 0',
         '&.Mui-expanded': {
           margin: '6px 0'
         }

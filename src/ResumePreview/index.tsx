@@ -86,14 +86,11 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
               </Text>
 
               {experiences.map(({ company, description, endDate, location, position, startDate = now, uuid }) => {
-                const doesCurrentlyWorkHere = !!startDate && !endDate;
-
                 return (
                   <View key={uuid} style={{ marginBottom: 12 }}>
                     {this.getRoleAndPlace(position, company, location)}
-                    <Text style={pdfStyles.date}>
-                      {format(new Date(startDate), DATE_FORMAT_MONTH_YEAR)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT_MONTH_YEAR)}
-                    </Text>
+
+                    {this.getFormattedStartDateEndDate(startDate, endDate)}
 
                     <View style={pdfStyles.description}>
                       {this.convertRichTextToTsx(description)}
@@ -111,8 +108,6 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
               </Text>
 
                 {educations.map(({ degree, description, endDate, gpa, school, startDate = now, uuid }) => {
-                  const doesCurrentlyAttend = !!startDate && !endDate;
-
                   return (
                     <View key={uuid} style={{ marginBottom: 12 }}>
                       {school &&
@@ -121,9 +116,8 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                         </Text>
                       }
                       {this.getDegreeAndGPA(degree, gpa)}
-                      <Text style={pdfStyles.date}>
-                        {format(new Date(startDate), DATE_FORMAT_YEAR)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT_YEAR)}
-                      </Text>
+
+                      {this.getFormattedStartDateEndDate(startDate, endDate as Nullable<string>, DATE_FORMAT_YEAR)}
 
                       <View style={pdfStyles.description}>
                         {this.convertRichTextToTsx(description)}
@@ -149,6 +143,28 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const { email, phoneNumber } = user;
 
     return !!(email || phoneNumber);
+  }
+
+  private getFormattedStartDateEndDate = (startDate: string | number, endDate: Nullable<string>, dateFormat: string = DATE_FORMAT_MONTH_YEAR): ReactElement => {
+    const { t } = this.props;
+
+    const isCurrentlyHere = !!startDate && !endDate;
+    const formattedStartDate = format(new Date(startDate), dateFormat);
+    const formattedEndDate = isCurrentlyHere ? t('present') : format(new Date(endDate!), dateFormat);
+
+    if (formattedStartDate === formattedEndDate) {
+      return (
+        <Text style={pdfStyles.date}>
+          {formattedStartDate}
+        </Text>
+      );
+    }
+
+    return (
+      <Text style={pdfStyles.date}>
+        {formattedStartDate} - {formattedEndDate}
+      </Text>
+    );
   }
 
   private getRoleAndPlace = (role: Maybe<string>, place: Maybe<string>, location: Maybe<string>): Maybe<ReactElement> => {
