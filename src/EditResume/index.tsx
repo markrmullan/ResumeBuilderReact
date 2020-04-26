@@ -1,19 +1,20 @@
 import React, { ChangeEvent, Component } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
-import { InputAdornment, TextField, Tooltip } from '@material-ui/core';
-import { deepPurple, grey } from '@material-ui/core/colors';
-import { ArrowBackRounded, EditOutlined, HelpOutline } from '@material-ui/icons';
+import { Button, InputAdornment, TextField, Tooltip } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
 import throttle from 'lodash.throttle';
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { ResumeEducations } from 'ResumeEducations';
-import { ResumeExperiences } from 'ResumeExperiences';
+import { EditEducation } from 'EditEducation';
+import { EditExperience } from 'EditExperience';
 import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { Education, Experience, Resume, User } from 'utils/models';
 import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
+import { BackLink } from './BackLink';
 
 import styles from './styles.module.scss';
 
@@ -47,8 +48,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   }
 
   public render() {
-    const { match, t } = this.props;
-    const { rId: resumeId } = match.params;
+    const { t } = this.props;
     const { user } = this.context;
     const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
     const { resume, showResumePreview } = this.state;
@@ -56,9 +56,8 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
 
     return (
       <Container fluid className={styles.backContainer}>
-        <Link to="/dashboard" className={styles.back}>
-          <ArrowBackRounded fontSize="large" style={{ color: deepPurple[500] }} />
-        </Link>
+        <BackLink />
+
         <Row>
           <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6} className={styles.outerResumeCol}>
             <Container fluid className={styles.outerContainer}>
@@ -223,13 +222,25 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                 </Col>
               </Row>
 
-              <ResumeExperiences
-                createWorkExperience={this.createWorkExperience}
-                updateWorkExperience={this.updateWorkExperience}
-                deleteWorkExperience={this.deleteWorkExperience}
-                experiences={experiences}
-                resumeId={resumeId}
-              />
+              {experiences.map(exp => (
+                <EditExperience
+                  key={exp.uuid}
+                  experience={exp}
+                  updateWorkExperience={this.updateWorkExperience}
+                  deleteWorkExperience={this.deleteWorkExperience}
+                />
+              ))}
+              <Row className={styles.mb16}>
+                <Col xs={12}>
+                  <Button
+                    color="primary"
+                    startIcon={<Add />}
+                    onClick={this.createWorkExperience}
+                    >
+                      {t('add_work_experience')}
+                    </Button>
+                </Col>
+              </Row>
 
               <Row>
                 <Col xs={12}>
@@ -242,13 +253,26 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                 </Col>
               </Row>
 
-              <ResumeEducations
-                createEducation={this.createEducation}
-                updateEducation={this.updateEducation}
-                deleteEducation={this.deleteEducation}
-                educations={educations}
-                resumeId={resumeId}
-              />
+              {educations.map(edu => (
+                <EditEducation
+                  key={edu.uuid}
+                  education={edu}
+                  updateEducation={this.updateEducation}
+                  deleteEducation={this.deleteEducation}
+                />
+              ))}
+
+              <Row className={styles.mb16}>
+                <Col xs={12}>
+                  <Button
+                    color="primary"
+                    startIcon={<Add />}
+                    onClick={this.createEducation}
+                    >
+                      {t('add_education')}
+                    </Button>
+                </Col>
+              </Row>
             </Container>
           </Col>
           {showResumePreview &&

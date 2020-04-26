@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, MouseEvent } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
@@ -9,18 +9,17 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
-import { Education } from 'utils/models';
+import { Experience } from 'utils/models';
 
-const DATE_PICKER_VIEWS: DatePickerView[] = ['year'];
-const DATE_PICKER_FORMAT = 'yyyy';
+const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
+const DATE_PICKER_FORMAT = 'MMM yyyy';
 
 import styles from './styles.module.scss';
 
 type TOwnProps = {
-  education: Education;
-  updateEducation: (education: Partial<Education>) => Promise<void>;
-  deleteEducation: (educationId: Uuid) => Promise<void>;
-  resumeId: Uuid;
+  experience: Experience;
+  updateWorkExperience: (experience: Partial<Experience>) => Promise<void>;
+  deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
 };
 
 type TComponentState = {
@@ -29,23 +28,23 @@ type TComponentState = {
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditEducationComponent extends React.Component<TComponentProps, TComponentState> {
+class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
   public state = {
     isDeleteConfirmationModalOpen: false
   };
 
   public render() {
     const now = new Date();
-    const { education, t } = this.props;
+    const { experience, t } = this.props;
     const { isDeleteConfirmationModalOpen } = this.state;
-    const { degree = '', description = '', endDate = now, gpa = '', school = '', startDate = now } = education;
+    const { company = '', description = '', endDate = now, location = '', position = '', startDate = now } = experience;
 
     return (
       <Fragment>
         <ConfirmationDialog
           title={t('delete_entry')}
           description={t('are_you_sure_you_want_to_delete_this_entry')}
-          secondaryButtonAction={this.deleteEducation}
+          secondaryButtonAction={this.deleteWorkExperience}
           secondaryButtonText={t('delete')}
           primaryButtonAction={this.closeDeleteConfirmationModal}
           primaryButtonText={t('cancel')}
@@ -69,7 +68,7 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
                   </div>
                   <div>
                     <div className={styles.title}>{this.getFullTitle()}</div>
-                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {this.doesCurrentlyAttend() ? t('present') : format(new Date(endDate!), DATE_PICKER_FORMAT)}</div>
+                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {this.doesCurrentlyWorkHere() ? t('present') : format(new Date(endDate!), DATE_PICKER_FORMAT)}</div>
                   </div>
                 </div>
               </Col>
@@ -80,22 +79,22 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
                 variant="filled"
-                label={t('school')}
+                label={t('job_title')}
                 fullWidth
-                name="school"
-                value={school}
-                onChange={this.onEducationChange}
+                name="position"
+                value={position}
+                onChange={this.onWorkExperienceChange}
               />
             </Col>
 
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
                 variant="filled"
-                label={t('degree')}
+                label={t('employer')}
                 fullWidth
-                name="degree"
-                value={degree}
-                onChange={this.onEducationChange}
+                name="company"
+                value={company}
+                onChange={this.onWorkExperienceChange}
               />
             </Col>
           </Row>
@@ -114,12 +113,12 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
                 openTo="year"
                 views={DATE_PICKER_VIEWS}
                 value={startDate}
-                onChange={this.onEducationStartDateChange}
+                onChange={this.onWorkExperienceStartDateChange}
               />
             </Col>
 
             <Col xs={6} md={3}>
-              {this.doesCurrentlyAttend() ?
+              {this.doesCurrentlyWorkHere() ?
                 <TextField
                   disabled
                   variant="filled"
@@ -142,32 +141,33 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
                   views={DATE_PICKER_VIEWS}
                   minDate={startDate}
                   value={endDate}
-                  onChange={this.onEducationEndDateChange}
+                  onChange={this.onWorkExperienceEndDateChange}
                 />
               }
             </Col>
 
-            <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.gpaContainer}>
+            <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.locationContainer}>
               <TextField
                 variant="filled"
-                label={t('gpa')}
+                label={t('location')}
+                placeholder={t('location_placeholder')}
                 fullWidth
-                name="gpa"
-                value={gpa}
-                onChange={this.onEducationChange}
+                name="location"
+                value={location}
+                onChange={this.onWorkExperienceChange}
               />
             </Col>
 
-            <Col xs={{ span: 12, order: 3 }} md={{ order: 4 }} className={styles.currentlyAttendContainer}>
+            <Col xs={{ span: 12, order: 3 }} md={{ order: 4 }} className={styles.currentlyWorkHereContainer}>
               <FormControlLabel
                 control={
                   <Switch
-                    checked={this.doesCurrentlyAttend()}
-                    onChange={this.toggleDoesCurrentlyAttend}
+                    checked={this.doesCurrentlyWorkHere()}
+                    onChange={this.toggleDoesCurrentlyWorkHere}
                     color="primary"
                   />
                 }
-                label={t('currently_attending')}
+                label={t('currently_work_here')}
               />
             </Col>
           </Row>
@@ -176,7 +176,7 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
             <Col xs={12} className={styles.mb16}>
               <RichTextEditor
                 label={t('description')}
-                onEditorChange={this.updateEducationDescription}
+                onEditorChange={this.updateWorkExperienceDescription}
                 value={description}
               />
             </Col>
@@ -186,56 +186,61 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
     );
   }
 
-  public shouldComponentUpdate() {
-    return true;
-  }
-
-  private getFullTitle = (): string => {
-    const { education, t } = this.props;
-    const { school = '', degree = '' } = education;
-
-    if (school && degree) {
-      return t('role_at_place', {
-        role: degree,
-        place: school
-      });
-    }
-
-    return degree || school || t('not_specified');
-  }
-
-  private doesCurrentlyAttend = (): boolean => {
-    const { education: { startDate, endDate } } = this.props;
+  private doesCurrentlyWorkHere = (): boolean => {
+    const { experience: { startDate, endDate } } = this.props;
 
     return !!startDate && !endDate;
   }
 
-  private toggleDoesCurrentlyAttend = (): void => {
-    this.updateEducation('endDate', (this.doesCurrentlyAttend() ? new Date() : null) as Date);
+  private getFullTitle = (): string => {
+    const { t } = this.props;
+    const { company = '', position = '' } = this.props.experience;
+
+    if (company && position) {
+      return t('role_at_place', {
+        role: position,
+        place: company
+      });
+    }
+
+    return position || company || t('not_specified');
   }
 
-  private onEducationChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  private toggleDoesCurrentlyWorkHere = (): void => {
+    const { experience: { uuid }, updateWorkExperience } = this.props;
+
+    updateWorkExperience({
+      uuid,
+      endDate: (this.doesCurrentlyWorkHere() ? new Date() : null) as any
+    });
+  }
+
+  private onWorkExperienceChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { experience: { uuid }, updateWorkExperience } = this.props;
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.updateEducation(name, value);
+    updateWorkExperience({
+      uuid,
+      [name]: value
+    });
   }
 
-  private onEducationStartDateChange = (val: unknown): void => {
-    this.updateEducation('startDate', val as Date);
+  private onWorkExperienceStartDateChange = (val: unknown): void => {
+    this.updateWorkExperienceState('startDate', val as Date);
   }
 
-  private onEducationEndDateChange = (val: unknown): void => {
-    this.updateEducation('endDate', val as Date);
+  private onWorkExperienceEndDateChange = (val: unknown): void => {
+    this.updateWorkExperienceState('endDate', val as Date);
   }
 
-  private updateEducationDescription = (descriptionVal: string): void => {
-    this.updateEducation('description', descriptionVal);
+  private updateWorkExperienceDescription = (value: string): void => {
+    return this.updateWorkExperienceState('description', value);
   }
 
-  private updateEducation = (name: string, value: string | Date): void => {
-    const { education: { uuid }, updateEducation } = this.props;
+  private updateWorkExperienceState = (name: string, value: string | Date): void => {
+    const { experience: { uuid }, updateWorkExperience } = this.props;
 
-    updateEducation({
+    updateWorkExperience({
       uuid,
       [name]: value
     });
@@ -251,13 +256,12 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
     this.setState({ isDeleteConfirmationModalOpen: false });
   }
 
-  private deleteEducation = async (): Promise<void> => {
-    const { deleteEducation, education } = this.props;
-    const { uuid: educationId } = education;
+  private deleteWorkExperience = async (): Promise<void> => {
+    const { deleteWorkExperience, experience: { uuid: experienceId } } = this.props;
 
-    await deleteEducation(educationId);
+    await deleteWorkExperience(experienceId);
     this.closeDeleteConfirmationModal();
   }
 }
 
-export const EditEducation = withNamespaces()(EditEducationComponent);
+export const EditExperience = withNamespaces()(EditExperienceComponent);
