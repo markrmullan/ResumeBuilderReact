@@ -31,22 +31,22 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 700
   },
   section: {
-    fontSize: 20,
-    fontWeight: 700
+    fontSize: 15,
+    fontWeight: 700,
+    textTransform: 'uppercase'
   },
   bold: {
     fontWeight: 700
   },
   date: {
-    fontSize: 14,
-    fontStyle: 'italic'
+    fontSize: 13
   },
   roleAndPlace: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 700
   },
   description: {
-    fontSize: 12
+    fontSize: 13
   },
   ul: {
     display: 'flex',
@@ -63,5 +63,8 @@ export const pdfStyles = StyleSheet.create({
   },
   strong: {
     fontWeight: 700
+  },
+  degreeAndGPA: {
+    fontSize: 14
   }
 });

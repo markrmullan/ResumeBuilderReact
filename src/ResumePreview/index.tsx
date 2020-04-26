@@ -82,15 +82,15 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
           {!!experiences.length &&
             <View>
               <Text style={pdfStyles.section}>
-                {t('professional_experience')}
+                {t('experience')}
               </Text>
 
-              {experiences.map(({ company, description, endDate = now, position, startDate = now, uuid }) => {
+              {experiences.map(({ company, description, endDate = now, location, position, startDate = now, uuid }) => {
                 const doesCurrentlyWorkHere = !!startDate && !endDate;
 
                 return (
                   <View key={uuid} style={{ marginBottom: 12 }}>
-                    {this.getRoleAndPlace(position, company)}
+                    {this.getRoleAndPlace(position, company, location)}
                     <Text style={pdfStyles.date}>
                       {format(new Date(startDate), DATE_FORMAT_MONTH_YEAR)} - {doesCurrentlyWorkHere ? t('present') : format(new Date(endDate!), DATE_FORMAT_MONTH_YEAR)}
                     </Text>
@@ -110,12 +110,17 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('education')}
               </Text>
 
-                {educations.map(({ degree, description, endDate = now, school, startDate = now, uuid }) => {
+                {educations.map(({ degree, description, endDate = now, gpa, school, startDate = now, uuid }) => {
                   const doesCurrentlyAttend = !!startDate && !endDate;
 
                   return (
                     <View key={uuid} style={{ marginBottom: 12 }}>
-                      {this.getRoleAndPlace(degree, school)}
+                      {school &&
+                        <Text style={pdfStyles.roleAndPlace}>
+                          {school}
+                        </Text>
+                      }
+                      {this.getDegreeAndGPA(degree, gpa)}
                       <Text style={pdfStyles.date}>
                         {format(new Date(startDate), DATE_FORMAT_YEAR)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate!), DATE_FORMAT_YEAR)}
                       </Text>
@@ -146,8 +151,24 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     return !!(email || phoneNumber);
   }
 
-  private getRoleAndPlace = (role: Maybe<string>, place: Maybe<string>): Maybe<ReactElement> => {
+  private getRoleAndPlace = (role: Maybe<string>, place: Maybe<string>, location: Maybe<string>): Maybe<ReactElement> => {
     const { t } = this.props;
+
+    if (role && place && location) {
+      return (
+        <Text style={pdfStyles.roleAndPlace}>
+          {t('values.em_dash_separated', { val1: t('role_at_place', { role, place }), val2: location })}
+        </Text>
+      );
+    }
+
+    if (location && (role || place)) {
+      return (
+        <Text style={pdfStyles.roleAndPlace}>
+          {t('values.em_dash_separated', { val1: role || place, val2: location })}
+        </Text>
+      );
+    }
 
     if (role && place) {
       return (
@@ -161,6 +182,34 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
       return (
         <Text style={pdfStyles.roleAndPlace}>
           {role || place}
+        </Text>
+      );
+    }
+  }
+
+  private getDegreeAndGPA = (degree: Maybe<string>, gpa: Maybe<string>): Maybe<ReactElement> => {
+    const { t } = this.props;
+
+    if (degree && gpa) {
+      return (
+        <Text style={pdfStyles.degreeAndGPA}>
+          {t('values.comma_separated', { val1: degree, val2: gpa })}
+        </Text>
+      );
+    }
+
+    if (degree) {
+      return (
+        <Text style={pdfStyles.degreeAndGPA}>
+          {degree}
+        </Text>
+      );
+    }
+
+    if (gpa) {
+      return (
+        <Text style={pdfStyles.degreeAndGPA}>
+          {t('gpa_and_value', { gpa })}
         </Text>
       );
     }

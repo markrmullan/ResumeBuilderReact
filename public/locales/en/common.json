@@ -36,10 +36,12 @@
   "employer": "Employer",
   "end_date": "End Date",
   "enter_contact_information": "Enter Contact Information",
+  "experience": "Experience",
   "first_name": "First Name",
   "first_time_here": "First time here? ",
   "get_started": "Get Started",
   "gpa": "GPA",
+  "gpa_and_value": "GPA: {{gpa}}",
   "great_choice_now_add_name": "Great choice! Now let's add your name.",
   "job_title": "Job Title",
   "last_name": "Last Name",
@@ -78,5 +80,9 @@
     "invalid_email": "Invalid email",
     "passwords_do_not_match": "Passwords do not match",
     "minimum_characters_with_count": "Minimum {{count}} characters"
+  },
+  "values": {
+    "comma_separated": "{{val1}}, {{val2}}",
+    "em_dash_separated": "{{val1}} — {{val2}}"
   }
 }
