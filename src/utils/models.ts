@@ -11,6 +11,10 @@ export interface User extends BaseModel {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  jobTitle?: string;
 }
 
 export interface Resume extends BaseModel {

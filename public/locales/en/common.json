@@ -1,8 +1,10 @@
 {
   "access_your_resume_any_time": "Save your progress for later, and access your resume any time.",
+  "add_a_title_that_summarizes": "Add a title like 'Senior Financial Analyst' that summarizes your overall experience, or the type of role you are applying to.",
   "add_education": "Add Education",
   "add_your_name": "Add Your Name",
   "add_work_experience": "Add Work Experience",
+  "adding_location_tooltip": "Adding location information can help you be discovered by recruiters doing radius based searches.",
   "allow_employers_to_contact_you": "Allow employers to contact you by entering your phone number and email address.",
   "already_have_account": "Already have an account? ",
   "app_name": "Resume Builder Pro",
@@ -12,6 +14,7 @@
   "cancel": "Cancel",
   "cannot_be_blank": "Cannot be blank",
   "character_limit_reached_plural": "{{count}} characters max",
+  "city": "City",
   "confirm_password": "Confirm Password",
   "connect_with_facebook": "Connect with Facebook",
   "connect_your_social_profile": "Connect Your Social Profile",
@@ -70,6 +73,7 @@
   "saving_ellipsis": "Saving...",
   "school": "School",
   "start_date": "Start Date",
+  "state_or_province": "State / Province",
   "sign_up": "Sign Up",
   "skip": "Skip",
   "submit": "Submit",
@@ -84,5 +88,6 @@
   "values": {
     "comma_separated": "{{val1}}, {{val2}}",
     "em_dash_separated": "{{val1}} — {{val2}}"
-  }
+  },
+  "zip_or_postal": "Zip / Postal Code"
 }

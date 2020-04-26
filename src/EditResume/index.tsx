@@ -48,7 +48,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { match, t } = this.props;
     const { rId: resumeId } = match.params;
     const { user } = this.context;
-    const { email = '', firstName = '', lastName = '', phoneNumber = '', resumeEmail = '' } = user;
+    const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
     const { resume, showResumePreview } = this.state;
     const { educations = [], experiences = [], name = '' } = resume;
 
@@ -140,6 +140,72 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                     value={phoneNumber}
                     inputMode="tel"
                     onChange={this.onUserChange}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="filled"
+                    label={t('job_title')}
+                    fullWidth
+                    name="jobTitle"
+                    value={jobTitle}
+                    onChange={this.onUserChange}
+                    InputProps={{
+                      endAdornment: (
+                        <Tooltip arrow title={t('add_a_title_that_summarizes')} placement="top">
+                          <InputAdornment position="end" style={{ color: grey[400] }}>
+                            <HelpOutline />
+                          </InputAdornment>
+                        </Tooltip>
+                      )
+                    }}
+                  />
+                </Col>
+
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="filled"
+                    label={t('city')}
+                    fullWidth
+                    name="city"
+                    value={city}
+                    onChange={this.onUserChange}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="filled"
+                    label={t('state_or_province')}
+                    fullWidth
+                    name="state"
+                    value={state}
+                    onChange={this.onUserChange}
+                  />
+                </Col>
+
+                <Col xs={12} md={6} className={styles.mb16}>
+                  <TextField
+                    variant="filled"
+                    label={t('zip_or_postal')}
+                    fullWidth
+                    name="zip"
+                    value={zip}
+                    onChange={this.onUserChange}
+                    InputProps={{
+                      endAdornment: (
+                        <Tooltip arrow title={t('adding_location_tooltip')} placement="top">
+                          <InputAdornment position="end" style={{ color: grey[400] }}>
+                            <HelpOutline />
+                          </InputAdornment>
+                        </Tooltip>
+                      )
+                    }}
                   />
                 </Col>
               </Row>
