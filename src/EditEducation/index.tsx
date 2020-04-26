@@ -186,11 +186,14 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
     );
   }
 
-  public shouldComponentUpdate(nextProps: TComponentProps) {
+  public shouldComponentUpdate (nextProps: TComponentProps, nextState: TComponentState) {
     const { education: { uuid } } = this.props;
     const { lastUpdatedUuid } = nextProps;
+    const { isDeleteConfirmationModalOpen } = this.state;
 
-    return lastUpdatedUuid === null || lastUpdatedUuid === uuid;
+    return lastUpdatedUuid === null ||
+      lastUpdatedUuid === uuid ||
+      isDeleteConfirmationModalOpen !== nextState.isDeleteConfirmationModalOpen;
   }
 
   private getFullTitle = (): string => {
@@ -259,7 +262,6 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
     const { uuid: educationId } = education;
 
     await deleteEducation(educationId);
-    this.closeDeleteConfirmationModal();
   }
 }
 

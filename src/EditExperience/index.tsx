@@ -187,11 +187,14 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
     );
   }
 
-  public shouldComponentUpdate(nextProps: TComponentProps) {
+  public shouldComponentUpdate(nextProps: TComponentProps, nextState: TComponentState) {
     const { experience: { uuid } } = this.props;
     const { lastUpdatedUuid } = nextProps;
+    const { isDeleteConfirmationModalOpen } = this.state;
 
-    return lastUpdatedUuid === null || lastUpdatedUuid === uuid;
+    return lastUpdatedUuid === null ||
+      lastUpdatedUuid === uuid ||
+      isDeleteConfirmationModalOpen !== nextState.isDeleteConfirmationModalOpen;
   }
 
   private doesCurrentlyWorkHere = (): boolean => {
@@ -268,7 +271,6 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
     const { deleteWorkExperience, experience: { uuid: experienceId } } = this.props;
 
     await deleteWorkExperience(experienceId);
-    this.closeDeleteConfirmationModal();
   }
 }
 
