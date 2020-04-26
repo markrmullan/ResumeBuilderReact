@@ -16,6 +16,7 @@ import { TopAppHeader } from 'common/TopAppHeader';
 import { theme } from 'styles/theme';
 import { ROUTES } from 'utils/constants';
 import { CurrentUserContextImpl } from 'utils/contexts';
+import { registerPDFViewerFonts } from 'utils/initializers/font-registrar';
 import { User } from 'utils/models';
 import { fetchCurrentUser, patchCurrentUser } from 'utils/requests';
 
@@ -57,6 +58,7 @@ class App extends Component<WithNamespaces, AppState> {
   }
 
   public async componentDidMount() {
+    registerPDFViewerFonts();
     const currentUser: User = await fetchCurrentUser();
 
     this.setState({ currentUser });

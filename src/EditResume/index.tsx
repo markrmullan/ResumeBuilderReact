@@ -61,7 +61,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
           <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6} className={styles.outerResumeCol}>
             <Container fluid className={styles.outerContainer}>
               <Row className={`${styles.resumeNameContainer} ${styles.mb16}`}>
-                <Col xs={8} sm={5} md={4} xl={3}>
+                <Col xs={8} sm={5} md={4}>
                   <TextField
                     fullWidth
                     label={t('resume_name')}

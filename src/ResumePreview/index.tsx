@@ -2,7 +2,7 @@ import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { blueGrey } from '@material-ui/core/colors';
-import { Document, Font, Link, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
 import classnames from 'classnames';
 import { format } from 'date-fns';
 import { Col } from 'react-bootstrap';
@@ -11,30 +11,12 @@ import { CurrentUserContextImpl } from 'utils/contexts';
 import { Resume } from 'utils/models';
 import { PDFViewer } from './PDFViewer';
 
-import robotoBoldItalic from 'styles/fonts/Roboto-Italic.ttf';
-import roboto from 'styles/fonts/Roboto-Light.ttf';
-import robotoItalic from 'styles/fonts/Roboto-LightItalic.ttf';
-import robotoBold from 'styles/fonts/Roboto-Regular.ttf';
-
 import { pdfStyles } from './pdfStyles';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
   resume: Resume;
 };
-
-// TODO register fonts earlier on?
-Font.register({
-  family: 'Roboto',
-  fonts: [
-    { src: roboto },
-    { src: robotoBold, fontWeight: 700 },
-    { src: robotoItalic, fontStyle: 'italic' },
-    { src: robotoBoldItalic, fontStyle: 'italic', fontWeight: 700 }
-  ]
-});
-
-Font.registerHyphenationCallback(word => [word]); // disable word wrapping hyphenation
 
 const DATE_FORMAT_MONTH_YEAR = 'MMM yyyy';
 const DATE_FORMAT_YEAR = 'yyyy';
