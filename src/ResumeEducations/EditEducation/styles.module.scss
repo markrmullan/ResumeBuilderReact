@@ -49,3 +49,12 @@
     margin-bottom: 0;
   }
 }
+
+.currently-attend-container {
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: $sm-screen-min) {
+    display: block;
+  }
+}

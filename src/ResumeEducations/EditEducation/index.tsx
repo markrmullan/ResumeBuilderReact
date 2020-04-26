@@ -158,7 +158,7 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
               />
             </Col>
 
-            <Col xs={{ span: 12, offset: 6, order: 3 }} md={{ offset: 0, order: 4 }}>
+            <Col xs={{ span: 12, order: 3 }} md={{ order: 4 }} className={styles.currentlyAttendContainer}>
               <FormControlLabel
                 control={
                   <Switch
