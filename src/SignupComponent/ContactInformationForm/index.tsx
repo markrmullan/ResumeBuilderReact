@@ -66,7 +66,7 @@ class ContactInformationFormComponent extends PureComponent<TComponentProps> {
               name="email"
               pattern={EMAIL_REQUIRED.source}
               value={email}
-              isValid={errors.email[0] ? false : undefined}
+              isValid={!errors.email.length}
               onChange={e => onChange(e)}/>
           </TextField>
         </div>

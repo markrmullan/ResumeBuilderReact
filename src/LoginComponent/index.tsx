@@ -49,7 +49,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
                 name="email"
                 pattern={EMAIL_REQUIRED.source}
                 value={email}
-                isValid={error ? false : undefined}
+                isValid={!error}
                 onChange={e => this.onChange(e)}/>
             </TextField>
 
