@@ -8,7 +8,7 @@ export const pdfStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16
+    marginBottom: 12
   },
   link: {
     color: lightBlue[900],
@@ -28,7 +28,12 @@ export const pdfStyles = StyleSheet.create({
   },
   name: {
     fontSize: 36,
-    fontWeight: 700
+    fontWeight: 700,
+    lineHeight: 1,
+    marginLeft: -1
+  },
+  jobTitle: {
+    fontSize: 11
   },
   section: {
     fontSize: 15,

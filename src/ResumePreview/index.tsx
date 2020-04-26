@@ -47,16 +47,22 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   public render() {
     const { resume, t } = this.props;
     const { user } = this.context;
-    const { email, phoneNumber, resumeEmail } = user;
+    const { email, jobTitle, phoneNumber, resumeEmail } = user;
     const { educations = [], experiences = [] } = resume;
     const now = Date.now();
+    const emailToShow = resumeEmail || email;
 
     const MyDocument = () => (
       <Document>
         <Page size="A4" style={pdfStyles.page}>
           <View style={pdfStyles.informationContainer}>
-            <View style={pdfStyles.name}>
-              <Text>{user.firstName} {user.lastName}</Text>
+            <View>
+              <Text style={pdfStyles.name}>
+                {`${user.firstName} ${user.lastName}`.trim()}
+              </Text>
+              {jobTitle &&
+                <Text style={pdfStyles.jobTitle}>{jobTitle}</Text>
+              }
             </View>
 
             {this.shouldShowDetails() &&
@@ -70,11 +76,13 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                   </Text>
                 }
 
-                {(resumeEmail || email) &&
-                  <Link style={pdfStyles.link} src={`mailto:${resumeEmail || email}`}>
-                    {(resumeEmail || email)}
+                {emailToShow &&
+                  <Link style={pdfStyles.link} src={`mailto:${emailToShow}`}>
+                    {emailToShow}
                   </Link>
                 }
+
+                {this.getCityStateZip()}
               </View>
             }
           </View>
@@ -143,6 +151,39 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const { email, phoneNumber } = user;
 
     return !!(email || phoneNumber);
+  }
+
+  private getCityStateZip = (): Maybe<ReactElement> => {
+    const { user } = this.context;
+    const { city, state, zip = '' } = user;
+
+    if (city && state) {
+      const { t } = this.props;
+
+      const cityState = t('values.comma_separated', { val1: city, val2: state });
+
+      return (
+        <Text>
+          {`${cityState} ${zip}`.trim()}
+        </Text>
+      );
+    }
+
+    if (city || state) {
+      return (
+        <Text>
+          {`${city || state} ${zip}`.trim()}
+        </Text>
+      );
+    }
+
+    if (zip) {
+      return (
+        <Text>
+          {zip.trim()}
+        </Text>
+      );
+    }
   }
 
   private getFormattedStartDateEndDate = (startDate: string | number, endDate: Nullable<string>, dateFormat: string = DATE_FORMAT_MONTH_YEAR): ReactElement => {
