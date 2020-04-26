@@ -5,10 +5,6 @@
     margin-bottom: 12px;
   }
 
-  .cta-button-container {
-    justify-self: center;
-  }
-
   .create-new-button {
     white-space: nowrap;
 
@@ -16,8 +12,18 @@
       width: 100%;
     }
   }
+
+  .add-button-container {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .resumes-container {
   margin-top: 16px;
+
+  .resume-card {
+    margin-bottom: 12px;
+  }
 }

@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import classnames from 'classnames';
+import { Col, Container, Row } from 'react-bootstrap';
 
 import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner';
@@ -36,44 +36,43 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
 
     if (pending) {
       return (
-        <Grid>
+        <Container>
           <Spinner />
-        </Grid>
+        </Container>
       );
     }
 
     return (
       <div className="app-wrapper-max-width">
-        <Grid container className={styles.container}>
-          <Grid container>
-            <Grid item xs={12} sm={9} lg={9} className={styles.headerEl}>
+        <Container fluid className={styles.container}>
+          <Row noGutters>
+            <Col xs={12} sm={8} className={styles.headerEl}>
               <h1>{t('resumes')}</h1>
-            </Grid>
-            <Grid alignItems="center" justify="flex-end" container item xs={12} sm={3} lg={3}>
+            </Col>
+
+            <Col xs={12} sm={4} className={`${styles.addButtonContainer}`}>
               <Button
                 color="primary"
                 variant="contained"
-                className={classnames(styles.createNewButton, styles.headerEl)}
+                className={`${styles.headerEl} ${styles.createNewButton}`}
                 startIcon={<Add />}
                 onClick={this.createResume}
-                >
-                  {t('create_new')}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
+              >
+                {t('create_new')}
+              </Button>
+            </Col>
+          </Row>
 
           <FullWidthDivider />
 
-          <Grid container className={styles.resumesContainer}>
-            <Grid container spacing={3}>
-              {resumes.map(resume => (
-                <Grid item xs={12} md={6} key={resume.uuid}>
-                  <ResumeCard resume={resume} deleteResume={this.deleteResume} />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
+          <Row className={styles.resumesContainer}>
+            {resumes.map(resume => (
+              <Col xs={12} md={6} key={resume.uuid} className={styles.resumeCard}>
+                <ResumeCard resume={resume} deleteResume={this.deleteResume} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </div>
     );
   }
