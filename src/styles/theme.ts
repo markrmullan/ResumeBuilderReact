@@ -40,6 +40,12 @@ export const theme = createMuiTheme({
     MuiExpansionPanelSummary: {
       root: {
         padding: '0 16px'
+      },
+      content: {
+        margin: '6px 0',
+        '&.Mui-expanded': {
+          margin: '6px 0'
+        }
       }
     },
     MuiInputBase: {
