@@ -196,13 +196,13 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
 
   public async componentDidMount() {
     const { rId: resumeId } = this.props.match.params;
+    const { patchCurrentUser } = this.context;
+    this.throttledPatchCurrentUser = throttle(patchCurrentUser, 2000, { leading: false });
 
     const resume: Resume = await fetchResume(resumeId);
     this.setState({ resume });
-    setTimeout(() => this.setState({ showResumePreview: true }), 500);
+    setTimeout(() => this.setState({ showResumePreview: true }), 200);
 
-    const { patchCurrentUser } = this.context;
-    this.throttledPatchCurrentUser = throttle(patchCurrentUser, 2000, { leading: false });
   }
 
   private onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
