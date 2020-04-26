@@ -1,35 +1,37 @@
-import React, { ChangeEvent, Component } from 'react';
-import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { RouteComponentProps } from 'react-router-dom';
+ import React, { ChangeEvent, Component } from 'react';
+ import { WithNamespaces, withNamespaces } from 'react-i18next';
+ import { RouteComponentProps } from 'react-router-dom';
 
-import { Button, InputAdornment, TextField, Tooltip } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
-import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
-import throttle from 'lodash.throttle';
-import { Col, Container, Row } from 'react-bootstrap';
+ import { Button, InputAdornment, TextField, Tooltip } from '@material-ui/core';
+ import { grey } from '@material-ui/core/colors';
+ import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
+ import throttle from 'lodash.throttle';
+ import { Col, Container, Row } from 'react-bootstrap';
 
-import { EditEducation } from 'EditEducation';
-import { EditExperience } from 'EditExperience';
-import { ResumePreview } from 'ResumePreview';
-import { CurrentUserContextImpl } from 'utils/contexts';
-import { Education, Experience, Resume, User } from 'utils/models';
-import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
-import { BackLink } from './BackLink';
+ import { EditEducation } from 'EditEducation';
+ import { EditExperience } from 'EditExperience';
+ import { ResumePreview } from 'ResumePreview';
+ import { CurrentUserContextImpl } from 'utils/contexts';
+ import { Education, Experience, Resume, User } from 'utils/models';
+ import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
+ import { BackLink } from './BackLink';
+ import { SectionHeader } from './SectionHeader';
+ import { SectionHeaderAndSupportingInfo } from './SectionHeader/WithSupportingInfo';
 
-import styles from './styles.module.scss';
+ import styles from './styles.module.scss';
 
-type PathParams = {
+ type PathParams = {
   rId: Uuid;
 };
 
-type TComponentState = {
+ type TComponentState = {
   showResumePreview: boolean;
   resume: Resume;
 };
 
-type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
+ type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 
-class EditResumeComponent extends Component<TComponentProps, TComponentState> {
+ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
   private throttledPatchEducation: (resumeId: Uuid, education: Partial<Education>) => Promise<Education>;
@@ -81,11 +83,8 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                   />
                 </Col>
               </Row>
-              <Row>
-                <Col xs={12} className={styles.mb16}>
-                  <h3 className={styles.sectionHeader}>{t('personal_information')}</h3>
-                </Col>
-              </Row>
+
+              <SectionHeader title={t('personal_information')} />
 
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
@@ -211,16 +210,10 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                 </Col>
               </Row>
 
-              <Row>
-                <Col xs={12}>
-                  <h3 className={styles.sectionHeader}>{t('professional_experience')}</h3>
-                </Col>
-              </Row>
-              <Row className={styles.mb16}>
-                <Col xs={12}>
-                  <p className={styles.supportingInfo}>{t('professional_experience_supporting_info')}</p>
-                </Col>
-              </Row>
+              <SectionHeaderAndSupportingInfo
+                title={t('professional_experience')}
+                supportingInfo={t('professional_experience_supporting_info')}
+              />
 
               {experiences.map(exp => (
                 <EditExperience
@@ -242,16 +235,10 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
                 </Col>
               </Row>
 
-              <Row>
-                <Col xs={12}>
-                  <h3 className={styles.sectionHeader}>{t('education')}</h3>
-                </Col>
-              </Row>
-              <Row className={styles.mb16}>
-                <Col xs={12}>
-                  <p className={styles.supportingInfo}>{t('education_supporting_info')}</p>
-                </Col>
-              </Row>
+              <SectionHeaderAndSupportingInfo
+                title={t('education')}
+                supportingInfo={t('education_supporting_info')}
+              />
 
               {educations.map(edu => (
                 <EditEducation
@@ -425,4 +412,4 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   }
 }
 
-export const EditResume = withNamespaces()(EditResumeComponent);
+ export const EditResume = withNamespaces()(EditResumeComponent);
