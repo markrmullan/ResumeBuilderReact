@@ -64,7 +64,7 @@ export const patchCurrentUser = (user: User): Promise<User> => {
   return patch<User>(query, user);
 };
 
-export const createWorkExperience = (resumeId: Uuid, experience: Experience = {} as Experience): Promise<Experience> => {
+export const createWorkExperience = (resumeId: Uuid, experience: Partial<Experience> = {}): Promise<Experience> => {
   const query: Partial<ApiQuery> = {
     baseResource: 'resumes',
     baseResourceId: resumeId,

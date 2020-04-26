@@ -85,7 +85,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('experience')}
               </Text>
 
-              {experiences.map(({ company, description, endDate = now, location, position, startDate = now, uuid }) => {
+              {experiences.map(({ company, description, endDate, location, position, startDate = now, uuid }) => {
                 const doesCurrentlyWorkHere = !!startDate && !endDate;
 
                 return (
@@ -110,7 +110,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 {t('education')}
               </Text>
 
-                {educations.map(({ degree, description, endDate = now, gpa, school, startDate = now, uuid }) => {
+                {educations.map(({ degree, description, endDate, gpa, school, startDate = now, uuid }) => {
                   const doesCurrentlyAttend = !!startDate && !endDate;
 
                   return (
