@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 
 type TOwnProps = {
   createEducation: () => void;
+  updateEducation: (education: Partial<Education>) => Promise<void>;
   deleteEducation: (experienceId: Uuid) => Promise<void>;
   educations: Education[];
   resumeId: Uuid;
@@ -21,7 +22,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class ResumeEducationsComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { createEducation, deleteEducation, educations = [], resumeId, t } = this.props;
+    const { createEducation, deleteEducation, educations = [], resumeId, t, updateEducation } = this.props;
 
     return (
       <Fragment>
@@ -29,6 +30,7 @@ class ResumeEducationsComponent extends PureComponent<TComponentProps> {
           <EditEducation
             key={edu.uuid}
             education={edu}
+            updateEducation={updateEducation}
             deleteEducation={deleteEducation}
             resumeId={resumeId}
           />

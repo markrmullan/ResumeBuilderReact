@@ -1,17 +1,15 @@
-import React, { ChangeEvent, Fragment, MouseEvent, PureComponent } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePicker, DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
-import throttle from 'lodash.throttle';
 import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
 import { Education } from 'utils/models';
-import { patchEducation } from 'utils/requests';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year'];
 const DATE_PICKER_FORMAT = 'yyyy';
@@ -20,38 +18,26 @@ import styles from './styles.module.scss';
 
 type TOwnProps = {
   education: Education;
+  updateEducation: (education: Partial<Education>) => Promise<void>;
   deleteEducation: (educationId: Uuid) => Promise<void>;
   resumeId: Uuid;
 };
 
 type TComponentState = {
-  doesCurrentlyAttend: boolean;
-  education: Education;
   isDeleteConfirmationModalOpen: boolean;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditEducationComponent extends PureComponent<TComponentProps, TComponentState> {
-  private throttledPatchEducationDescription: Function;
-
-  public constructor(props: TComponentProps) {
-    super(props);
-    const { education } = this.props;
-    const { endDate, startDate } = education;
-
-    this.state = {
-      doesCurrentlyAttend: !!startDate && !endDate,
-      education,
-      isDeleteConfirmationModalOpen: false
-    };
-    this.throttledPatchEducationDescription = throttle(this.patchEducationDescription, 2000);
-  }
+class EditEducationComponent extends React.Component<TComponentProps, TComponentState> {
+  public state = {
+    isDeleteConfirmationModalOpen: false
+  };
 
   public render() {
     const now = new Date();
-    const { t } = this.props;
-    const { doesCurrentlyAttend, education, isDeleteConfirmationModalOpen } = this.state;
+    const { education, t } = this.props;
+    const { isDeleteConfirmationModalOpen } = this.state;
     const { degree = '', description = '', endDate = now, gpa = '', school = '', startDate = now } = education;
 
     return (
@@ -68,7 +54,6 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
 
         <ExpansionPanel className={styles.mb16} elevation={0} variant="outlined">
           <ExpansionPanelSummary
-
             expandIcon={<ExpandMore />}
           >
             <Row>
@@ -84,7 +69,7 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
                   </div>
                   <div>
                     <div className={styles.title}>{this.getFullTitle()}</div>
-                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {doesCurrentlyAttend ? t('present') : format(new Date(endDate), DATE_PICKER_FORMAT)}</div>
+                    <div>{format(new Date(startDate), DATE_PICKER_FORMAT)} - {this.doesCurrentlyAttend() ? t('present') : format(new Date(endDate!), DATE_PICKER_FORMAT)}</div>
                   </div>
                 </div>
               </Col>
@@ -100,7 +85,6 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
                 name="school"
                 value={school}
                 onChange={this.onEducationChange}
-                onBlur={this.patchEducation}
               />
             </Col>
 
@@ -112,7 +96,6 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
                 name="degree"
                 value={degree}
                 onChange={this.onEducationChange}
-                onBlur={this.patchEducation}
               />
             </Col>
           </Row>
@@ -136,7 +119,7 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
             </Col>
 
             <Col xs={6} md={3}>
-              {doesCurrentlyAttend ?
+              {this.doesCurrentlyAttend() ?
                 <TextField
                   disabled
                   variant="filled"
@@ -172,7 +155,6 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
                 name="gpa"
                 value={gpa}
                 onChange={this.onEducationChange}
-                onBlur={this.patchEducation}
               />
             </Col>
 
@@ -180,8 +162,8 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
               <FormControlLabel
                 control={
                   <Switch
-                    checked={doesCurrentlyAttend}
-                    onChange={this.toggleDoesCurrentlyWorkHere}
+                    checked={this.doesCurrentlyAttend()}
+                    onChange={this.toggleDoesCurrentlyAttend}
                     color="primary"
                   />
                 }
@@ -194,10 +176,7 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
             <Col xs={12} className={styles.mb16}>
               <RichTextEditor
                 label={t('description')}
-                onEditorChange={(e: string) => {
-                  this.updateEducationState('description', e);
-                  this.throttledPatchEducationDescription();
-                }}
+                onEditorChange={this.updateEducationDescription}
                 value={description}
               />
             </Col>
@@ -207,9 +186,13 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
     );
   }
 
+  public shouldComponentUpdate() {
+    return true;
+  }
+
   private getFullTitle = (): string => {
-    const { t } = this.props;
-    const { school = '', degree = '' } = this.state.education;
+    const { education, t } = this.props;
+    const { school = '', degree = '' } = education;
 
     if (school && degree) {
       return t('role_at_place', {
@@ -221,73 +204,40 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
     return degree || school || t('not_specified');
   }
 
-  private toggleDoesCurrentlyWorkHere = (): void => {
-    const { education: { uuid: educationUuid }, resumeId } = this.props;
+  private doesCurrentlyAttend = (): boolean => {
+    const { education: { startDate, endDate } } = this.props;
 
-    this.setState(prevState => ({
-      doesCurrentlyAttend: !prevState.doesCurrentlyAttend,
-      education: {
-        ...prevState.education,
-        endDate: prevState.doesCurrentlyAttend ? new Date() : undefined
-      }
-    } as TComponentState), () => {
-      patchEducation(resumeId, {
-        uuid: educationUuid,
-        endDate: (this.state.education.endDate || null) as string
-      });
-    });
+    return !!startDate && !endDate;
+  }
+
+  private toggleDoesCurrentlyAttend = (): void => {
+    this.updateEducation('endDate', (this.doesCurrentlyAttend() ? new Date() : null) as Date);
   }
 
   private onEducationChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.updateEducationState(name, value);
+    this.updateEducation(name, value);
   }
 
   private onEducationStartDateChange = (val: unknown): void => {
-    this.onEducationDateChange('startDate', val);
+    this.updateEducation('startDate', val as Date);
   }
 
   private onEducationEndDateChange = (val: unknown): void => {
-    this.onEducationDateChange('endDate', val);
+    this.updateEducation('endDate', val as Date);
   }
 
-  private updateEducationState = (name: string, value: string | Date): void => {
-    this.setState(({ education }) => ({
-      education: {
-        ...education,
-        [name]: value
-      }
-    } as TComponentState));
+  private updateEducationDescription = (descriptionVal: string): void => {
+    this.updateEducation('description', descriptionVal);
   }
 
-  private onEducationDateChange = (key: string, val: unknown): void => {
-    const { education: { uuid: educationUuid }, resumeId } = this.props;
+  private updateEducation = (name: string, value: string | Date): void => {
+    const { education: { uuid }, updateEducation } = this.props;
 
-    this.updateEducationState(key, val as Date);
-    patchEducation(resumeId, {
-      uuid: educationUuid,
-      [key]: val as Date
-    });
-  }
-
-  private patchEducation = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { name, value }: { name: string; value: string } = e.currentTarget;
-    const { education: { uuid: educationUuid }, resumeId } = this.props;
-
-    patchEducation(resumeId, {
-      uuid: educationUuid,
+    updateEducation({
+      uuid,
       [name]: value
-    });
-  }
-
-  private patchEducationDescription = (): void => {
-    const { education: { uuid: educationUuid }, resumeId } = this.props;
-    const { education: { description } } = this.state;
-
-    patchEducation(resumeId, {
-      uuid: educationUuid,
-      description
     });
   }
 
@@ -302,8 +252,8 @@ class EditEducationComponent extends PureComponent<TComponentProps, TComponentSt
   }
 
   private deleteEducation = async (): Promise<void> => {
-    const { deleteEducation } = this.props;
-    const { uuid: educationId } = this.state.education;
+    const { deleteEducation, education } = this.props;
+    const { uuid: educationId } = education;
 
     await deleteEducation(educationId);
     this.closeDeleteConfirmationModal();

@@ -39,5 +39,5 @@ export interface Education extends BaseModel {
   gpa: string;
   school: string;
   startDate: string;
-  endDate: Maybe<string>;
+  endDate: Nullable<string>;
 }

@@ -12,8 +12,8 @@ import { ResumeEducations } from 'ResumeEducations';
 import { ResumeExperiences } from 'ResumeExperiences';
 import { ResumePreview } from 'ResumePreview';
 import { CurrentUserContextImpl } from 'utils/contexts';
-import { Experience, Resume, User } from 'utils/models';
-import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchResume, patchWorkExperience } from 'utils/requests';
+import { Education, Experience, Resume, User } from 'utils/models';
+import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
 
 import styles from './styles.module.scss';
 
@@ -31,12 +31,14 @@ type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
+  private throttledPatchEducation: (resumeId: Uuid, education: Partial<Education>) => Promise<Education>;
   private throttledPatchCurrentUser: Nullable<(user: Partial<User>) => Promise<User>> = null;
 
   public constructor(props: TComponentProps) {
     super(props);
 
-    this.throttledPatchExperience = throttle(patchWorkExperience, 4000, { leading: false });
+    this.throttledPatchExperience = throttle(patchWorkExperience, 2000, { leading: false });
+    this.throttledPatchEducation = throttle(patchEducation, 2000, { leading: false });
 
     this.state = {
       resume: {} as Resume,
@@ -242,6 +244,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
 
               <ResumeEducations
                 createEducation={this.createEducation}
+                updateEducation={this.updateEducation}
                 deleteEducation={this.deleteEducation}
                 educations={educations}
                 resumeId={resumeId}
@@ -334,6 +337,23 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
         educations: [...(resume.educations || []), education]
       }
     }));
+  }
+
+  private updateEducation = async (education: Partial<Education>): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        educations: (resume.educations || []).map(prevEducation => prevEducation.uuid === education.uuid ? { ...prevEducation, ...education } : prevEducation)
+      }
+    }), () => {
+      const toUpdate: Maybe<Education> = (this.state.resume.educations || []).find(exp => exp.uuid === education.uuid);
+
+      if (toUpdate) {
+        this.throttledPatchEducation(resumeId, toUpdate);
+      }
+    });
   }
 
   private deleteEducation = async (educationId: Uuid): Promise<void> => {
