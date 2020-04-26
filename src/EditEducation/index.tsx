@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, MouseEvent } from 'react';
+import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
@@ -17,6 +17,7 @@ const DATE_PICKER_FORMAT = 'yyyy';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
+  lastUpdatedUuid: Nullable<Uuid>;
   education: Education;
   updateEducation: (education: Partial<Education>) => Promise<void>;
   deleteEducation: (educationId: Uuid) => Promise<void>;
@@ -28,7 +29,7 @@ type TComponentState = {
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditEducationComponent extends React.Component<TComponentProps, TComponentState> {
+class EditEducationComponent extends Component<TComponentProps, TComponentState> {
   public state = {
     isDeleteConfirmationModalOpen: false
   };
@@ -185,8 +186,11 @@ class EditEducationComponent extends React.Component<TComponentProps, TComponent
     );
   }
 
-  public shouldComponentUpdate() {
-    return true;
+  public shouldComponentUpdate(nextProps: TComponentProps) {
+    const { education: { uuid } } = this.props;
+    const { lastUpdatedUuid } = nextProps;
+
+    return lastUpdatedUuid === null || lastUpdatedUuid === uuid;
   }
 
   private getFullTitle = (): string => {

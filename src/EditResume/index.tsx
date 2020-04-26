@@ -25,6 +25,7 @@
 };
 
  type TComponentState = {
+  lastUpdatedUuid: Nullable<Uuid>;
   showResumePreview: boolean;
   resume: Resume;
 };
@@ -44,6 +45,7 @@
     this.throttledPatchEducation = throttle(patchEducation, 2000, { leading: false });
 
     this.state = {
+      lastUpdatedUuid: null,
       resume: {} as Resume,
       showResumePreview: false
     };
@@ -53,7 +55,7 @@
     const { t } = this.props;
     const { user } = this.context;
     const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
-    const { resume, showResumePreview } = this.state;
+    const { lastUpdatedUuid, resume, showResumePreview } = this.state;
     const { educations = [], experiences = [], name = '' } = resume;
 
     return (
@@ -221,6 +223,7 @@
                   experience={exp}
                   updateWorkExperience={this.updateWorkExperience}
                   deleteWorkExperience={this.deleteWorkExperience}
+                  lastUpdatedUuid={lastUpdatedUuid}
                 />
               ))}
               <Row className={styles.mb16}>
@@ -246,6 +249,7 @@
                   education={edu}
                   updateEducation={this.updateEducation}
                   deleteEducation={this.deleteEducation}
+                  lastUpdatedUuid={lastUpdatedUuid}
                 />
               ))}
 
@@ -311,14 +315,16 @@
 
   private updateWorkExperience = async (experience: Partial<Experience>): Promise<void> => {
     const { rId: resumeId } = this.props.match.params;
+    const { uuid } = experience;
 
     this.setState(({ resume }) => ({
+      lastUpdatedUuid: uuid || null,
       resume: {
         ...resume,
-        experiences: (resume.experiences || []).map(prevExp => prevExp.uuid === experience.uuid ? { ...prevExp, ...experience } : prevExp)
+        experiences: (resume.experiences || []).map(prevExp => prevExp.uuid === uuid ? { ...prevExp, ...experience } : prevExp)
       }
     }), () => {
-      const toUpdate: Maybe<Experience> = (this.state.resume.experiences || []).find(exp => exp.uuid === experience.uuid);
+      const toUpdate: Maybe<Experience> = (this.state.resume.experiences || []).find(exp => exp.uuid === uuid);
 
       if (toUpdate) {
         this.throttledPatchExperience(resumeId, toUpdate);
@@ -352,14 +358,16 @@
 
   private updateEducation = async (education: Partial<Education>): Promise<void> => {
     const { rId: resumeId } = this.props.match.params;
+    const { uuid } = education;
 
     this.setState(({ resume }) => ({
+      lastUpdatedUuid: uuid || null,
       resume: {
         ...resume,
-        educations: (resume.educations || []).map(prevEducation => prevEducation.uuid === education.uuid ? { ...prevEducation, ...education } : prevEducation)
+        educations: (resume.educations || []).map(prevEducation => prevEducation.uuid === uuid ? { ...prevEducation, ...education } : prevEducation)
       }
     }), () => {
-      const toUpdate: Maybe<Education> = (this.state.resume.educations || []).find(exp => exp.uuid === education.uuid);
+      const toUpdate: Maybe<Education> = (this.state.resume.educations || []).find(exp => exp.uuid === uuid);
 
       if (toUpdate) {
         this.throttledPatchEducation(resumeId, toUpdate);

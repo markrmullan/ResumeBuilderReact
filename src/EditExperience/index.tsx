@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment, MouseEvent, PureComponent } from 'react';
+import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
@@ -17,6 +17,7 @@ const DATE_PICKER_FORMAT = 'MMM yyyy';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
+  lastUpdatedUuid: Nullable<Uuid>;
   experience: Experience;
   updateWorkExperience: (experience: Partial<Experience>) => Promise<void>;
   deleteWorkExperience: (experienceId: Uuid) => Promise<void>;
@@ -28,7 +29,7 @@ type TComponentState = {
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class EditExperienceComponent extends PureComponent<TComponentProps, TComponentState> {
+class EditExperienceComponent extends Component<TComponentProps, TComponentState> {
   public state = {
     isDeleteConfirmationModalOpen: false
   };
@@ -184,6 +185,13 @@ class EditExperienceComponent extends PureComponent<TComponentProps, TComponentS
         </ExpansionPanel>
       </Fragment>
     );
+  }
+
+  public shouldComponentUpdate(nextProps: TComponentProps) {
+    const { experience: { uuid } } = this.props;
+    const { lastUpdatedUuid } = nextProps;
+
+    return lastUpdatedUuid === null || lastUpdatedUuid === uuid;
   }
 
   private doesCurrentlyWorkHere = (): boolean => {
