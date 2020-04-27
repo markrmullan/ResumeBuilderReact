@@ -30,7 +30,7 @@ type TComponentState = {
 type TComponentProps = TOwnProps & WithNamespaces & RouteComponentProps;
 
 class ResumeCardComponent extends PureComponent<TComponentProps, TComponentState> {
-  public state = {
+  state = {
     isDeleteConfirmationOpen: false
   };
 

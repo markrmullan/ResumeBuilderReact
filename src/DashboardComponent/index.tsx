@@ -25,7 +25,7 @@ type TComponentProps = RouteComponentProps & WithNamespaces;
 class DashboardComponent extends PureComponent<TComponentProps, DashboardComponentState> {
   public static contextType = CurrentUserContextImpl;
 
-  public state = {
+  state = {
     resumes: [],
     pending: true
   };

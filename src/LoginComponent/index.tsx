@@ -22,7 +22,7 @@ type LoginState = {
 type TComponentProps = RouteComponentProps & WithNamespaces;
 
 class Login extends PureComponent<TComponentProps, LoginState> {
-  public state = {
+  state = {
     email: '',
     error: undefined,
     password: ''

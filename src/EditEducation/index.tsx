@@ -34,7 +34,7 @@ type TComponentState = {
 type TComponentProps = TOwnProps & WithNamespaces;
 
 class EditEducationComponent extends Component<TComponentProps, TComponentState> {
-  public state = {
+  state = {
     isDeleteConfirmationModalOpen: false
   };
 

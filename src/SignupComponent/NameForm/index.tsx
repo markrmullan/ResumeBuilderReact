@@ -25,7 +25,7 @@ type TComponentState = {
 };
 
 class NameFormComponent extends PureComponent<TComponentProps, TComponentState> {
-  public state = {
+  state = {
     firstNameError: false,
     lastNameError: false
   };
