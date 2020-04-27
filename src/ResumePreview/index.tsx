@@ -179,7 +179,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const { links = [] } = this.props.resume;
 
     return links.reduce((acc, link) => {
-      const urlWithoutProtocol = link.url && link.url.replace(/^(https:\/\/|http:\/\/|https:\/\/www\.|http:\/\/www\.)/, '');
+      const urlWithoutProtocol = link.url && link.url.replace(/^(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)/, '');
 
       if (urlWithoutProtocol) {
         acc.push(
