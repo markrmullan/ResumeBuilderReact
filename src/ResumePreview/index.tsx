@@ -34,6 +34,8 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     const now = Date.now();
     const emailToShow = resumeEmail || email;
 
+    const links = this.getLinks();
+
     const MyDocument = () => (
       <Document>
         <Page size="A4" style={pdfStyles.page}>
@@ -49,9 +51,12 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
             {this.shouldShowDetails() &&
               <View style={pdfStyles.detailsContainer}>
-                <Text style={pdfStyles.bold}>
-                  {t('contact_details')}
-                </Text>
+                {!links.length &&
+                  <Text style={pdfStyles.bold}>
+                    {t('contact_details')}
+                  </Text>
+                }
+
                 {phoneNumber &&
                   <Text>
                     {phoneNumber}
@@ -65,6 +70,8 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
                 }
 
                 {this.getCityStateZip()}
+
+                {links}
               </View>
             }
           </View>
@@ -166,6 +173,24 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
         </Text>
       );
     }
+  }
+
+  private getLinks = (): ReactElement[] => {
+    const { links = [] } = this.props.resume;
+
+    return links.reduce((acc, link) => {
+      const urlWithoutProtocol = link.url && link.url.replace(/^(https:\/\/|http:\/\/|https:\/\/www\.|http:\/\/www\.)/, '');
+
+      if (urlWithoutProtocol) {
+        acc.push(
+          <Link key={link.uuid} src={urlWithoutProtocol} style={pdfStyles.link}>
+            {urlWithoutProtocol}
+          </Link>
+        );
+      }
+
+      return acc;
+    }, [] as ReactElement[]);
   }
 
   private getFormattedStartDateEndDate = (startDate: string | number, endDate: Nullable<string>, dateFormat: string = DATE_FORMAT_MONTH_YEAR): ReactElement => {
