@@ -1,15 +1,17 @@
-import TextField, { HelperText, Input } from '@material/react-text-field';
 import React, { FormEvent, PureComponent } from 'react';
 import AsyncButton from 'react-async-button';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import classnames from 'classnames';
+import { TextField } from 'common/TextField';
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH, ROUTES } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
 
-import styles from 'SignupComponent/styles.module.scss';
+import signupStyles from 'SignupComponent/styles.module.scss';
+import styles from './styles.module.scss';
 
 type LoginState = {
   email: string;
@@ -32,57 +34,41 @@ class Login extends PureComponent<TComponentProps, LoginState> {
 
     return (
       <form onSubmit={e => this.allFieldsValid && this.submit(e)}>
-        <div className={styles.authContainer}>
-            <h1 className={styles.h1}>
-              {t('log_in')}
-            </h1>
+        <div className={`${signupStyles.authContainer} ${styles.loginContainer}`}>
+          <h1 className={signupStyles.h1}>
+            {t('log_in')}
+          </h1>
 
-            <TextField
-              label={t('email')}
-              helperText={
-                <HelperText isValidationMessage validation>
-                  {error || t('validation.invalid_email')}
-                </HelperText>}
-            >
-              <Input
-                id="email"
-                name="email"
-                pattern={EMAIL_REQUIRED.source}
-                value={email}
-                isValid={!error}
-                onChange={e => this.onChange(e)}/>
-            </TextField>
+          <TextField
+            className={classnames(styles.field, { [styles.helperTextActive]: !!error })}
+            label={t('email')}
+            error={!!error}
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            helperText={error}
+          />
 
-            <TextField
-              label={t('password')}
-              helperText={
-                <HelperText
-                  isValidationMessage
-                  validation
-                >
-                  {t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
-                </HelperText>}
-            >
-              <Input
-                id="password"
-                minLength={MIN_PASSWORD_LENGTH}
-                name="password"
-                type="password"
-                autoComplete="password"
-                value={password}
-                onChange={e => this.onChange(e)}/>
-            </TextField>
+          <TextField
+            className={styles.field}
+            label={t('password')}
+            name="password"
+            type="password"
+            autoComplete="password"
+            value={password}
+            onChange={this.onChange}
+          />
 
-            <AsyncButton
-              type="submit"
-              className="mdc-button mdc-ripple-upgraded mdc-button--raised"
-              disabled={!this.allFieldsValid}
-              text={t('submit')}
-              pendingText={t('loading_ellipsis')}
-              onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
-            />
+          <AsyncButton
+            type="submit"
+            className="mdc-button mdc-ripple-upgraded mdc-button--raised"
+            disabled={!this.allFieldsValid}
+            text={t('submit')}
+            pendingText={t('loading_ellipsis')}
+            onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
+          />
 
-          <div className={styles.switchAuthMethod}>
+          <div className={signupStyles.switchAuthMethod}>
             <span>{t('first_time_here')}</span>
             <Link to="get-started">
               {t('sign_up')}
@@ -93,7 +79,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     );
   }
 
-  private onChange(e: FormEvent<HTMLTextAreaElement>) {
+  private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
     this.setState({ [name]: value, error: undefined } as LoginState);
