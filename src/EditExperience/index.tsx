@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { ExpansionPanelSummary, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
+import { ExpansionPanelSummary, FormControlLabel, Switch } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
@@ -12,6 +12,7 @@ import { DatePicker } from 'common/DatePicker';
 import { ExpansionPanel } from 'common/ExpansionPanel';
 import { RichTextEditor } from 'common/RichTextEditor';
 import { TextField } from 'common/TextField';
+import { Tooltip } from 'common/Tooltip';
 import { Experience } from 'utils/models';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
@@ -63,7 +64,7 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
               <Col xs={12}>
                 <div className={styles.summary}>
                   <div className={styles.deleteIconContainer}>
-                    <Tooltip arrow title={t('delete')} placement="top">
+                    <Tooltip title={t('delete')}>
                       <DeleteOutlined
                         className={styles.deleteIcon}
                         onClick={this.openDeleteConfirmationModal}

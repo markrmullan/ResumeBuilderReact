@@ -2,7 +2,7 @@
  import { WithNamespaces, withNamespaces } from 'react-i18next';
  import { RouteComponentProps } from 'react-router-dom';
 
- import { Button, InputAdornment, Tooltip } from '@material-ui/core';
+ import { Button, InputAdornment } from '@material-ui/core';
  import { grey } from '@material-ui/core/colors';
  import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
  import throttle from 'lodash.throttle';
@@ -12,6 +12,7 @@
  import { EditExperience } from 'EditExperience';
  import { ResumePreview } from 'ResumePreview';
  import { TextField } from 'common/TextField';
+ import { Tooltip } from 'common/Tooltip';
  import { CurrentUserContextImpl } from 'utils/contexts';
  import { Education, Experience, Resume, User } from 'utils/models';
  import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
@@ -119,7 +120,7 @@
                     onChange={this.onUserChange}
                     InputProps={{
                       endAdornment: (
-                        <Tooltip arrow title={t('use_best_email_for_resume', { email })} placement="top">
+                        <Tooltip title={t('use_best_email_for_resume', { email })}>
                           <InputAdornment position="end" style={{ color: grey[400] }}>
                             <HelpOutline />
                           </InputAdornment>
@@ -149,7 +150,7 @@
                     onChange={this.onUserChange}
                     InputProps={{
                       endAdornment: (
-                        <Tooltip arrow title={t('add_a_title_that_summarizes')} placement="top">
+                        <Tooltip title={t('add_a_title_that_summarizes')}>
                           <InputAdornment position="end" style={{ color: grey[400] }}>
                             <HelpOutline />
                           </InputAdornment>
@@ -187,7 +188,7 @@
                     onChange={this.onUserChange}
                     InputProps={{
                       endAdornment: (
-                        <Tooltip arrow title={t('adding_location_tooltip')} placement="top">
+                        <Tooltip title={t('adding_location_tooltip')}>
                           <InputAdornment position="end" style={{ color: grey[400] }}>
                             <HelpOutline />
                           </InputAdornment>
