@@ -27,7 +27,7 @@ type AppState = {
 };
 
 class App extends Component<WithNamespaces, AppState> {
-  state = {
+  public state = {
     currentUser: {} as User
   };
 

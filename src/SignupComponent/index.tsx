@@ -58,7 +58,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     };
   }
 
-  state = {
+  public state = {
     email: '',
     firstName: '',
     lastName: '',

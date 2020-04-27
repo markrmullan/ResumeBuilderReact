@@ -27,7 +27,7 @@ type TComponentState = {
 };
 
 class EditLinksComponent extends PureComponent<TComponentProps, TComponentState> {
-  state = {
+  public state = {
     isDeleteConfirmationModalOpen: false,
     linkToDelete: null
   };
