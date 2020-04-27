@@ -1,0 +1,21 @@
+@import "styles/common";
+
+.summary {
+  font-size: 0.875em;
+  font-weight: $bolder;
+  margin-left: 32px;
+}
+
+.mb16 {
+  margin-bottom: 16px;
+}
+
+.delete-icon-container {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+
+  .delete-icon {
+    cursor: pointer;
+  }
+}

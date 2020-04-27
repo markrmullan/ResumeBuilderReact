@@ -20,6 +20,7 @@ export interface User extends BaseModel {
 export interface Resume extends BaseModel {
   educations: Education[];
   experiences: Experience[];
+  links: Link[];
   jobTitle: string;
   name: string;
 }
@@ -40,4 +41,8 @@ export interface Education extends BaseModel {
   school: string;
   startDate: string;
   endDate: Nullable<string>;
+}
+
+export interface Link extends BaseModel {
+  url?: string;
 }

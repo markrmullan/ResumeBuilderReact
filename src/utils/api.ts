@@ -85,6 +85,6 @@ export const destroy = async <T> (params: Partial<ApiQuery> | string): Promise<T
 
 type BaseResource = 'resumes' | 'users';
 
-type NestedResource = 'experiences' | 'educations';
+type NestedResource = 'experiences' | 'educations' | 'links';
 
 type Query = Obj<string>;

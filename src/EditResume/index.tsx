@@ -10,12 +10,13 @@
 
  import { EditEducation } from 'EditEducation';
  import { EditExperience } from 'EditExperience';
+ import { EditLinks } from 'EditLinks';
  import { ResumePreview } from 'ResumePreview';
  import { TextField } from 'common/TextField';
  import { Tooltip } from 'common/Tooltip';
  import { CurrentUserContextImpl } from 'utils/contexts';
- import { Education, Experience, Resume, User } from 'utils/models';
- import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
+ import { Education, Experience, Link, Resume, User } from 'utils/models';
+ import { createEducation, createLink, createWorkExperience, deleteEducation, deleteLink, deleteWorkExperience, fetchResume, patchEducation, patchLink, patchResume, patchWorkExperience } from 'utils/requests';
  import { BackLink } from './BackLink';
  import { SectionHeader } from './SectionHeader';
  import { SectionHeaderAndSupportingInfo } from './SectionHeader/WithSupportingInfo';
@@ -38,6 +39,7 @@
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
   private throttledPatchEducation: (resumeId: Uuid, education: Partial<Education>) => Promise<Education>;
+  private throttledPatchLink: (resumeId: Uuid, link: Partial<Link>) => Promise<Link>;
   private throttledPatchCurrentUser: Nullable<(user: Partial<User>) => Promise<User>> = null;
 
   public constructor(props: TComponentProps) {
@@ -45,6 +47,7 @@
 
     this.throttledPatchExperience = throttle(patchWorkExperience, 2000, { leading: false });
     this.throttledPatchEducation = throttle(patchEducation, 2000, { leading: false });
+    this.throttledPatchLink = throttle(patchLink, 2000, { leading: false });
 
     this.state = {
       lastUpdatedUuid: null,
@@ -58,7 +61,7 @@
     const { user } = this.context;
     const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
     const { lastUpdatedUuid, resume, showResumePreview } = this.state;
-    const { educations = [], experiences = [], name = '' } = resume;
+    const { educations = [], experiences = [], links = [], name = '' } = resume;
 
     return (
       <Container fluid className={styles.backContainer}>
@@ -250,6 +253,29 @@
                     </Button>
                 </Col>
               </Row>
+
+              <SectionHeaderAndSupportingInfo
+                title={t('links')}
+                supportingInfo={t('links_supporting_info')}
+              />
+
+              <EditLinks
+                deleteLink={this.deleteLink}
+                links={links}
+                updateLink={this.updateLink}
+              />
+
+              <Row className={styles.mb16}>
+                <Col xs={12}>
+                  <Button
+                    color="primary"
+                    startIcon={<Add />}
+                    onClick={this.createLink}
+                    >
+                      {t('add_link')}
+                    </Button>
+                </Col>
+              </Row>
             </Container>
           </Col>
           {showResumePreview &&
@@ -403,6 +429,52 @@
     }
 
     patchResume(resume);
+  }
+
+  private createLink = async (): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    const link: Link = await createLink(resumeId);
+
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        links: [...(resume.links || []), link]
+      }
+    }));
+  }
+
+  private updateLink = (link: Partial<Link>): void => {
+    const { rId: resumeId } = this.props.match.params;
+    const { uuid } = link;
+
+    this.setState(({ resume }) => ({
+      lastUpdatedUuid: uuid || null,
+      resume: {
+        ...resume,
+        links: (resume.links || []).map(prevLink => prevLink.uuid === uuid ? { ...prevLink, ...link } : prevLink)
+      }
+    }), () => {
+      const toUpdate: Maybe<Link> = (this.state.resume.links || []).find(link => link.uuid === uuid);
+
+      if (toUpdate) {
+        this.throttledPatchLink(resumeId, toUpdate);
+      }
+    });
+  }
+
+  private deleteLink = async (linkId: Uuid, callback?: Function): Promise<void> => {
+    const { rId: resumeId } = this.props.match.params;
+
+    await deleteLink(resumeId, linkId);
+    this.setState(({ resume }) => ({
+      resume: {
+        ...resume,
+        links: [...(resume.links || []).filter(link => link.uuid !== linkId)]
+      }
+    }), () => {
+      if (callback) callback();
+    });
   }
 }
 
