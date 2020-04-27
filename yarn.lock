@@ -894,12 +894,40 @@
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/base/-/base-0.41.0.tgz#badadce711b4c25b1eb889a5e7581e32cd07c421"
 
+"@material/button@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/button/-/button-0.41.0.tgz#2663f23780e777e5c9ebc8bf35e385f1edc94673"
+  dependencies:
+    "@material/elevation" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/shape" "^0.41.0"
+    "@material/theme" "^0.41.0"
+    "@material/typography" "^0.41.0"
+
 "@material/elevation@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/elevation/-/elevation-0.41.0.tgz#db6b75ea43354fe35936cba2d78c55390faf4e9e"
   dependencies:
     "@material/animation" "^0.41.0"
     "@material/theme" "^0.41.0"
+
+"@material/react-button@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@material/react-button/-/react-button-0.8.0.tgz#715b734e62dd6e4e2d682a9fd4cd89d5de046314"
+  dependencies:
+    "@material/button" "^0.41.0"
+    "@material/react-ripple" "^0.8.0"
+    classnames "^2.2.5"
+    react "^16.4.2"
+
+"@material/react-ripple@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.8.0.tgz#59455b428b3335bb6ac8c5f36fb5f6a9c6898b1f"
+  dependencies:
+    "@material/ripple" "^0.41.0"
+    classnames "^2.2.5"
+    react "^16.4.2"
 
 "@material/react-top-app-bar@^0.8.0":
   version "0.8.0"
