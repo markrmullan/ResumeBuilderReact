@@ -48,7 +48,7 @@ class EditLinksComponent extends PureComponent<TComponentProps, TComponentState>
           open={isDeleteConfirmationModalOpen}
         />
 
-        <ExpansionPanel>
+        <ExpansionPanel className={styles.mb16}>
           <ExpansionPanelSummary expandIcon={<ExpandMore />}>
             <Row>
               <Col xs={12} className={styles.summary}>
