@@ -120,7 +120,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     );
   }
 
-  public onChange(e: FormEvent<HTMLTextAreaElement>): void {
+  public onChange(e: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
     this.setState({

@@ -1,80 +1,76 @@
 import React, { FormEvent, PureComponent } from 'react';
-import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
-import TextField, { HelperText, Input } from '@material/react-text-field';
+import classnames from 'classnames';
+import { TextField } from 'common/TextField';
+import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { AT_LEAST_ONE_CHARACTER } from 'utils/regex';
 
-import styles from '../styles.module.scss';
+import signupStyles from '../styles.module.scss';
 
 type TOwnProps = {
   firstName: string;
   lastName: string;
   clickNext: () => void;
   clickPrev: () => void;
-  onChange: (e: FormEvent<HTMLTextAreaElement>) => void;
+  onChange: (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class NameFormComponent extends PureComponent<TComponentProps> {
+type TComponentState = {
+  firstNameError: boolean;
+  lastNameError: boolean;
+};
+
+class NameFormComponent extends PureComponent<TComponentProps, TComponentState> {
+  public state = {
+    firstNameError: false,
+    lastNameError: false
+  };
+
   public render() {
-    const { clickPrev, clickNext, firstName, lastName, onChange, t } = this.props;
+    const { clickPrev, clickNext, firstName, lastName, t } = this.props;
+    const { firstNameError, lastNameError } = this.state;
 
     return (
-      <div className={styles.formFunnel}>
-        <h1 className={styles.h1}>
+      <div className={signupStyles.formFunnel}>
+        <h1 className={signupStyles.h1}>
           {t('add_your_name')}
         </h1>
 
-        <p className={styles.p}>
+        <p className={signupStyles.p}>
           {t('great_choice_now_add_name')}
         </p>
 
-        <div className={styles.fields}>
+        <div className={signupStyles.fields}>
           <TextField
             label={t('first_name')}
-            helperText={
-              <HelperText
-                isValidationMessage
-                validation
-              >
-                {t('cannot_be_blank')}
-              </HelperText>}
-          >
-            <Input
-              id="firstName"
-              name="firstName"
-              required
-              pattern={AT_LEAST_ONE_CHARACTER.source}
-              value={firstName}
-              onChange={e => onChange(e)}
-            />
-          </TextField>
+            helperText={firstNameError && t('cannot_be_blank')}
+            error={firstNameError}
+            onBlur={this.onChange}
+            onChange={this.onChange}
+            required
+            name="firstName"
+            value={firstName}
+            className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: firstNameError })}
+          />
 
           <TextField
             label={t('last_name')}
-            helperText={
-              <HelperText
-                isValidationMessage
-                validation
-              >
-                {t('cannot_be_blank')}
-              </HelperText>}
-          >
-            <Input
-              id="lastName"
-              name="lastName"
-              required
-              pattern={AT_LEAST_ONE_CHARACTER.source}
-              value={lastName}
-              onChange={e => onChange(e)}
-            />
-          </TextField>
+            helperText={lastNameError && t('cannot_be_blank')}
+            error={lastNameError}
+            onBlur={this.onChange}
+            onChange={this.onChange}
+            required
+            name="lastName"
+            value={lastName}
+            className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: lastNameError })}
+          />
         </div>
 
-        <div className={styles.buttonContainer}>
+        <div className={signupStyles.buttonContainer}>
           <Button
             onClick={clickPrev}
             variant="outlined"
@@ -93,6 +89,16 @@ class NameFormComponent extends PureComponent<TComponentProps> {
         </div>
       </div>
     );
+  }
+
+  private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { onChange } = this.props;
+    const { name, value }: { name: string; value: string } = e.currentTarget;
+
+    onChange(e);
+    this.setState({
+      [`${name}Error`]: !value
+    } as TComponentState);
   }
 
   private get allFieldsValid(): boolean {
