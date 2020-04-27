@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
+import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
 import { DatePicker, DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
@@ -9,6 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { RichTextEditor } from 'common/RichTextEditor';
+import { TextField } from 'common/TextField';
 import { Experience } from 'utils/models';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year', 'month'];
@@ -79,9 +80,7 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
           <Row>
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
-                variant="filled"
                 label={t('job_title')}
-                fullWidth
                 name="position"
                 value={position}
                 onChange={this.onWorkExperienceChange}
@@ -90,9 +89,7 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
 
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
-                variant="filled"
                 label={t('employer')}
-                fullWidth
                 name="company"
                 value={company}
                 onChange={this.onWorkExperienceChange}
@@ -122,9 +119,7 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
               {this.doesCurrentlyWorkHere() ?
                 <TextField
                   disabled
-                  variant="filled"
                   label={t('end_date')}
-                  fullWidth
                   InputProps={{
                     readOnly: true
                   }}
@@ -149,10 +144,8 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
 
             <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.locationContainer}>
               <TextField
-                variant="filled"
                 label={t('location')}
                 placeholder={t('location_placeholder')}
-                fullWidth
                 name="location"
                 value={location}
                 onChange={this.onWorkExperienceChange}

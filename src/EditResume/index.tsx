@@ -2,7 +2,7 @@
  import { WithNamespaces, withNamespaces } from 'react-i18next';
  import { RouteComponentProps } from 'react-router-dom';
 
- import { Button, InputAdornment, TextField, Tooltip } from '@material-ui/core';
+ import { Button, InputAdornment, Tooltip } from '@material-ui/core';
  import { grey } from '@material-ui/core/colors';
  import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
  import throttle from 'lodash.throttle';
@@ -11,6 +11,7 @@
  import { EditEducation } from 'EditEducation';
  import { EditExperience } from 'EditExperience';
  import { ResumePreview } from 'ResumePreview';
+ import { TextField } from 'common/TextField';
  import { CurrentUserContextImpl } from 'utils/contexts';
  import { Education, Experience, Resume, User } from 'utils/models';
  import { createEducation, createWorkExperience, deleteEducation, deleteWorkExperience, fetchResume, patchEducation, patchResume, patchWorkExperience } from 'utils/requests';
@@ -68,7 +69,8 @@
               <Row className={`${styles.resumeNameContainer} ${styles.mb16}`}>
                 <Col xs={8} sm={5} md={4}>
                   <TextField
-                    fullWidth
+                    variant="standard"
+                    fullWidth={false}
                     label={t('resume_name')}
                     name="name"
                     onChange={this.onChange}
@@ -91,9 +93,7 @@
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('first_name')}
-                    fullWidth
                     name="firstName"
                     value={firstName}
                     onChange={this.onUserChange}
@@ -102,9 +102,7 @@
 
                 <Col xs={12} md={6} className={styles.mb16} >
                   <TextField
-                    variant="filled"
                     label={t('last_name')}
-                    fullWidth
                     name="lastName"
                     value={lastName}
                     onChange={this.onUserChange}
@@ -115,9 +113,7 @@
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('email')}
-                    fullWidth
                     name="resumeEmail"
                     value={resumeEmail || email}
                     onChange={this.onUserChange}
@@ -135,9 +131,7 @@
 
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('phone')}
-                    fullWidth
                     name="phoneNumber"
                     value={phoneNumber}
                     inputMode="tel"
@@ -149,9 +143,7 @@
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('job_title')}
-                    fullWidth
                     name="jobTitle"
                     value={jobTitle}
                     onChange={this.onUserChange}
@@ -169,9 +161,7 @@
 
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('city')}
-                    fullWidth
                     name="city"
                     value={city}
                     onChange={this.onUserChange}
@@ -182,9 +172,7 @@
               <Row>
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('state_or_province')}
-                    fullWidth
                     name="state"
                     value={state}
                     onChange={this.onUserChange}
@@ -193,9 +181,7 @@
 
                 <Col xs={12} md={6} className={styles.mb16}>
                   <TextField
-                    variant="filled"
                     label={t('zip_or_postal')}
-                    fullWidth
                     name="zip"
                     value={zip}
                     onChange={this.onUserChange}
