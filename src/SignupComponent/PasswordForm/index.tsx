@@ -2,19 +2,20 @@ import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button } from '@material-ui/core';
-import TextField, { HelperText, Input } from '@material/react-text-field';
+import classnames from 'classnames';
+import { TextField } from 'common/TextField';
 import AsyncButton from 'react-async-button';
 
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 
-import styles from '../styles.module.scss';
+import signupStyles from '../styles.module.scss';
 
 type TOwnProps = {
   password: string;
   passwordConfirmation: string;
   clickNext: (e: React.FormEvent<HTMLButtonElement>) => void;
   clickPrev: () => void;
-  onChange: (e: FormEvent<HTMLTextAreaElement>) => void;
+  onChange: (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   errors: {
     password: string[];
   };
@@ -22,59 +23,63 @@ type TOwnProps = {
 
 type TComponentProps = TOwnProps & WithNamespaces;
 
-class PasswordFormComponent extends PureComponent<TComponentProps> {
+type TComponentState = {
+  passwordError: boolean;
+  passwordConfirmationError: boolean;
+};
+
+class PasswordFormComponent extends PureComponent<TComponentProps, TComponentState> {
+  public state = {
+    passwordError: false,
+    passwordConfirmationError: false
+  };
+
   public render() {
-    const { errors, password, passwordConfirmation, clickNext, clickPrev, onChange, t } = this.props;
+    const { errors, password, passwordConfirmation, clickNext, clickPrev, t } = this.props;
+    const { passwordConfirmationError, passwordError } = this.state;
 
     return (
-      <div className={styles.formFunnel}>
-        <h1 className={styles.h1}>
+      <div className={signupStyles.formFunnel}>
+        <h1 className={signupStyles.h1}>
           {t('create_a_password')}
         </h1>
 
-        <p className={styles.p}>
+        <p className={signupStyles.p}>
           {t('access_your_resume_any_time')}
         </p>
 
-        <div className={styles.fields}>
+        <div className={signupStyles.fields}>
           <TextField
             label={t('create_a_password')}
-            helperText={
-              <HelperText validation>
-                {errors.password[0] || t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
-              </HelperText>}
-          >
-            <Input
-              id="password"
-              minLength={MIN_PASSWORD_LENGTH}
-              name="password"
-              required
-              type="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={e => onChange(e)}/>
-          </TextField>
+            id="password"
+            error={!!errors.password[0] || passwordError}
+            helperText={errors.password[0] || passwordError && t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
+            name="password"
+            required
+            type="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+            className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: passwordError })}
+          />
 
           <TextField
             label={t('confirm_password')}
-            helperText={
-              <HelperText validation>
-                {t('validation.passwords_do_not_match')}
-              </HelperText>}
-          >
-            <Input
-              pattern={`^${password}$`}
-              id="password-confirmation"
-              name="passwordConfirmation"
-              required
-              type="password"
-              autoComplete="new-password"
-              value={passwordConfirmation}
-              onChange={e => onChange(e)}/>
-          </TextField>
+            error={passwordConfirmationError}
+            helperText={passwordConfirmationError && t('validation.passwords_do_not_match')}
+            id="password-confirmation"
+            name="passwordConfirmation"
+            required
+            type="password"
+            autoComplete="new-password"
+            value={passwordConfirmation}
+            onChange={this.onChange}
+            className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: passwordConfirmationError })}
+          />
         </div>
 
-        <div className={styles.buttonContainer}>
+        <div className={signupStyles.buttonContainer}>
           <Button
             color="primary"
             variant="outlined"
@@ -101,6 +106,33 @@ class PasswordFormComponent extends PureComponent<TComponentProps> {
     return !!password &&
       password.length >= MIN_PASSWORD_LENGTH &&
       password === passwordConfirmation;
+  }
+
+  private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { passwordError } = this.state;
+    const { password, onChange } = this.props;
+
+    onChange(e);
+
+    if (passwordError) {
+      this.onBlur(e);
+    }
+
+    const { name, value } = e.currentTarget;
+
+    if (name === 'passwordConfirmation') {
+      this.setState({
+        passwordConfirmationError: password !== value
+      });
+    }
+  }
+
+  private onBlur = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value = '' } = e.currentTarget;
+
+    this.setState({
+      passwordError: value.length < MIN_PASSWORD_LENGTH
+    });
   }
 }
 
