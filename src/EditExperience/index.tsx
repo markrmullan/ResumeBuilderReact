@@ -1,13 +1,15 @@
 import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
+import { ExpansionPanelSummary, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
-import { DatePicker, DatePickerView } from '@material-ui/pickers';
+import { DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
 import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
+import { DatePicker } from 'common/DatePicker';
+import { ExpansionPanel } from 'common/ExpansionPanel';
 import { RichTextEditor } from 'common/RichTextEditor';
 import { TextField } from 'common/TextField';
 import { Experience } from 'utils/models';
@@ -53,7 +55,7 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
           open={isDeleteConfirmationModalOpen}
         />
 
-        <ExpansionPanel className={styles.mb16} elevation={0} variant="outlined">
+        <ExpansionPanel className={styles.mb16}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMore />}
           >
@@ -101,14 +103,9 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
             <Col xs={6} md={3} className={styles.startDate}>
               <DatePicker
                 className={styles.datePicker}
-                autoOk
-                disableToolbar
                 disableFuture
-                inputVariant="filled"
-                variant="inline"
                 label={t('start_date')}
                 format={DATE_PICKER_FORMAT}
-                openTo="year"
                 views={DATE_PICKER_VIEWS}
                 value={startDate}
                 onChange={this.onWorkExperienceStartDateChange}
@@ -127,13 +124,8 @@ class EditExperienceComponent extends Component<TComponentProps, TComponentState
                 /> :
                 <DatePicker
                   className={styles.datePicker}
-                  autoOk
-                  disableToolbar
-                  inputVariant="filled"
-                  variant="inline"
                   label={t('end_date')}
                   format={DATE_PICKER_FORMAT}
-                  openTo="year"
                   views={DATE_PICKER_VIEWS}
                   minDate={startDate}
                   value={endDate}

@@ -1,14 +1,17 @@
 import React, { ChangeEvent, Component, Fragment, MouseEvent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { ExpansionPanel, ExpansionPanelSummary, FormControlLabel, Switch, TextField, Tooltip } from '@material-ui/core';
+import { ExpansionPanelSummary, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
-import { DatePicker, DatePickerView } from '@material-ui/pickers';
+import { DatePickerView } from '@material-ui/pickers';
 import { format } from 'date-fns';
 import { Col, Row } from 'react-bootstrap';
 
 import { ConfirmationDialog } from 'common/ConfirmationDialog';
+import { DatePicker } from 'common/DatePicker';
+import { ExpansionPanel } from 'common/ExpansionPanel';
 import { RichTextEditor } from 'common/RichTextEditor';
+import { TextField } from 'common/TextField';
 import { Education } from 'utils/models';
 
 const DATE_PICKER_VIEWS: DatePickerView[] = ['year'];
@@ -52,7 +55,7 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
           open={isDeleteConfirmationModalOpen}
         />
 
-        <ExpansionPanel className={styles.mb16} elevation={0} variant="outlined">
+        <ExpansionPanel className={styles.mb16}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMore />}
           >
@@ -79,9 +82,7 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
           <Row>
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
-                variant="filled"
                 label={t('school')}
-                fullWidth
                 name="school"
                 value={school}
                 onChange={this.onEducationChange}
@@ -90,9 +91,7 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
 
             <Col xs={12} md={6} className={styles.mb16}>
               <TextField
-                variant="filled"
                 label={t('degree')}
-                fullWidth
                 name="degree"
                 value={degree}
                 onChange={this.onEducationChange}
@@ -104,14 +103,9 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
             <Col xs={6} md={3} className={styles.startDate}>
               <DatePicker
                 className={styles.datePicker}
-                autoOk
-                disableToolbar
                 disableFuture
-                inputVariant="filled"
-                variant="inline"
                 label={t('start_date')}
                 format={DATE_PICKER_FORMAT}
-                openTo="year"
                 views={DATE_PICKER_VIEWS}
                 value={startDate}
                 onChange={this.onEducationStartDateChange}
@@ -122,9 +116,7 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
               {this.doesCurrentlyAttend() ?
                 <TextField
                   disabled
-                  variant="filled"
                   label={t('end_date')}
-                  fullWidth
                   InputProps={{
                     readOnly: true
                   }}
@@ -132,13 +124,8 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
                 /> :
                 <DatePicker
                   className={styles.datePicker}
-                  autoOk
-                  disableToolbar
-                  inputVariant="filled"
-                  variant="inline"
                   label={t('end_date')}
                   format={DATE_PICKER_FORMAT}
-                  openTo="year"
                   views={DATE_PICKER_VIEWS}
                   minDate={startDate}
                   value={endDate}
@@ -149,9 +136,7 @@ class EditEducationComponent extends Component<TComponentProps, TComponentState>
 
             <Col xs={{ span: 12, order: 4 }} md={{ span: 6, order: 3 }} className={styles.gpaContainer}>
               <TextField
-                variant="filled"
                 label={t('gpa')}
-                fullWidth
                 name="gpa"
                 value={gpa}
                 onChange={this.onEducationChange}
