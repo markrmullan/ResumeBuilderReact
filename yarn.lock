@@ -912,34 +912,6 @@
     "@material/animation" "^0.41.0"
     "@material/theme" "^0.41.0"
 
-"@material/floating-label@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@material/floating-label/-/floating-label-0.41.0.tgz#17a9af90199b3bcf0ba13b1b5d3616451c7c8c0b"
-  dependencies:
-    "@material/animation" "^0.41.0"
-    "@material/base" "^0.41.0"
-    "@material/rtl" "^0.40.1"
-    "@material/theme" "^0.41.0"
-    "@material/typography" "^0.41.0"
-
-"@material/line-ripple@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@material/line-ripple/-/line-ripple-0.41.0.tgz#de499b0d1dc7f60ddbf497bcc49be76475642d1f"
-  dependencies:
-    "@material/animation" "^0.41.0"
-    "@material/base" "^0.41.0"
-    "@material/theme" "^0.41.0"
-
-"@material/notched-outline@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@material/notched-outline/-/notched-outline-0.41.0.tgz#0b84bc710032fd9809fb21a9233fe3e71a142733"
-  dependencies:
-    "@material/animation" "^0.41.0"
-    "@material/base" "^0.41.0"
-    "@material/rtl" "^0.40.1"
-    "@material/shape" "^0.41.0"
-    "@material/theme" "^0.41.0"
-
 "@material/react-button@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@material/react-button/-/react-button-0.8.0.tgz#715b734e62dd6e4e2d682a9fd4cd89d5de046314"
@@ -949,46 +921,11 @@
     classnames "^2.2.5"
     react "^16.4.2"
 
-"@material/react-floating-label@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@material/react-floating-label/-/react-floating-label-0.8.0.tgz#5cc397876d476855554310c56168ba7e3772291b"
-  dependencies:
-    "@material/floating-label" "^0.41.0"
-    classnames "^2.2.5"
-    react "^16.4.2"
-
-"@material/react-line-ripple@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@material/react-line-ripple/-/react-line-ripple-0.8.0.tgz#ea22e8234ac8cc9f0dedec5806698fc874a25dcf"
-  dependencies:
-    "@material/line-ripple" "^0.41.0"
-    classnames "^2.2.5"
-    react "^16.4.2"
-
-"@material/react-notched-outline@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@material/react-notched-outline/-/react-notched-outline-0.8.0.tgz#83d9ef85b74f416da451f0381b7fc6ab19be9222"
-  dependencies:
-    "@material/notched-outline" "^0.41.0"
-    classnames "^2.2.5"
-    react "^16.4.2"
-
 "@material/react-ripple@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.8.0.tgz#59455b428b3335bb6ac8c5f36fb5f6a9c6898b1f"
   dependencies:
     "@material/ripple" "^0.41.0"
-    classnames "^2.2.5"
-    react "^16.4.2"
-
-"@material/react-text-field@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@material/react-text-field/-/react-text-field-0.8.0.tgz#91e9d7fdeca58ab9ccee99d2cff252156f1f1853"
-  dependencies:
-    "@material/react-floating-label" "^0.8.0"
-    "@material/react-line-ripple" "^0.8.0"
-    "@material/react-notched-outline" "^0.8.0"
-    "@material/textfield" "^0.41.0"
     classnames "^2.2.5"
     react "^16.4.2"
 
@@ -1015,21 +952,6 @@
 "@material/shape@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/shape/-/shape-0.41.0.tgz#2b1cb9a9e1240965ae25a107bbd6e29ca0257583"
-
-"@material/textfield@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@material/textfield/-/textfield-0.41.0.tgz#e12630599b93ed536f10f698bbe9024048a604e4"
-  dependencies:
-    "@material/animation" "^0.41.0"
-    "@material/base" "^0.41.0"
-    "@material/floating-label" "^0.41.0"
-    "@material/line-ripple" "^0.41.0"
-    "@material/notched-outline" "^0.41.0"
-    "@material/ripple" "^0.41.0"
-    "@material/rtl" "^0.40.1"
-    "@material/shape" "^0.41.0"
-    "@material/theme" "^0.41.0"
-    "@material/typography" "^0.41.0"
 
 "@material/theme@^0.41.0":
   version "0.41.0"
