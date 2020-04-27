@@ -71,7 +71,6 @@
                 <Col xs={8} sm={5} md={4}>
                   <TextField
                     variant="standard"
-                    fullWidth={false}
                     label={t('resume_name')}
                     name="name"
                     onChange={this.onChange}
