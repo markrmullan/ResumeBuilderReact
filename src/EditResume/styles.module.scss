@@ -11,13 +11,13 @@
 
   .back {
     border-radius: 20px;
-    left: 26px;
+    left: 20px;
     position: absolute;
     top: 74px;
     z-index: 9999;
 
     @media (min-width: 992px) {
-      top: 20px;
+      top: 26px;
     }
 
     &:hover {
