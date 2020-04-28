@@ -1,25 +1,5 @@
 @import "styles/common";
 
-.mdc-top-app-bar {
-  .mdc-button {
-    white-space: nowrap;
-    width: fit-content;
-
-    &--outlined {
-      @include mdc-button-ink-color($mdc-theme-on-primary);
-
-      &.mr12 {
-        margin-right: 12px;
-      }
-    }
-
-    &--raised {
-      @include mdc-button-container-fill-color($mdc-theme-on-primary);
-      @include mdc-button-ink-color($mdc-theme-primary);
-    }
-  }
-}
-
 .app-wrapper-max-width {
   margin: 42px auto 20px;
   max-width: 900px;
@@ -34,7 +14,7 @@
   color: $gray-90;
 
   &:hover {
-    color: $mdc-theme-primary;
+    color: $deep-purple-500;
   }
 }
 

@@ -1,21 +1,23 @@
-import React, { Fragment, PureComponent, ReactElement } from 'react';
+import React, { PureComponent, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
-import { Button } from '@material-ui/core';
-
-import TopAppBar, { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { Menu } from '@material-ui/icons';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
 import { logOut } from 'utils/requests';
+import styles from './styles.module.scss';
 
 const PATHS_TO_HIDE_HEADER: RegExp[] = [
   new RegExp('/resumes/\.+/edit')
 ];
 
-class TopAppHeaderComponent extends PureComponent<RouteComponentProps & WithNamespaces> {
+type TComponentProps = RouteComponentProps & WithNamespaces;
+
+class TopAppHeaderComponent extends PureComponent<TComponentProps> {
   public static contextType = CurrentUserContextImpl;
 
   public render() {
@@ -25,13 +27,19 @@ class TopAppHeaderComponent extends PureComponent<RouteComponentProps & WithName
     if (PATHS_TO_HIDE_HEADER.some(path => path.test(pathname))) return null;
 
     return (
-      <Fragment>
-        <TopAppBar
-          title={t('app_name')}
-          actionItems={this.getActionItems()}
-        />
-        <TopAppBarFixedAdjust />
-      </Fragment>
+      <AppBar
+        position="static"
+      >
+        <Toolbar className={styles.toolbar}>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <Menu />
+          </IconButton>
+          <Typography variant="h5" className={styles.title}>
+            {t('app_name')}
+          </Typography>
+          {this.getActionItems()}
+        </Toolbar>
+      </AppBar>
     );
   }
 
@@ -43,40 +51,60 @@ class TopAppHeaderComponent extends PureComponent<RouteComponentProps & WithName
     if (user && user.uuid) {
       return [
         <Button
-          key={1}
+          color="inherit"
+          key="log-out"
           onClick={this.logOut}
-          className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined mr12"
           >
           {t('log_out')}
         </Button>,
         ...(pathname === '/' ? [
-          <Link
-            key={2}
-            className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
-            to="/dashboard"
+          <Button
+            variant="contained"
+            key="dashboard"
+            className={styles.ctaLink}
+            onClick={this.redirectToDashboard}
           >
             {t('my_dashboard')}
-          </Link>
+          </Button>
         ] : [])
       ];
     }
 
     return [
-      <Link
-        key={1}
-        className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--outlined"
-        to="/login"
+      <Button
+        color="inherit"
+        key="log-in"
+        onClick={this.redirectToLogin}
       >
         {t('log_in')}
-      </Link>,
-      <Link
-        key={2}
-        className="mdc-button mdc-ripple-upgraded mdc-top-app-bar__action-item mdc-button--raised"
-        to="/get-started"
+      </Button>,
+      <Button
+        variant="contained"
+        key="get-started"
+        className={styles.ctaLink}
+        onClick={this.redirectToSignup}
       >
         {t('sign_up')}
-      </Link>
+      </Button>
     ];
+  }
+
+  private redirectToLogin = (): void => {
+    const { history } = this.props;
+
+    history.push('/login');
+  }
+
+  private redirectToSignup = (): void => {
+    const { history } = this.props;
+
+    history.push('/get-started');
+  }
+
+  private redirectToDashboard = (): void => {
+    const { history } = this.props;
+
+    history.push('/dashboard');
   }
 
   private logOut = () => {

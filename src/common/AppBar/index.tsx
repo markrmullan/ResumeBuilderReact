@@ -6,7 +6,7 @@ class AppBarComponent extends PureComponent<AppBarProps> {
   public render() {
     return (
       <AppBar
-        position="fixed"
+        position="static"
         {...this.props}
       />
     );

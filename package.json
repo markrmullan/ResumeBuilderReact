@@ -12,7 +12,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
     "@material/react-button": "^0.8.0",
-    "@material/react-top-app-bar": "^0.8.0",
     "@react-pdf/renderer": "^1.6.8",
     "@svgr/webpack": "2.4.1",
     "@tinymce/tinymce-react": "^3.5.0",

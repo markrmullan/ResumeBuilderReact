@@ -1,0 +1,15 @@
+@import "styles/common";
+
+.toolbar {
+  flex-grow: 1;
+
+  .title {
+    flex-grow: 1;
+  }
+
+  .cta-link {
+    background-color: $white;
+    color: $deep-purple-500;
+    margin-left: 12px;
+  }
+}
