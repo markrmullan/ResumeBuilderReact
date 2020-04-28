@@ -14,7 +14,7 @@ axios.createWith401Handler = (config: AxiosRequestConfig) => {
   axiosInstance.interceptors.response.use(_ => _, error => {
     const { pathname } = window.location;
 
-    if (error && error.response && error.response.status === 401 && pathname !== ROUTES.login) {
+    if (error.response.status === 401 && pathname !== ROUTES.login) {
         window.location.href = ROUTES.login;
       }
 

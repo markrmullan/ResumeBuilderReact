@@ -3,10 +3,7 @@ import 'middleware/axios';
 
 const axiosInstance = axios.createWith401Handler({
   baseURL: PRODUCTION ? 'https://resume-builder-server.herokuapp.com/' : 'http://localhost:3001/',
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json;charset=UTF-8'
-  }
+  withCredentials: true
 });
 
 export type ApiQuery = {
