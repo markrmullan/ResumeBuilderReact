@@ -18,6 +18,7 @@ type LoginState = {
   email: string;
   error?: string;
   password: string;
+  submitting: boolean;
 };
 
 type TComponentProps = RouteComponentProps & WithNamespaces;
@@ -26,12 +27,13 @@ class Login extends PureComponent<TComponentProps, LoginState> {
   public state = {
     email: '',
     error: undefined,
-    password: ''
+    password: '',
+    submitting: false
   };
 
   public render() {
     const { t } = this.props;
-    const { email, error, password } = this.state;
+    const { email, error, password, submitting } = this.state;
 
     return (
       <form onSubmit={e => this.allFieldsValid && this.submit(e)}>
@@ -64,7 +66,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
             variant="contained"
             color="primary"
             type="submit"
-            disabled={!this.allFieldsValid}
+            disabled={!this.allFieldsValid || submitting}
             onClick={this.submit}
           >
             {t('submit')}
@@ -84,7 +86,7 @@ class Login extends PureComponent<TComponentProps, LoginState> {
   private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
-    this.setState({ [name]: value, error: undefined } as LoginState);
+    this.setState({ [name]: value, error: undefined } as unknown as LoginState);
   }
 
   private get allFieldsValid(): boolean {
@@ -106,11 +108,13 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     const user: Pick<User, 'email' | 'password'> = { email, password };
 
     try {
+      this.setState({ submitting: true });
       await post({ baseResourceId: 'sign_in' }, { user });
       history.push(ROUTES.dashboard);
     } catch ({ data: { error } }) {
       this.setState({
-        error
+        error,
+        submitting: false
       });
     }
   }
