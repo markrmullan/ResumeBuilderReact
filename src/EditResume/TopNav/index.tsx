@@ -17,7 +17,7 @@ type TComponentProps = TOwnProps & WithNamespaces;
 
 class TopNavComponent extends PureComponent<TComponentProps> {
   public render() {
-    const { handleChange, value } = this.props;
+    const { handleChange, t, value } = this.props;
 
     return (
       <Paper className={styles.paper}>
@@ -28,8 +28,8 @@ class TopNavComponent extends PureComponent<TComponentProps> {
           indicatorColor="primary"
           variant="fullWidth"
         >
-          <Tab label="Build" />
-          <Tab label="Preview" />
+          <Tab label={t('build')} />
+          <Tab label={t('preview')} />
         </Tabs>
       </Paper>
     );
