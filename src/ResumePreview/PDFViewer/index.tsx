@@ -10,6 +10,7 @@ import throttle from 'lodash.throttle';
 import { Document, Page } from 'react-pdf';
 import { CurrentUserContextImpl } from 'utils/contexts';
 
+import previewStyles from '../styles.module.scss';
 import styles from './styles.module.scss';
 
 type PDFViewerProps = {
@@ -44,7 +45,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
 
     return (
       <div className={styles.container}>
-        <div className={styles.pdfViewerWrapper}>
+        <div className={previewStyles.pdfViewerWrapper}>
           <Document file={document}>
             <Page renderMode="svg" pageNumber={1} />
           </Document>

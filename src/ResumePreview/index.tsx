@@ -15,6 +15,7 @@ import { pdfStyles } from './pdfStyles';
 import styles from './styles.module.scss';
 
 type TOwnProps = {
+  isMobilePreviewEnabled: boolean;
   resume: Resume;
 };
 
@@ -27,7 +28,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   public static contextType = CurrentUserContextImpl;
 
   public render() {
-    const { resume, t } = this.props;
+    const { isMobilePreviewEnabled, resume, t } = this.props;
     const { user } = this.context;
     const { email, jobTitle, phoneNumber, resumeEmail } = user;
     const { educations = [], experiences = [] } = resume;
@@ -129,7 +130,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     );
 
     return (
-      <Col className={classnames(styles.resumePreview, 'd-lg-flex')} style={{ backgroundColor: blueGrey[200] }} id="pdf">
+      <Col className={classnames(styles.resumePreview, 'd-lg-flex', { [styles.previewMode]: isMobilePreviewEnabled })} style={{ backgroundColor: blueGrey[200] }} id="pdf">
         <PDFViewer document={<MyDocument />} />
       </Col>
     );

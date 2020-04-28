@@ -10,7 +10,33 @@
   top: 0;
   width: 41.6666666666667%;
 
+  &.preview-mode {
+    @media (max-width: 991px) {
+      display: flex;
+      height: calc(100vh - 48px);
+      position: relative;
+      width: 100%;
+    }
+  }
+
   @media (min-width: $xl-screen-min) {
     width: 50%;
+  }
+}
+
+.preview-mode {
+  @media (max-width: $xs-screen-max) {
+    .pdf-viewer-wrapper {
+      zoom: 0.4;
+    }
+  }
+}
+
+.pdf-viewer-wrapper {
+  margin-bottom: 12px;
+  zoom: 0.62;
+
+  @media (min-width: $xl-screen-min) {
+    zoom: 0.75;
   }
 }

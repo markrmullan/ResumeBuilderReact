@@ -52,6 +52,13 @@ export const theme = createMuiTheme({
       root: {
         caretColor: deepPurple[500]
       }
+    },
+    MuiTab: {
+      fullWidth: {
+        '&:focus': {
+          outline: 'none'
+        }
+      }
     }
   },
   palette: {

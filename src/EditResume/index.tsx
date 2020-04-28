@@ -1,41 +1,44 @@
- import React, { ChangeEvent, Component } from 'react';
- import { WithNamespaces, withNamespaces } from 'react-i18next';
- import { RouteComponentProps } from 'react-router-dom';
+import React, { ChangeEvent, Component } from 'react';
+import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { RouteComponentProps } from 'react-router-dom';
 
- import { Button, InputAdornment } from '@material-ui/core';
- import { grey } from '@material-ui/core/colors';
- import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
- import throttle from 'lodash.throttle';
- import { Col, Container, Row } from 'react-bootstrap';
+import { Button, InputAdornment } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { Add, EditOutlined, HelpOutline } from '@material-ui/icons';
+import classnames from 'classnames';
+import throttle from 'lodash.throttle';
+import { Col, Container, Row } from 'react-bootstrap';
 
- import { EditEducation } from 'EditEducation';
- import { EditExperience } from 'EditExperience';
- import { EditLinks } from 'EditLinks';
- import { ResumePreview } from 'ResumePreview';
- import { TextField } from 'common/TextField';
- import { Tooltip } from 'common/Tooltip';
- import { CurrentUserContextImpl } from 'utils/contexts';
- import { Education, Experience, Link, Resume, User } from 'utils/models';
- import { createEducation, createLink, createWorkExperience, deleteEducation, deleteLink, deleteWorkExperience, fetchResume, patchEducation, patchLink, patchResume, patchWorkExperience } from 'utils/requests';
- import { BackLink } from './BackLink';
- import { SectionHeader } from './SectionHeader';
- import { SectionHeaderAndSupportingInfo } from './SectionHeader/WithSupportingInfo';
+import { EditEducation } from 'EditEducation';
+import { EditExperience } from 'EditExperience';
+import { EditLinks } from 'EditLinks';
+import { ResumePreview } from 'ResumePreview';
+import { TextField } from 'common/TextField';
+import { Tooltip } from 'common/Tooltip';
+import { CurrentUserContextImpl } from 'utils/contexts';
+import { Education, Experience, Link, Resume, User } from 'utils/models';
+import { createEducation, createLink, createWorkExperience, deleteEducation, deleteLink, deleteWorkExperience, fetchResume, patchEducation, patchLink, patchResume, patchWorkExperience } from 'utils/requests';
+import { BackLink } from './BackLink';
+import { SectionHeader } from './SectionHeader';
+import { SectionHeaderAndSupportingInfo } from './SectionHeader/WithSupportingInfo';
+import { TopNav } from './TopNav';
 
- import styles from './styles.module.scss';
+import styles from './styles.module.scss';
 
- type PathParams = {
+type PathParams = {
   rId: Uuid;
 };
 
- type TComponentState = {
+type TComponentState = {
   lastUpdatedUuid: Nullable<Uuid>;
   showResumePreview: boolean;
   resume: Resume;
+  selectedTab: number;
 };
 
- type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
+type TComponentProps = RouteComponentProps<PathParams> & WithNamespaces;
 
- class EditResumeComponent extends Component<TComponentProps, TComponentState> {
+class EditResumeComponent extends Component<TComponentProps, TComponentState> {
   public static contextType = CurrentUserContextImpl;
   private throttledPatchExperience: (resumeId: Uuid, experience: Partial<Experience>) => Promise<Experience>;
   private throttledPatchEducation: (resumeId: Uuid, education: Partial<Education>) => Promise<Education>;
@@ -52,7 +55,8 @@
     this.state = {
       lastUpdatedUuid: null,
       resume: {} as Resume,
-      showResumePreview: false
+      showResumePreview: false,
+      selectedTab: 0
     };
   }
 
@@ -60,15 +64,22 @@
     const { t } = this.props;
     const { user } = this.context;
     const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
-    const { lastUpdatedUuid, resume, showResumePreview } = this.state;
+    const { lastUpdatedUuid, resume, selectedTab, showResumePreview } = this.state;
     const { educations = [], experiences = [], links = [], name = '' } = resume;
+
+    const isMobilePreviewEnabled = selectedTab === 1;
 
     return (
       <Container fluid className={styles.backContainer}>
-        <BackLink />
+        <BackLink isMobilePreviewEnabled={isMobilePreviewEnabled} />
+
+        <TopNav
+          value={selectedTab}
+          handleChange={this.handleTopNavChange}
+        />
 
         <Row>
-          <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6} className={styles.outerResumeCol}>
+          <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 7, offset: 0 }} xl={6} className={classnames(styles.outerResumeCol, { [styles.previewMode]: isMobilePreviewEnabled })}>
             <Container fluid className={styles.outerContainer}>
               <Row className={`${styles.resumeNameContainer} ${styles.mb16}`}>
                 <Col xs={8} sm={5} md={4}>
@@ -279,7 +290,10 @@
             </Container>
           </Col>
           {showResumePreview &&
-            <ResumePreview resume={resume} />
+            <ResumePreview
+              isMobilePreviewEnabled={isMobilePreviewEnabled}
+              resume={resume}
+            />
           }
         </Row>
       </Container>
@@ -298,7 +312,10 @@
     const resume: Resume = await fetchResume(resumeId);
     this.setState({ resume });
     setTimeout(() => this.setState({ showResumePreview: true }), 200);
+  }
 
+  private handleTopNavChange = (_: React.ChangeEvent<{}>, newValue: any): void => {
+    this.setState({ selectedTab: newValue as number });
   }
 
   private onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
@@ -478,4 +495,4 @@
   }
 }
 
- export const EditResume = withNamespaces()(EditResumeComponent);
+export const EditResume = withNamespaces()(EditResumeComponent);
