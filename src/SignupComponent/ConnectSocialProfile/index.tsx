@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { Button } from '@material-ui/core';
 
@@ -14,7 +15,7 @@ type TOwnProps = {
   clickNext: () => void;
 };
 
-type TComponentProps = TOwnProps & WithNamespaces;
+type TComponentProps = TOwnProps & WithNamespaces & RouteComponentProps;
 
 class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
   public render() {
@@ -37,12 +38,13 @@ class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
         </div>
 
         <div className={styles.buttonContainer}>
-          <Link
-            className="mdc-button mdc-ripple-upgraded mdc-button--outlined"
-            to="/"
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.onClickBack}
           >
             {t('back')}
-          </Link>
+          </Button>
 
           <Button
             color="primary"
@@ -55,6 +57,12 @@ class ConnectSocialProfileComponent extends PureComponent<TComponentProps> {
       </div>
     );
   }
+
+  private onClickBack = (): void => {
+    const { history } = this.props;
+
+    history.push('/');
+  }
 }
 
-export const ConnectSocialProfile = withNamespaces()(ConnectSocialProfileComponent);
+export const ConnectSocialProfile = withNamespaces()(withRouter(ConnectSocialProfileComponent));

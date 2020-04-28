@@ -1,9 +1,10 @@
 import React, { FormEvent, PureComponent } from 'react';
-import AsyncButton from 'react-async-button';
+
+import { Button } from '@material-ui/core';
+import classnames from 'classnames';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import classnames from 'classnames';
 import { TextField } from 'common/TextField';
 import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH, ROUTES } from 'utils/constants';
@@ -59,14 +60,15 @@ class Login extends PureComponent<TComponentProps, LoginState> {
             onChange={this.onChange}
           />
 
-          <AsyncButton
+          <Button
+            variant="contained"
+            color="primary"
             type="submit"
-            className="mdc-button mdc-ripple-upgraded mdc-button--raised"
             disabled={!this.allFieldsValid}
-            text={t('submit')}
-            pendingText={t('loading_ellipsis')}
-            onClick={(e: React.FormEvent<HTMLButtonElement>) => this.submit(e)}
-          />
+            onClick={this.submit}
+          >
+            {t('submit')}
+          </Button>
 
           <div className={signupStyles.switchAuthMethod}>
             <span>{t('first_time_here')}</span>

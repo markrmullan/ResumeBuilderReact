@@ -4,7 +4,6 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { Button } from '@material-ui/core';
 import classnames from 'classnames';
 import { TextField } from 'common/TextField';
-import AsyncButton from 'react-async-button';
 
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 
@@ -88,13 +87,14 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
             {t('back')}
           </Button>
 
-          <AsyncButton
-            className="mdc-button mdc-ripple-upgraded mdc-button--raised"
+          <Button
+            color="primary"
+            variant="contained"
             disabled={!this.allFieldsValid}
-            text={t('save')}
-            pendingText={t('saving_ellipsis')}
             onClick={(e: React.FormEvent<HTMLButtonElement>) => clickNext(e)}
-          />
+          >
+            {t('save')}
+          </Button>
         </div>
       </div>
     );
