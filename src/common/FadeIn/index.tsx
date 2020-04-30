@@ -29,14 +29,15 @@ class FadeInComponent extends PureComponent<TComponentProps> {
       <InView triggerOnce threshold={threshold}>
         {({ inView, ref }) => {
           const className = classnames(styles.hidden, { [styles.inView]: inView });
+          const props = { inView, ref, className };
 
           if (typeof child === 'function') {
-            const children = child({ inView, ref, className });
+            const children = child(props);
 
             return cloneElement(children);
           }
 
-          return cloneElement(Children.only(child as ReactElement), { inView, ref, className });
+          return cloneElement(Children.only(child as ReactElement), props);
         }}
       </InView>
     );

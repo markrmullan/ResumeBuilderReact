@@ -13,7 +13,6 @@
   "are_you_sure_you_want_to_delete_this_resume": "Are you sure you want to delete this resume?",
   "back": "Back",
   "build": "Build",
-  "build_your_professional_resume_in_10": "Build your professional resume in 10 minutes",
   "cancel": "Cancel",
   "cannot_be_blank": "Cannot be blank",
   "character_limit_reached_plural": "{{count}} characters max",
@@ -55,8 +54,10 @@
   "get_started": "Get Started",
   "gpa": "GPA",
   "gpa_and_value": "GPA: {{gpa}}",
-  "great_choice_now_add_name": "Great choice! Now let's add your name.",
   "home_page": {
+    "build_your_professional_resume_in_10": "Build your professional resume in 10 minutes",
+    "download_your_resume_as_pdf": "Download your resume as PDF",
+    "image_of_sample_resume": "Image of sample resume",
     "make_your_resume_stand_out": "Make your resume stand out, get hired faster, and open more doors for you and your career.",
     "start_now": "Start Now"
   },
@@ -90,6 +91,7 @@
   "save": "Save",
   "saving_ellipsis": "Saving...",
   "school": "School",
+  "start_by_adding_your_name": "Start by adding your name",
   "start_date": "Start Date",
   "state_or_province": "State / Province",
   "sign_up": "Sign Up",

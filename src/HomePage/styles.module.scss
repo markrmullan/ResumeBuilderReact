@@ -1,8 +1,16 @@
 @import "styles/common";
 
-.container {
-  background-color: $blue-grey-50;
+.delayed {
+  transition-delay: 0.75s;
+}
+
+.outer-container {
   color: $grey-800;
+}
+
+.primary-container {
+  background-color: $blue-grey-50;
+  margin-bottom: 90px;
   padding-top: 16px;
 
   &.alert-dismissed {
@@ -46,6 +54,10 @@
         height: 100%;
       }
     }
+  }
+
+  .divider {
+    margin-top: -1px;
   }
 }
 

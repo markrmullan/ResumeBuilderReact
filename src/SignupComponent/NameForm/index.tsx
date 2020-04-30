@@ -41,7 +41,7 @@ class NameFormComponent extends PureComponent<TComponentProps, TComponentState> 
         </h1>
 
         <p className={signupStyles.p}>
-          {t('great_choice_now_add_name')}
+          {t('start_by_adding_your_name')}
         </p>
 
         <div className={signupStyles.fields}>
