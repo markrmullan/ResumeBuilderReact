@@ -21,13 +21,11 @@ type TComponentProps = WithNamespaces & RouteComponentProps;
 
 type TComponentState = {
   isCovidAlertDismissed: boolean;
-  isImageLoaded: boolean;
 };
 
 class HomePageComponent extends PureComponent<TComponentProps, TComponentState> {
   public state = {
-    isCovidAlertDismissed: !!localStorage.getItem('isCovidAlertDismissed'),
-    isImageLoaded: false
+    isCovidAlertDismissed: !!localStorage.getItem('isCovidAlertDismissed')
   };
 
   public render() {
@@ -41,7 +39,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
             <Row>
               <FadeIn>
                 {({ className, ref }: { className: string; ref: DivRef }) => (
-                  <Col ref={ref} className={`${className} ${styles.delayed}`}>
+                  <Col ref={ref} className={`${className}`}>
                     <Alert className={styles.alert} onClose={this.dismissAlert}>
                       {t('covid_response.offering_for_free')}
                     </Alert>
@@ -65,7 +63,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className} ${styles.delayed}`} ref={ref}>
+              <Row className={`${className}`} ref={ref}>
                 <Col>
                   <p className={styles.text}>
                     {t('home_page.make_your_resume_stand_out')}
@@ -77,7 +75,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className} ${styles.delayed}`} ref={ref}>
+              <Row className={`${className}`} ref={ref}>
                 <Col className={styles.ctaContainer}>
                   <Button
                     color="primary"
@@ -95,10 +93,14 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className} ${styles.delayed}`} ref={ref}>
+              <Row className={`${className}`} ref={ref}>
                 <Col className={styles.resumeCol}>
                   <Card className={styles.resumeCard} variant="outlined">
-                    <img src={sampleResume} className={styles.resume} alt={t('image_of_sample_resume')} onLoad={this.imageDidLoad} />
+                    <img
+                      src={sampleResume}
+                      className={styles.resume}
+                      alt={t('image_of_sample_resume')}
+                    />
                   </Card>
                 </Col>
               </Row>
@@ -155,10 +157,6 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
         <Footer />
       </div>
     );
-  }
-
-  private imageDidLoad = (): void => {
-    this.setState({ isImageLoaded: true });
   }
 
   private dismissAlert = (): void => {
