@@ -96,7 +96,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
               <Row className={`${className} ${styles.delayed}`} ref={ref}>
-                <Col>
+                <Col className={styles.resumeCol}>
                   <Card className={styles.resumeCard} variant="outlined">
                     <img src={sampleResume} className={styles.resume} alt={t('image_of_sample_resume')} onLoad={this.imageDidLoad} />
                   </Card>

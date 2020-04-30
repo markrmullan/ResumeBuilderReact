@@ -38,40 +38,17 @@
     margin-top: 12px;
   }
 
-  .resume-card {
-    margin: 0 auto;
-    text-align: center;
-    width: fit-content;
+  .resume-col {
+    padding: 0 35px;
 
-    .resume {
-      height: 178px;
+    .resume-card {
+      margin: 0 auto;
+      text-align: center;
+      width: fit-content;
 
-      @media (min-width: 336px) {
-        height: 193px;
-      }
-
-      @media (min-width: 413px) {
-        height: 237px;
-      }
-
-      @media (min-width: 456px) {
-        height: 269px;
-      }
-
-      @media (min-width: 507px) {
-        height: 302px;
-      }
-
-      @media (min-width: $sm-screen-min) {
-        height: 348px;
-      }
-
-      @media (min-width: $md-screen-min) {
-        height: 440px;
-      }
-
-      @media (min-width: $lg-screen-min) {
-        height: 100%;
+      .resume {
+        height: auto;
+        max-width: 100%;
       }
     }
   }
