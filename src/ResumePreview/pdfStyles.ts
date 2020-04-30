@@ -59,7 +59,8 @@ export const pdfStyles = StyleSheet.create({
   },
   li: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    lineHeight: 1.2
   },
   bulletPoint: {
     fontSize: 14,
