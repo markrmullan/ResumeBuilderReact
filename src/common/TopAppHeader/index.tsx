@@ -1,7 +1,7 @@
 import React, { PureComponent, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 
@@ -36,9 +36,11 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
         position="static"
       >
         <Toolbar className={styles.toolbar}>
-          <Typography variant="h5" className={styles.title}>
-            {t('app_name')}
-          </Typography>
+          <Link to="/" className={styles.title}>
+            <Typography variant="h5">
+              {t('app_name')}
+            </Typography>
+          </Link>
           {this.getActionItems()}
         </Toolbar>
       </AppBar>
