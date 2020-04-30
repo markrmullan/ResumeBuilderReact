@@ -1,5 +1,10 @@
 @import "styles/common";
 
+.alert {
+  margin: 0 auto;
+  width: fit-content;
+}
+
 .outer-container {
   color: $grey-800;
 
@@ -74,7 +79,10 @@
   max-width: 483px;
 }
 
-.alert {
-  margin: 0 auto;
-  width: fit-content;
+.resume-wireframe-container {
+  text-align: center;
+
+  .resume-wireframe {
+    height: 200px;
+  }
 }

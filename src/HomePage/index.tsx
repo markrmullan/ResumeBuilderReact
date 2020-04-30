@@ -12,6 +12,7 @@ import { Card } from 'common/Card';
 import { FadeIn } from 'common/FadeIn';
 import { Footer } from './Footer';
 
+import resumeWireframe from './resume_wireframe.svg';
 import sampleResume from './sample_resume.svg';
 import styles from './styles.module.scss';
 
@@ -39,7 +40,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
             <Row>
               <FadeIn>
                 {({ className, ref }: { className: string; ref: DivRef }) => (
-                  <Col ref={ref} className={`${className}`}>
+                  <Col ref={ref} className={className}>
                     <Alert className={styles.alert} onClose={this.dismissAlert}>
                       {t('covid_response.offering_for_free')}
                     </Alert>
@@ -63,7 +64,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className}`} ref={ref}>
+              <Row className={className} ref={ref}>
                 <Col>
                   <p className={styles.text}>
                     {t('home_page.make_your_resume_stand_out')}
@@ -75,7 +76,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className}`} ref={ref}>
+              <Row className={className} ref={ref}>
                 <Col className={styles.ctaContainer}>
                   <Button
                     color="primary"
@@ -93,7 +94,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className}`} ref={ref}>
+              <Row className={className} ref={ref}>
                 <Col className={styles.resumeCol}>
                   <Card className={styles.resumeCard} variant="outlined">
                     <img
@@ -111,6 +112,20 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
         </Container>
 
         <Container>
+          <FadeIn>
+            {({ className, ref }: { className: string; ref: DivRef }) => (
+              <Row className={className} ref={ref}>
+                <Col className={styles.resumeWireframeContainer}>
+                  <img
+                    className={styles.resumeWireframe}
+                    src={resumeWireframe}
+                    alt=""
+                  />
+                </Col>
+              </Row>
+            )}
+          </FadeIn>
+
           <Row>
             <Col>
               <FadeIn>
@@ -137,7 +152,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
 
           <FadeIn>
             {({ className, ref }: { className: string; ref: DivRef }) => (
-              <Row className={`${className}`} ref={ref}>
+              <Row className={className} ref={ref}>
                 <Col className={styles.ctaContainer}>
                   <Button
                     color="primary"
