@@ -10,19 +10,24 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Alert } from 'common/Alert';
 import { Card } from 'common/Card';
 import { FadeIn } from 'common/FadeIn';
+import { Footer } from './Footer';
 
 import sampleResume from './sample_resume.svg';
 import styles from './styles.module.scss';
+
+type DivRef = string & React.Ref<HTMLDivElement>;
 
 type TComponentProps = WithNamespaces & RouteComponentProps;
 
 type TComponentState = {
   isCovidAlertDismissed: boolean;
+  isImageLoaded: boolean;
 };
 
 class HomePageComponent extends PureComponent<TComponentProps, TComponentState> {
   public state = {
-    isCovidAlertDismissed: !!localStorage.getItem('isCovidAlertDismissed')
+    isCovidAlertDismissed: !!localStorage.getItem('isCovidAlertDismissed'),
+    isImageLoaded: false
   };
 
   public render() {
@@ -30,12 +35,12 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
     const { t } = this.props;
 
     return (
-      <div className={styles.outerContainer}>
+      <div className={classnames(styles.outerContainer)}>
         <Container fluid className={classnames(styles.primaryContainer, { [styles.alertDismissed]: isCovidAlertDismissed })}>
           {!isCovidAlertDismissed &&
             <Row>
               <FadeIn>
-                {({ className, ref }: { className: string; ref: string & React.Ref<HTMLDivElement> }) => (
+                {({ className, ref }: { className: string; ref: DivRef }) => (
                   <Col ref={ref} className={`${className} ${styles.delayed}`}>
                     <Alert className={styles.alert} onClose={this.dismissAlert}>
                       {t('covid_response.offering_for_free')}
@@ -59,7 +64,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
           </Row>
 
           <FadeIn>
-            {({ className, ref }: { className: string; ref: string & React.Ref<HTMLDivElement> }) => (
+            {({ className, ref }: { className: string; ref: DivRef }) => (
               <Row className={`${className} ${styles.delayed}`} ref={ref}>
                 <Col>
                   <p className={styles.text}>
@@ -71,7 +76,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
           </FadeIn>
 
           <FadeIn>
-            {({ className, ref }: { className: string; ref: string & React.Ref<HTMLDivElement> }) => (
+            {({ className, ref }: { className: string; ref: DivRef }) => (
               <Row className={`${className} ${styles.delayed}`} ref={ref}>
                 <Col className={styles.ctaContainer}>
                   <Button
@@ -89,11 +94,11 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
           </FadeIn>
 
           <FadeIn>
-            {({ className, ref }: { className: string; ref: string & React.Ref<HTMLDivElement> }) => (
+            {({ className, ref }: { className: string; ref: DivRef }) => (
               <Row className={`${className} ${styles.delayed}`} ref={ref}>
                 <Col>
                   <Card className={styles.resumeCard} variant="outlined">
-                    <img src={sampleResume} className={styles.resume} alt={t('image_of_sample_resume')} />
+                    <img src={sampleResume} className={styles.resume} alt={t('image_of_sample_resume')} onLoad={this.imageDidLoad} />
                   </Card>
                 </Col>
               </Row>
@@ -117,19 +122,43 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
           </Row>
 
           <FadeIn>
-            {({ className, ref }: { className: string; ref: string & React.Ref<HTMLDivElement> }) => (
+            {({ className, ref }: { className: string; ref: DivRef }) => (
               <Row className={className} ref={ref}>
                 <Col>
                   <p className={styles.text}>
-                    {t('home_page.make_your_resume_stand_out')}
+                    {t('home_page.instantly_download_completed_resume')}
                   </p>
                 </Col>
               </Row>
             )}
           </FadeIn>
+
+          <FadeIn>
+            {({ className, ref }: { className: string; ref: DivRef }) => (
+              <Row className={`${className}`} ref={ref}>
+                <Col className={styles.ctaContainer}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={this.redirectToSignup}
+                    fullWidth
+                    size="large"
+                    >
+                    {t('home_page.start_now')}
+                  </Button>
+                </Col>
+              </Row>
+            )}
+          </FadeIn>
         </Container>
+
+        <Footer />
       </div>
     );
+  }
+
+  private imageDidLoad = (): void => {
+    this.setState({ isImageLoaded: true });
   }
 
   private dismissAlert = (): void => {

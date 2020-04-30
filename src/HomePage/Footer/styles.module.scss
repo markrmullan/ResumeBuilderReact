@@ -1,0 +1,15 @@
+@import "styles/common";
+
+.container {
+  align-items: center;
+  background-color: $blue-grey-900;
+  color: $white;
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  min-height: 78px;
+
+  .made-with {
+    font-weight: $bolder;
+  }
+}

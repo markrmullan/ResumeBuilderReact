@@ -3,8 +3,7 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
@@ -17,6 +16,12 @@ const PATHS_TO_HIDE_HEADER: RegExp[] = [
 
 type TComponentProps = RouteComponentProps & WithNamespaces;
 
+/*
+ * TODO inside the <Toolbar>, add a
+ *           <IconButton edge="start" color="inherit" aria-label="menu">
+ *             <Menu />
+ *           </IconButton>
+ */
 class TopAppHeaderComponent extends PureComponent<TComponentProps> {
   public static contextType = CurrentUserContextImpl;
 
@@ -31,9 +36,6 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
         position="static"
       >
         <Toolbar className={styles.toolbar}>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <Menu />
-          </IconButton>
           <Typography variant="h5" className={styles.title}>
             {t('app_name')}
           </Typography>

@@ -6,11 +6,20 @@
 
 .outer-container {
   color: $grey-800;
+
+  &.loading {
+    opacity: 0;
+  }
+
+  .cta-container {
+    margin: 32px auto;
+    max-width: 223px;
+  }
 }
 
 .primary-container {
   background-color: $blue-grey-50;
-  margin-bottom: 90px;
+  margin-bottom: 80px;
   padding-top: 16px;
 
   &.alert-dismissed {
@@ -29,11 +38,6 @@
     margin-top: 12px;
   }
 
-  .cta-container {
-    margin: 32px auto;
-    max-width: 223px;
-  }
-
   .resume-card {
     margin: 0 auto;
     text-align: center;
@@ -42,8 +46,24 @@
     .resume {
       height: 178px;
 
+      @media (min-width: 336px) {
+        height: 193px;
+      }
+
+      @media (min-width: 413px) {
+        height: 237px;
+      }
+
+      @media (min-width: 456px) {
+        height: 269px;
+      }
+
+      @media (min-width: 507px) {
+        height: 302px;
+      }
+
       @media (min-width: $sm-screen-min) {
-        height: 337px;
+        height: 348px;
       }
 
       @media (min-width: $md-screen-min) {
