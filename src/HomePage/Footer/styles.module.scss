@@ -1,15 +1,26 @@
 @import "styles/common";
 
 .container {
-  align-items: center;
   background-color: $blue-grey-900;
   color: $white;
-  display: flex;
-  justify-content: center;
   margin-top: 32px;
   min-height: 78px;
+  padding-bottom: 44px;
 
   .made-with {
     font-weight: $bolder;
+    margin-top: 44px;
+  }
+}
+
+.social-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  // https://www.iconsdb.com/white-icons/white-social-icons.html
+  .social-media-icon {
+    height: 20px;
+    margin: 0 6px;
   }
 }
