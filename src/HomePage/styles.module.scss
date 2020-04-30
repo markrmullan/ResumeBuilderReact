@@ -1,0 +1,65 @@
+@import "styles/common";
+
+.container {
+  background-color: $blue-grey-50;
+  color: $grey-800;
+  padding-top: 16px;
+
+  &.alert-dismissed {
+    padding-top: 40px;
+
+    @media (min-width: $lg-screen-min) {
+      padding-top: 60px;
+    }
+
+    @media (min-width: $xl-screen-min) {
+      padding-top: 68px;
+    }
+  }
+
+  .extra-margin {
+    margin-top: 12px;
+  }
+
+  .cta-container {
+    margin: 32px auto;
+    max-width: 223px;
+  }
+
+  .resume-card {
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+
+    .resume {
+      height: 178px;
+
+      @media (min-width: $sm-screen-min) {
+        height: 337px;
+      }
+
+      @media (min-width: $md-screen-min) {
+        height: 440px;
+      }
+
+      @media (min-width: $lg-screen-min) {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.text {
+  margin: 0 auto 4px !important;
+  max-width: 383px;
+  text-align: center;
+}
+
+.hero-text {
+  max-width: 483px;
+}
+
+.alert {
+  margin: 0 auto;
+  width: fit-content;
+}

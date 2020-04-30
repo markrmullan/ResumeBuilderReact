@@ -1,7 +1,7 @@
 import { deepPurple, grey } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
-export const theme = createMuiTheme({
+const baseTheme = createMuiTheme({
   overrides: {
     MuiButton: {
       containedPrimary: {
@@ -59,9 +59,17 @@ export const theme = createMuiTheme({
           outline: 'none'
         }
       }
+    },
+    MuiTypography: {
+      h4: {
+        fontFamily: 'inherit',
+        fontWeight: 700
+      }
     }
   },
   palette: {
     primary: deepPurple
   }
 });
+
+export const theme = responsiveFontSizes(baseTheme, { factor: 2.2 });

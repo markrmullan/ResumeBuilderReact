@@ -58,7 +58,6 @@ export const pdfStyles = StyleSheet.create({
     flexDirection: 'column'
   },
   li: {
-    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row'
   },

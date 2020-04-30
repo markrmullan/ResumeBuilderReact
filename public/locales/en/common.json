@@ -13,6 +13,7 @@
   "are_you_sure_you_want_to_delete_this_resume": "Are you sure you want to delete this resume?",
   "back": "Back",
   "build": "Build",
+  "build_your_professional_resume_in_10": "Build your professional resume in 10 minutes",
   "cancel": "Cancel",
   "cannot_be_blank": "Cannot be blank",
   "character_limit_reached_plural": "{{count}} characters max",
@@ -23,6 +24,10 @@
   "contact_details": "Contact Details",
   "count_links_added": "{{count}} link added",
   "count_links_added_plural": "{{count}} links added",
+  "covid_response": {
+    "covid_19_response": "COVID-19 Response",
+    "offering_for_free": "To assist you during the COVID-19 outbreak, we are offering this service completely FREE."
+  },
   "create_a_password": "Create a Password",
   "create_account": "Create Account",
   "create_another": "Create another",
@@ -51,6 +56,10 @@
   "gpa": "GPA",
   "gpa_and_value": "GPA: {{gpa}}",
   "great_choice_now_add_name": "Great choice! Now let's add your name.",
+  "home_page": {
+    "make_your_resume_stand_out": "Make your resume stand out, get hired faster, and open more doors for you and your career.",
+    "start_now": "Start Now"
+  },
   "job_title": "Job Title",
   "last_name": "Last Name",
   "link": "Link",

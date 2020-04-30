@@ -9,6 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
+import { HomePage } from 'HomePage';
 import { LoginComponent } from 'LoginComponent';
 import { SignupComponent } from 'SignupComponent';
 import { TopAppHeader } from 'common/TopAppHeader';
@@ -45,6 +46,7 @@ class App extends Component<WithNamespaces, AppState> {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TopAppHeader />
               <Switch>
+                <Route exact path="/" component={HomePage} />
                 <Route exact path={ROUTES.login} component={LoginComponent} />
                 <Route exact path="/get-started" component={SignupComponent} />
                 <Route exact path="/dashboard" component={Dashboard} />

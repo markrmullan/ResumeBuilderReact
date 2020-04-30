@@ -54,6 +54,7 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
           color="inherit"
           key="log-out"
           onClick={this.logOut}
+          className={styles.headerButton}
           >
           {t('log_out')}
         </Button>,
@@ -61,7 +62,7 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
           <Button
             variant="contained"
             key="dashboard"
-            className={styles.ctaLink}
+            className={`${styles.ctaLink} ${styles.headerButton}`}
             onClick={this.redirectToDashboard}
           >
             {t('my_dashboard')}
@@ -75,13 +76,14 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
         color="inherit"
         key="log-in"
         onClick={this.redirectToLogin}
+        className={styles.headerButton}
       >
         {t('log_in')}
       </Button>,
       <Button
         variant="contained"
         key="get-started"
-        className={styles.ctaLink}
+        className={`${styles.ctaLink} ${styles.headerButton}`}
         onClick={this.redirectToSignup}
       >
         {t('sign_up')}

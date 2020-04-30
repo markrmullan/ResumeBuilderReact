@@ -85,7 +85,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
               {experiences.map(({ company, description, endDate, location, position, startDate = now, uuid }) => {
                 return (
-                  <View key={uuid} style={{ marginBottom: 12 }}>
+                  <View key={uuid} style={{ marginBottom: 12, marginRight: 20 }}>
                     {this.getRoleAndPlace(position, company, location)}
 
                     {this.getFormattedStartDateEndDate(startDate, endDate)}
@@ -107,7 +107,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
                 {educations.map(({ degree, description, endDate, gpa, school, startDate = now, uuid }) => {
                   return (
-                    <View key={uuid} style={{ marginBottom: 12 }}>
+                    <View key={uuid} style={{ marginBottom: 12, marginRight: 20 }}>
                       {school &&
                         <Text style={pdfStyles.roleAndPlace}>
                           {school}

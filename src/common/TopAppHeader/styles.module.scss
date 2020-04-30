@@ -5,11 +5,19 @@
 
   .title {
     flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .cta-link {
     background-color: $white;
     color: $deep-purple-500;
     margin-left: 12px;
+  }
+
+  .header-button {
+    min-width: auto;
+    white-space: nowrap;
   }
 }
