@@ -65,7 +65,7 @@ class BuyMeACoffeeComponent extends PureComponent<TComponentProps> {
                 <Typography paragraph>
                   <Trans i18nKey="coffee.paypal_or_venmo">
                     If you would like to buy me a coffee, you can use the PayPal donation link below, or Venmo me <a href="https://venmo.com/Mark-Mullan" target="_blank" rel="noopener noreferrer">{{ venmoLink: '@mark-mullan' }}</a>.
-                    Not only will you earn my eternal gratitude, I'll also write you a Thank You note! If you change your mind, <a href="mailto:mark@easy-resu.me">send me an email</a>, and you can get a refund.
+                    Not only will you earn my eternal gratitude, I'll also write you a Thank You note! If you change your mind within 30 days, <a href="mailto:mark@easy-resu.me">send me an email</a>, and you can get a refund.
                   </Trans>
                 </Typography>
               </Col>
