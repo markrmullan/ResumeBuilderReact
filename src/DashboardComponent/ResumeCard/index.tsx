@@ -13,6 +13,7 @@ import { ConfirmationDialog } from 'common/ConfirmationDialog';
 import { Resume } from 'utils/models';
 import { getEditResumeRoute } from 'utils/routes';
 
+import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import styles from './styles.module.scss';
 
 const DATE_FORMAT = 'dd MMM, HH:mm'; // 14 Apr, 19:36
@@ -43,7 +44,15 @@ class ResumeCardComponent extends PureComponent<TComponentProps, TComponentState
       <Card className={styles.container}>
         <Container fluid>
           <Row>
-            <Col xs={{ span: 12, offset: 4 }} sm={{ offset: 6 }} md={{ offset: 4 }}>
+            <Col xs={4} sm={6} className={styles.wireframeContainer}>
+              <img
+                className={styles.resumeWireframe}
+                src={resumeWireframe}
+                alt=""
+              />
+            </Col>
+
+            <Col xs={8} sm={6}>
               <div className={styles.infoContainer}>
                 <Typography className={styles.name}>
                   {resume.name}

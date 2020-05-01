@@ -6,6 +6,16 @@
   height: 300px;
   padding: 12px;
 
+  .wireframe-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .resume-wireframe {
+      height: 103px;
+    }
+  }
+
   .info-container {
     margin-bottom: 12px;
 
