@@ -1,0 +1,13 @@
+@import "styles/common";
+
+.container {
+  color: $grey-800;
+  margin-top: 36px;
+
+  .paypal-col {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+}

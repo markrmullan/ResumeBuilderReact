@@ -7,6 +7,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 
+import { BuyMeACoffee } from 'BuyMeACoffee';
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
 import { HomePage } from 'HomePage';
@@ -47,6 +48,7 @@ class App extends Component<WithNamespaces, AppState> {
               <TopAppHeader />
               <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/coffee" component={BuyMeACoffee} />
                 <Route exact path={ROUTES.login} component={LoginComponent} />
                 <Route exact path="/get-started" component={SignupComponent} />
                 <Route exact path="/dashboard" component={Dashboard} />

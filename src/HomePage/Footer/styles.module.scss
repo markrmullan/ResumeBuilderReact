@@ -6,10 +6,16 @@
   margin-top: 32px;
   min-height: 78px;
   padding-bottom: 44px;
+  padding-top: 44px;
+
+  .footer-link {
+    color: $white;
+    text-decoration: underline;
+  }
 
   .made-with {
     font-weight: $bolder;
-    margin-top: 44px;
+    margin-top: 20px;
   }
 }
 
