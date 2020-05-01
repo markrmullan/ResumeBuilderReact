@@ -27,6 +27,7 @@
     "paypal_or_venmo": "If you would like to buy me a coffee, you can use the PayPal donation link below, or Venmo me <1>{{venmoLink}}</1>. Not only will you earn my eternal gratitude, I'll also write you a Thank You note! If you change your mind, send me an email, and you can get a refund.",
     "support": "Support"
   },
+  "company_logo": "EasyResume Logo",
   "confirm_password": "Confirm Password",
   "connect_with_facebook": "Connect with Facebook",
   "connect_your_social_profile": "Connect Your Social Profile",

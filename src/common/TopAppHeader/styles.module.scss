@@ -4,11 +4,11 @@
   flex-grow: 1;
 
   .title {
-    color: $white;
     flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+    .logo {
+      height: 40px;
+    }
   }
 
   .cta-link {

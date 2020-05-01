@@ -12,7 +12,7 @@ import { Card } from 'common/Card';
 import { FadeIn } from 'common/FadeIn';
 import { Footer } from './Footer';
 
-import resumeWireframe from './resume_wireframe.svg';
+import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import sampleResume from './sample_resume.svg';
 import styles from './styles.module.scss';
 

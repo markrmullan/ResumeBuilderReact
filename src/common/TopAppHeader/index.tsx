@@ -3,11 +3,13 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Toolbar } from '@material-ui/core';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
 import { User } from 'utils/models';
 import { logOut } from 'utils/requests';
+
+import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import styles from './styles.module.scss';
 
 const PATHS_TO_HIDE_HEADER: RegExp[] = [
@@ -37,9 +39,7 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
       >
         <Toolbar className={styles.toolbar}>
           <Link to="/" className={styles.title}>
-            <Typography variant="h5">
-              {t('app_name')}
-            </Typography>
+            <img src={resumeWireframe} className={styles.logo} alt={t('company_logo')} />
           </Link>
           {this.getActionItems()}
         </Toolbar>
