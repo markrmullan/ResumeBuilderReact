@@ -2,11 +2,15 @@ import { AppComponent } from 'App';
 import 'i18n';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import HttpsRedirect from 'react-https-redirect';
+
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 const ResumeBuilder = (
-  <AppComponent />
+  <HttpsRedirect>
+    <AppComponent />
+  </HttpsRedirect>
 );
 
 ReactDOM.render(ResumeBuilder, document.getElementById('root'));
