@@ -175,7 +175,7 @@ export class PrivacyPolicy extends PureComponent {
           <Row>
             <Col xs={{ span: 10, offset: 1 }} sm={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
               <Typography paragraph>
-                For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at markrmullan@gmail.com.
+                For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at <a href="mailto:mark@easy-resu.me">mark@easy-resu.me</a>.
               </Typography>
             </Col>
           </Row>

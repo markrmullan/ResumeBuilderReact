@@ -10,4 +10,13 @@
     justify-content: center;
     margin-bottom: 12px;
   }
+
+  .back-container {
+    display: flex;
+    justify-content: center;
+
+    .arrow {
+      margin-right: 8px;
+    }
+  }
 }
