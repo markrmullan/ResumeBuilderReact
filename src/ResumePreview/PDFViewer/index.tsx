@@ -82,9 +82,12 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   }
 
   private getResumeName = (): string => {
+    const { t } = this.props;
     const { user } = this.context;
 
-    return `${user.firstName} ${user.lastName}.pdf`;
+    const fullName = `${user.firstName} ${user.lastName}`;
+
+    return t('full_name_resume_dot_pdf', { fullName });
   }
 }
 

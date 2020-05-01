@@ -62,6 +62,7 @@
   "experience": "Experience",
   "first_name": "First Name",
   "first_time_here": "First time here? ",
+  "full_name_resume_dot_pdf": "{{fullName}} Resume.pdf",
   "get_started": "Get Started",
   "gpa": "GPA",
   "gpa_and_value": "GPA: {{gpa}}",
