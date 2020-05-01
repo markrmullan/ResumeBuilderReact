@@ -36,9 +36,11 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
 
     if (pending) {
       return (
-        <Container>
-          <Spinner />
-        </Container>
+        <div className="app-wrapper-max-width">
+          <Container>
+            <Spinner />
+          </Container>
+        </div>
       );
     }
 
