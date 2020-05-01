@@ -12,6 +12,7 @@ import { EditResume } from 'EditResume';
 import { HomePage } from 'HomePage';
 import { LoginComponent } from 'LoginComponent';
 import { PrivacyPolicy } from 'PrivacyPolicy';
+import { ScrollToTop } from 'ScrollToTop';
 import { SignupComponent } from 'SignupComponent';
 import { TopAppHeader } from 'common/TopAppHeader';
 
@@ -38,6 +39,7 @@ class App extends Component<WithNamespaces, AppState> {
 
     return (
       <BrowserRouter>
+        <ScrollToTop />
         <ThemeProvider theme={theme}>
           <CurrentUserContextImpl.Provider value={{
             user: currentUser,
