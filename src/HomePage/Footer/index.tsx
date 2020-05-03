@@ -64,8 +64,13 @@ class FooterComponent extends PureComponent<TComponentProps> {
 
               <span className={styles.pipe}>|</span>
 
-              <a href="https://www.google.com" className={styles.footerLink}>
-                Product Roadmap
+              <a
+                target="_blank"
+                href="https://trello.com/b/NbvM7Sk2/easyresume-product-roadmap"
+                className={styles.footerLink}
+                rel="noopener noreferrer"
+              >
+                {t('home_page.product_roadmap')}
               </a>
 
               <span className={styles.pipe}>|</span>
