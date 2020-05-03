@@ -31,7 +31,6 @@ type PathParams = {
 
 type TComponentState = {
   lastUpdatedUuid: Nullable<Uuid>;
-  showResumePreview: boolean;
   resume: Resume;
   selectedTab: number;
 };
@@ -55,7 +54,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     this.state = {
       lastUpdatedUuid: null,
       resume: {} as Resume,
-      showResumePreview: false,
       selectedTab: 0
     };
   }
@@ -64,7 +62,7 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
     const { t } = this.props;
     const { user } = this.context;
     const { city = '', email = '', firstName = '', jobTitle = '', lastName = '', phoneNumber = '', resumeEmail = '', state = '', zip = '' } = user;
-    const { lastUpdatedUuid, resume, selectedTab, showResumePreview } = this.state;
+    const { lastUpdatedUuid, resume, selectedTab } = this.state;
     const { educations = [], experiences = [], links = [], name = '' } = resume;
 
     const isMobilePreviewEnabled = selectedTab === 1;
@@ -289,12 +287,11 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
               </Row>
             </Container>
           </Col>
-          {showResumePreview &&
-            <ResumePreview
-              isMobilePreviewEnabled={isMobilePreviewEnabled}
-              resume={resume}
-            />
-          }
+
+          <ResumePreview
+            isMobilePreviewEnabled={isMobilePreviewEnabled}
+            resume={resume}
+          />
         </Row>
       </Container>
     );
@@ -311,7 +308,6 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
 
     const resume: Resume = await fetchResume(resumeId);
     this.setState({ resume });
-    setTimeout(() => this.setState({ showResumePreview: true }), 200);
   }
 
   private handleTopNavChange = (_: React.ChangeEvent<{}>, newValue: any): void => {
