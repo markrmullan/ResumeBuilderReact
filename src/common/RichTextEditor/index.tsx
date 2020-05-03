@@ -15,7 +15,7 @@ type TComponentProps = {
 
 const CONTENT_STYLE: string = 'ul, ol { padding-inline-start: 30px; } p, ul, ol { margin: 0; }';
 const KEY: string = 'vw2o44ss6yxeeus1sui02suy8d9qr62ht06rit7qfwn0uj6f';
-const PLUGINS: string[] = ['lists link'];
+const PLUGINS: string[] = ['lists link paste'];
 const TOOLBAR: string = 'undo redo | bullist ';
 
 export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorChange, value }) => (
@@ -36,7 +36,9 @@ export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorCh
         statusbar: false,
         menubar: false,
         plugins: PLUGINS,
-        toolbar: TOOLBAR
+        toolbar: TOOLBAR,
+        paste_text_sticky_default: true,
+        paste_text_sticky: true
       }}
       onBlur={onBlur}
       onEditorChange={onEditorChange}
