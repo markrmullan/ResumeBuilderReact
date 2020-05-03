@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Fragment, PureComponent } from 'react';
 
 import { ExpansionPanelSummary } from '@material-ui/core';
-import { DeleteOutlined, ExpandMore } from '@material-ui/icons';
+import { DeleteOutlined } from '@material-ui/icons';
 import { Col, Row } from 'react-bootstrap';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
@@ -48,8 +48,8 @@ class EditLinksComponent extends PureComponent<TComponentProps, TComponentState>
           open={isDeleteConfirmationModalOpen}
         />
 
-        <ExpansionPanel className={styles.mb16}>
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <ExpansionPanel className={styles.mb16} expanded={!!links.length}>
+          <ExpansionPanelSummary className={styles.expansionPanelSummary}>
             <Row>
               <Col xs={12} className={styles.summary}>
                 {t('count_links_added', { count: links.length })}

@@ -1,9 +1,12 @@
 @import "styles/common";
 
-.summary {
-  font-size: 0.875em;
-  font-weight: $bolder;
-  margin-left: 32px;
+.expansion-panel-summary {
+  cursor: default;
+
+  .summary {
+    font-size: 0.875em;
+    font-weight: $bolder;
+  }
 }
 
 .mb16 {
