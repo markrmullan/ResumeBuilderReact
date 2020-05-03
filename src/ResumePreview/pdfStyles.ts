@@ -22,9 +22,8 @@ export const pdfStyles = StyleSheet.create({
   },
   page: {
     fontFamily: 'Roboto',
-    paddingBottom: 65,
     paddingHorizontal: 35,
-    paddingTop: 35
+    paddingVertical: 35
   },
   name: {
     fontSize: 36,
