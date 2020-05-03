@@ -90,7 +90,7 @@ class BuyMeACoffeeComponent extends PureComponent<TComponentProps> {
                 <Typography paragraph>
                   <Trans i18nKey="coffee.other_ways_to_support">
                     There are many other ways to support EasyResume. You can tell your friends and family about this website, or share us on social media.
-                    If you would like to become a corporate sponsor, support product development, translate the website into another language, or leverage
+                    If you would like to become a corporate sponsor, support product development, help develop the EasyResume brand, or leverage
                     your other awesome abilities, send me an email at <a href="mailto:mark@easy-resu.me">mark@easy-resu.me</a>.
                   </Trans>
                 </Typography>
