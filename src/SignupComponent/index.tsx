@@ -83,29 +83,29 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
         <div className={className}>
           <ConnectSocialProfile
             onConnectWithFacebook={this.onConnectWithFacebook}
-            clickNext={() => this.clickNext()}
+            clickNext={this.clickNext}
           />
           <NameForm
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
+            clickPrev={this.clickPrev}
+            clickNext={this.clickNext}
             firstName={firstName}
             lastName={lastName}
-            onChange={e => this.onChange(e)}
+            onChange={this.onChange}
           />
           <ContactInformationForm
             email={email}
             phoneNumber={phoneNumber}
             errors={errors}
-            onChange={e => this.onChange(e)}
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
+            onChange={this.onChange}
+            clickPrev={this.clickPrev}
+            clickNext={this.clickNext}
           />
           <PasswordForm
             password={password}
             passwordConfirmation={passwordConfirmation}
             errors={errors}
-            onChange={e => this.onChange(e)}
-            clickPrev={() => this.clickPrev()}
+            onChange={this.onChange}
+            clickPrev={this.clickPrev}
             clickNext={e => this.submit(e)}
           />
         </div>
@@ -120,7 +120,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     );
   }
 
-  public onChange(e: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  public onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value }: { name: string; value: string } = e.currentTarget;
 
     this.setState({
@@ -129,13 +129,13 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
     } as SignupStateWithErrors);
   }
 
-  public clickNext(): void {
+  public clickNext = (): void => {
     this.setState(prevState => ({
       currentPage: prevState.currentPage + 1
     }));
   }
 
-  public clickPrev(): void {
+  public clickPrev = (): void => {
     this.setState(prevState => ({
       currentPage: prevState.currentPage - 1
     }));

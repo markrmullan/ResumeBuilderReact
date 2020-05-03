@@ -17,6 +17,7 @@ class ConnectWithFacebookComponent extends PureComponent<TOwnProps & WithNamespa
     return (
       <div className={styles.container}>
         <FacebookLogin
+          disableMobileRedirect
           appId={FACEBOOK_APP_ID}
           callback={onConnectWithFacebook}
           fields="first_name,last_name,email,picture"
