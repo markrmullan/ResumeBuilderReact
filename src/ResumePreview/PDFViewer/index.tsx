@@ -1,13 +1,11 @@
 import React, { PureComponent, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import pdfjs from 'pdfjs-dist';
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
 import { Button } from '@material-ui/core';
 import { pdf } from '@react-pdf/renderer';
 import throttle from 'lodash.throttle';
 import { Document, Page } from 'react-pdf';
+
 import { CurrentUserContextImpl } from 'utils/contexts';
 
 import previewStyles from '../styles.module.scss';
@@ -30,7 +28,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   public constructor(props: TComponentProps) {
     super(props);
 
-    this.throttledRenderDocument = throttle(this.renderDocument, 4000, { leading: false });
+    this.throttledRenderDocument = throttle(this.renderDocument, 4000);
 
     this.state = {
       document: ''

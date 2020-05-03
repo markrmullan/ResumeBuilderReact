@@ -4,6 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HttpsRedirect from 'react-https-redirect';
 
+import pdfjs from 'pdfjs-dist';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 

@@ -37,7 +37,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
     const links = this.getLinks();
 
-    const MyDocument = () => (
+    const Resume = () => (
       <Document>
         <Page size="A4" style={pdfStyles.page}>
           <View style={pdfStyles.informationContainer}>
@@ -131,7 +131,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
     return (
       <Col className={classnames(styles.resumePreview, 'd-lg-flex', { [styles.previewMode]: isMobilePreviewEnabled })} style={{ backgroundColor: blueGrey[200] }} id="pdf">
-        <PDFViewer document={<MyDocument />} />
+        {user.uuid && resume.uuid &&
+          <PDFViewer document={<Resume />} />
+        }
       </Col>
     );
   }

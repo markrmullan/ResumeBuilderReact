@@ -288,10 +288,12 @@ class EditResumeComponent extends Component<TComponentProps, TComponentState> {
             </Container>
           </Col>
 
-          <ResumePreview
-            isMobilePreviewEnabled={isMobilePreviewEnabled}
-            resume={resume}
-          />
+          {resume.uuid && user.uuid &&
+            <ResumePreview
+              isMobilePreviewEnabled={isMobilePreviewEnabled}
+              resume={resume}
+            />
+          }
         </Row>
       </Container>
     );
