@@ -18,6 +18,7 @@
   "city": "City",
   "coffee": {
     "back_to_home_page": "Back to Home Page",
+    "buy_me_a_coffee": "Buy me a Coffee",
     "connect_with_me": "When I'm not improving (or breaking) this website, you can find me playing video games, playing board games, or writing code at <1>Clover</1>. Connect with me <3>on LinkedIn</3>, and let's keep in touch.",
     "donate_with_paypal_alt": "Donate with PayPal button",
     "donate_with_paypal_title": "PayPal - The safer, easier way to pay online!",
@@ -36,7 +37,7 @@
   "count_links_added_plural": "{{count}} links added",
   "covid_response": {
     "covid_19_response": "COVID-19 Response",
-    "offering_for_free": "To assist you during the COVID-19 outbreak, we are offering this service completely FREE."
+    "offering_for_free": "To assist you during the COVID-19 outbreak, we are offering EasyResume completely FREE."
   },
   "create_a_password": "Create a Password",
   "create_account": "Create Account",
@@ -70,11 +71,13 @@
     "build_your_professional_resume_in_10": "Build your professional resume in 10 minutes",
     "download_your_resume_as_pdf": "Download your resume as PDF",
     "facebook": "Facebook",
+    "feedback_contact": "Feedback? <1>mark@easy-resu.me</1>",
     "image_of_sample_resume": "Image of sample resume",
     "instantly_download_completed_resume": "Create a perfectly formatted resume in minutes, and instantly download it in PDF format.",
     "linkedin": "LinkedIn",
     "made_with_muscle": "Made with 💪 in the Bay Area",
     "make_your_resume_stand_out": "Make your resume stand out, get hired faster, and open more doors for you and your career.",
+    "product_roadmap": "Product Roadmap",
     "start_now": "Start Now"
   },
   "job_title": "Job Title",
@@ -102,6 +105,7 @@
   "prev": "Prev",
   "preview": "Preview",
   "previous": "Previous",
+  "privacy": "Privacy",
   "professional_experience": "Professional Experience",
   "professional_experience_supporting_info": "Include your last 10 years of relevant experience. List your most recent position first.",
   "resume_name": "Resume Name",

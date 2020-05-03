@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { Typography } from '@material-ui/core';
 import { Col, Container, Row } from 'react-bootstrap';
-import { WithNamespaces, withNamespaces } from 'react-i18next';
+import { Trans, WithNamespaces, withNamespaces } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import facebookIcon from './facebook-32.png';
@@ -19,11 +19,11 @@ class FooterComponent extends PureComponent<TComponentProps> {
       <Container fluid className={styles.container}>
         <Row>
           <Col>
-            <Link to="/coffee">
-              <Typography align="center" variant="h6" className={styles.footerLink}>
-                Buy me a Coffee
-              </Typography>
-            </Link>
+            <Typography align="center" variant="h6">
+              <Link to="/coffee" className={styles.footerLink}>
+                {t('coffee.buy_me_a_coffee')}
+              </Link>
+            </Typography>
           </Col>
         </Row>
 
@@ -52,6 +52,28 @@ class FooterComponent extends PureComponent<TComponentProps> {
             >
               <img className={styles.socialMediaIcon} src={facebookIcon} alt={t('home_page.facebook')} />
             </a>
+          </Col>
+        </Row>
+
+        <Row className={styles.moreLinks}>
+          <Col>
+            <Typography align="center" variant="subtitle2">
+              <Link target="_blank" to="/privacy-policy" className={styles.footerLink}>
+                {t('privacy')}
+              </Link>
+
+              <span className={styles.pipe}>|</span>
+
+              <a href="https://www.google.com" className={styles.footerLink}>
+                Product Roadmap
+              </a>
+
+              <span className={styles.pipe}>|</span>
+
+              <Trans i18nKey='home_page.feedback_contact'>
+                Feedback? <a href="mailto:mark@easy-resu.me" className={styles.footerLink}>mark@easy-resu.me</a>
+              </Trans>
+            </Typography>
           </Col>
         </Row>
       </Container>

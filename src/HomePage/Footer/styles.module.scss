@@ -11,11 +11,24 @@
   .footer-link {
     color: $white;
     text-decoration: underline;
+
+    &:hover {
+      color: $light-blue-500;
+    }
   }
 
   .made-with {
     font-weight: $bolder;
     margin-top: 20px;
+  }
+
+  .more-links {
+    margin-top: 20px;
+
+    .pipe {
+      margin-left: 12px;
+      margin-right: 12px;
+    }
   }
 }
 
