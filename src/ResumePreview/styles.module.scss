@@ -37,5 +37,13 @@
 
   @media (min-width: $xl-screen-min) {
     zoom: 0.75;
+
+    @media (max-height: 760px) {
+      zoom: 0.62;
+    }
+  }
+
+  @media (max-height: 647px) {
+    zoom: 0.4;
   }
 }
