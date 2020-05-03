@@ -94,11 +94,10 @@ class ResumeCardComponent extends PureComponent<TComponentProps, TComponentState
     this.setState({ isDeleteConfirmationOpen: false });
   }
 
-  private deleteResume = async (): Promise<void> => {
+  private deleteResume = (): void => {
     const { deleteResume, resume: { uuid: resumeId } } = this.props;
 
-    deleteResume(resumeId)
-      .then(_ => this.closeDeleteConfirmation());
+    deleteResume(resumeId);
   }
 }
 
