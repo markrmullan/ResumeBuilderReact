@@ -95,7 +95,7 @@ export class PrivacyPolicy extends PureComponent {
           <Row>
             <Col xs={{ span: 10, offset: 1 }} sm={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }}>
               <Typography paragraph>
-                We share your Personal Information with third parties to help us use your Personal Information, as described above. We also use Google Analytics to help us understand how our customers use the Site--you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/.  You can also opt-out of Google Analytics here:  https://tools.google.com/dlpage/gaoptout.
+                We share your Personal Information with third parties to help us use your Personal Information, as described above. We also use Google Analytics to help us understand how our customers use the Site—you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/.  You can also opt-out of Google Analytics here:  https://tools.google.com/dlpage/gaoptout.
               </Typography>
             </Col>
           </Row>
