@@ -16,7 +16,7 @@ import { getEditResumeRoute } from 'utils/routes';
 import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import styles from './styles.module.scss';
 
-const DATE_FORMAT = 'dd MMM, HH:mm'; // 14 Apr, 19:36
+const DATE_FORMAT = 'd MMM, HH:mm'; // 3 Apr, 19:36
 const ICON_COLOR = deepPurple[300];
 
 type TOwnProps = {
