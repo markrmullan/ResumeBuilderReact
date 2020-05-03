@@ -1,5 +1,9 @@
 @import "styles/common";
 
+.outer-container {
+  min-height: calc(100vh - 166px);
+}
+
 .container {
   .header-el {
     margin-bottom: 12px;

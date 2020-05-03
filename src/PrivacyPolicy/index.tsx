@@ -3,7 +3,7 @@ import React, { Fragment, PureComponent } from 'react';
 import { Typography } from '@material-ui/core';
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { Footer } from 'HomePage/Footer';
+import { Footer } from 'Footer';
 
 import styles from './styles.module.scss';
 

@@ -120,10 +120,10 @@ class BuyMeACoffeeComponent extends PureComponent<TComponentProps> {
           {({ className, ref }: { className: string; ref: DivRef }) => (
             <Row className={className} ref={ref}>
               <Col xs={{ span: 10, offset: 1 }} md={{ span: 8, offset: 2 }} xl={{ span: 6, offset: 3 }} className={styles.backContainer}>
-                <Button color="primary" onClick={this.redirectHome}>
+                <Button color="primary" onClick={this.goBack}>
                   <ArrowBack className={styles.arrow} />
                   <Typography>
-                    {t('coffee.back_to_home_page')}
+                    {t('back')}
                   </Typography>
                 </Button>
               </Col>
@@ -134,10 +134,10 @@ class BuyMeACoffeeComponent extends PureComponent<TComponentProps> {
     );
   }
 
-  private redirectHome = (): void => {
+  private goBack = (): void => {
     const { history } = this.props;
 
-    history.push('/');
+    history.goBack();
   }
 }
 

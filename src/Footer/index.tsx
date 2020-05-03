@@ -75,7 +75,7 @@ class FooterComponent extends PureComponent<TComponentProps> {
 
               <span className={styles.pipe}>|</span>
 
-              <Trans i18nKey='home_page.feedback_contact'>
+              <Trans i18nKey="home_page.feedback_contact">
                 Feedback? <a href="mailto:mark@easy-resu.me" className={styles.footerLink}>mark@easy-resu.me</a>
               </Trans>
             </Typography>

@@ -7,10 +7,10 @@ import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 
+import { Footer } from 'Footer';
 import { Alert } from 'common/Alert';
 import { Card } from 'common/Card';
 import { FadeIn } from 'common/FadeIn';
-import { Footer } from './Footer';
 
 import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import sampleResume from './sample_resume.svg';
@@ -34,7 +34,7 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
     const { t } = this.props;
 
     return (
-      <div className={classnames(styles.outerContainer)}>
+      <div className={styles.outerContainer}>
         <Container fluid className={classnames(styles.primaryContainer, { [styles.alertDismissed]: isCovidAlertDismissed })}>
           {!isCovidAlertDismissed &&
             <Row>

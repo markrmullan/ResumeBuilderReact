@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { Footer } from 'Footer';
 import { FullWidthDivider } from 'common/FullWidthDivider';
 import { Spinner } from 'common/Spinner';
 import { CurrentUserContextImpl } from 'utils/contexts';
@@ -45,37 +46,42 @@ class DashboardComponent extends PureComponent<TComponentProps, DashboardCompone
     }
 
     return (
-      <div className="app-wrapper-max-width">
-        <Container fluid className={styles.container}>
-          <Row noGutters>
-            <Col xs={12} sm={8} className={styles.headerEl}>
-              <h1>{t('resumes')}</h1>
-            </Col>
-
-            <Col xs={12} sm={4} className={`${styles.addButtonContainer}`}>
-              <Button
-                color="primary"
-                variant="contained"
-                className={`${styles.headerEl} ${styles.createNewButton}`}
-                startIcon={<Add />}
-                onClick={this.createResume}
-              >
-                {t('create_new')}
-              </Button>
-            </Col>
-          </Row>
-
-          <FullWidthDivider />
-
-          <Row className={styles.resumesContainer}>
-            {resumes.map(resume => (
-              <Col xs={12} md={6} key={resume.uuid} className={styles.resumeCard}>
-                <ResumeCard resume={resume} deleteResume={this.deleteResume} />
+      <Fragment>
+        <div className={`app-wrapper-max-width ${styles.outerContainer}`}>
+          <Container fluid className={styles.container}>
+            <Row noGutters>
+              <Col xs={12} sm={8} className={styles.headerEl}>
+                <h1>{t('resumes')}</h1>
               </Col>
-            ))}
-          </Row>
-        </Container>
-      </div>
+
+              <Col xs={12} sm={4} className={`${styles.addButtonContainer}`}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  className={`${styles.headerEl} ${styles.createNewButton}`}
+                  startIcon={<Add />}
+                  onClick={this.createResume}
+                >
+                  {t('create_new')}
+                </Button>
+              </Col>
+            </Row>
+
+            <FullWidthDivider />
+
+            <Row className={styles.resumesContainer}>
+              {resumes.map(resume => (
+                <Col xs={12} md={6} key={resume.uuid} className={styles.resumeCard}>
+                  <ResumeCard resume={resume} deleteResume={this.deleteResume} />
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+
+        <Footer />
+
+      </Fragment>
     );
   }
 
