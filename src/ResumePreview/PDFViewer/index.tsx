@@ -15,6 +15,7 @@ import styles from './styles.module.scss';
 
 type PDFViewerProps = {
   document: ReactElement;
+  isMobilePreviewEnabled: boolean;
 };
 
 type PDFViewerState = {
@@ -106,6 +107,16 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
 
     this.throttledRenderDocument(document);
     (this.throttledRenderDocument as unknown as any).flush();
+  }
+
+  /**
+   * don't re-render if we're just switching from Build to Preview mode on mobile
+   */
+  public shouldComponentUpdate(nextProps: TComponentProps) {
+    const { isMobilePreviewEnabled } = nextProps;
+    const { isMobilePreviewEnabled: wasMobilePreviewEnabled } = this.props;
+
+    return isMobilePreviewEnabled === wasMobilePreviewEnabled;
   }
 
   public componentDidUpdate(prevProps: PDFViewerProps) {

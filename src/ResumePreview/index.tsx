@@ -132,7 +132,10 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     return (
       <Col className={classnames(styles.resumePreview, 'd-lg-flex', { [styles.previewMode]: isMobilePreviewEnabled })} style={{ backgroundColor: blueGrey[200] }} id="pdf">
         {user.uuid && resume.uuid &&
-          <PDFViewer document={<Resume />} />
+          <PDFViewer
+            document={<Resume />}
+            isMobilePreviewEnabled={isMobilePreviewEnabled}
+          />
         }
       </Col>
     );
