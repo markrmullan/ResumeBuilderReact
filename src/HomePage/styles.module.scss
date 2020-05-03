@@ -82,6 +82,8 @@
 }
 
 .resume-wireframe-container {
+  @include user-select(none);
+
   text-align: center;
 
   .resume-wireframe {

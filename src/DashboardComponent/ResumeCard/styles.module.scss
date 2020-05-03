@@ -7,6 +7,8 @@
   padding: 12px;
 
   .wireframe-container {
+    @include user-select(none);
+
     align-items: center;
     display: flex;
     justify-content: center;

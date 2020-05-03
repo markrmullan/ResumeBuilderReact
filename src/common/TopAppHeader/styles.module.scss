@@ -2,10 +2,9 @@
 
 .toolbar {
   flex-grow: 1;
+  justify-content: space-between;
 
   .title {
-    flex-grow: 1;
-
     .logo {
       height: 40px;
     }

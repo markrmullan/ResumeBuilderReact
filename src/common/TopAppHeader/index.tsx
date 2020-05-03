@@ -41,7 +41,10 @@ class TopAppHeaderComponent extends PureComponent<TComponentProps> {
           <Link to="/" className={styles.title}>
             <img src={resumeWireframe} className={styles.logo} alt={t('company_logo')} />
           </Link>
-          {this.getActionItems()}
+
+          <div>
+            {this.getActionItems()}
+          </div>
         </Toolbar>
       </AppBar>
     );
