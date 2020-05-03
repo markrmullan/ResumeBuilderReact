@@ -3,11 +3,10 @@
   justify-items: center;
 
   :global(.kep-login-facebook.metro) {
-    align-items: flex-end;
+    align-items: center;
     border-radius: 4px;
     display: flex;
     font-family: inherit;
-    font-size: 16px;
     justify-content: space-between;
     padding: 10px 12px;
     text-transform: unset;
