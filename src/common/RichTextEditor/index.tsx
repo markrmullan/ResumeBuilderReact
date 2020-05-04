@@ -37,6 +37,7 @@ export const RichTextEditor: SFC<TComponentProps> = ({ label, onBlur, onEditorCh
         menubar: false,
         plugins: PLUGINS,
         toolbar: TOOLBAR,
+        paste_as_text: true,
         paste_text_sticky_default: true,
         paste_text_sticky: true
       }}
