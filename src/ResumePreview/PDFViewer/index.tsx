@@ -1,6 +1,7 @@
 import React, { PureComponent, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
+import classnames from 'classnames';
 import { Button, Typography } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { pdf } from '@react-pdf/renderer';
@@ -49,8 +50,8 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
     if (!document) return null;
 
     return (
-      <div className={styles.container}>
-        <div className={previewStyles.pdfViewerWrapper}>
+      <div className={classnames(styles.container, previewStyles.pdfViewerWrapper, previewStyles.container)}>
+        <div>
           <Document file={document} onLoadSuccess={this.onDocumentLoadSuccess}>
             <Page renderMode="svg" pageNumber={pageNumber} />
           </Document>
@@ -89,6 +90,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
         }
 
         <Button
+          size="large"
           className={styles.downloadAsPdfButton}
           href={document}
           download={this.getResumeName()}
