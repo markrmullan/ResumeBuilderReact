@@ -1,13 +1,16 @@
 import React, { FormEvent, PureComponent } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
-import { Button } from '@material-ui/core';
+import { Button, InputAdornment } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import classnames from 'classnames';
 import { TextField } from 'common/TextField';
 
 import { MIN_PASSWORD_LENGTH } from 'utils/constants';
 
 import signupStyles from '../styles.module.scss';
+import styles from './styles.module.scss';
 
 type TOwnProps = {
   password: string;
@@ -25,17 +28,21 @@ type TComponentProps = TOwnProps & WithNamespaces;
 type TComponentState = {
   passwordError: boolean;
   passwordConfirmationError: boolean;
+  showPassword: boolean;
+  showPasswordConfirmation: boolean;
 };
 
 class PasswordFormComponent extends PureComponent<TComponentProps, TComponentState> {
   public state = {
     passwordError: false,
-    passwordConfirmationError: false
+    passwordConfirmationError: false,
+    showPassword: false,
+    showPasswordConfirmation: false
   };
 
   public render() {
     const { errors, password, passwordConfirmation, clickNext, clickPrev, t } = this.props;
-    const { passwordConfirmationError, passwordError } = this.state;
+    const { passwordConfirmationError, passwordError, showPassword, showPasswordConfirmation } = this.state;
 
     return (
       <form className={signupStyles.formFunnel} onSubmit={this.onSubmit}>
@@ -55,12 +62,19 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
             helperText={errors.password[0] || passwordError && t('validation.minimum_characters_with_count', { count: MIN_PASSWORD_LENGTH })}
             name="password"
             required
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             autoComplete="new-password"
             value={password}
             onChange={this.onChange}
             onBlur={this.onBlur}
             className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: passwordError })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" style={{ color: grey[400] }}>
+                  {showPassword ? <VisibilityOff className={styles.vis} onClick={this.togglePasswordVisibility} /> : <Visibility className={styles.vis} onClick={this.togglePasswordVisibility} />}
+                </InputAdornment>
+              )
+            }}
           />
 
           <TextField
@@ -70,11 +84,18 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
             id="password-confirmation"
             name="passwordConfirmation"
             required
-            type="password"
+            type={showPasswordConfirmation ? 'text' : 'password'}
             autoComplete="new-password"
             value={passwordConfirmation}
             onChange={this.onChange}
             className={classnames(signupStyles.textField, { [signupStyles.helperTextActive]: passwordConfirmationError })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end" style={{ color: grey[400] }}>
+                  {showPasswordConfirmation ? <VisibilityOff className={styles.vis} onClick={this.togglePasswordConfirmationVisibility} /> : <Visibility className={styles.vis} onClick={this.togglePasswordConfirmationVisibility} />}
+                </InputAdornment>
+              )
+            }}
           />
         </div>
 
@@ -156,6 +177,18 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
 
       clickNext(e as FormEvent<HTMLButtonElement>);
     }
+  }
+
+  private togglePasswordVisibility = (): void => {
+    this.setState(prevState => ({
+      showPassword: !prevState.showPassword
+    }));
+  }
+
+  private togglePasswordConfirmationVisibility = (): void => {
+    this.setState(prevState => ({
+      showPasswordConfirmation: !prevState.showPasswordConfirmation
+    }));
   }
 }
 
