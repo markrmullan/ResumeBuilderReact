@@ -7,20 +7,20 @@
 
   transform: scale(0.62);
 
-  @media (min-width: $xl-screen-min) {
-    transform: scale(0.75);
-
-    @media (max-height: 760px) {
-      transform: scale(0.72);
-    }
+  @media (max-height: 553px) {
+    transform: scale(0.48);
   }
 
   @media (max-height: 647px) {
     transform: scale(0.6);
   }
 
-  @media (max-height: 553px) {
-    transform: scale(0.48);
+  @media (min-width: $xl-screen-min) {
+    transform: scale(0.75);
+  }
+
+  @media (max-height: 760px) {
+    transform: scale(0.64);
   }
 
   .prev-next-container {

@@ -26,19 +26,19 @@
 
 .preview-mode {
   .container {
-    @media (max-width: 415px) {
-        transform: scale(0.48);
-    }
-
-    @media (max-width: $xs-screen-max) {
-      transform: scale(0.65);
-    }
-
     @media (max-height: 647px) {
       transform: scale(0.6);
     }
 
     @media (max-height: 553px) {
+      transform: scale(0.48);
+    }
+
+    @media (max-width: $xs-screen-max) {
+      transform: scale(0.58);
+    }
+
+    @media (max-width: 415px) {
       transform: scale(0.48);
     }
   }
