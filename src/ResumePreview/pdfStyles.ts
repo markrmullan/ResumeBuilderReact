@@ -32,7 +32,8 @@ export const pdfStyles = StyleSheet.create({
     marginLeft: -1
   },
   jobTitle: {
-    fontSize: 11
+    fontSize: 11,
+    marginTop: 6
   },
   section: {
     fontSize: 15,
