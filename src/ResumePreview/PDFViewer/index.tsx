@@ -109,7 +109,7 @@ class PDFViewerComponent extends Component<TComponentProps, PDFViewerState> {
   }
 
   public componentDidMount() {
-    window.addEventListener("resize", this.throttledHandleResize as unknown as any);
+    window.addEventListener('resize', this.throttledHandleResize as unknown as any);
     const { document } = this.props;
 
     this.throttledRenderDocument(document);
@@ -134,7 +134,7 @@ class PDFViewerComponent extends Component<TComponentProps, PDFViewerState> {
   }
 
   public componentWillUnmount() {
-    window.removeEventListener("resize", this.throttledHandleResize as unknown as any);
+    window.removeEventListener('resize', this.throttledHandleResize as unknown as any);
   }
 
   private handleResize = () => {

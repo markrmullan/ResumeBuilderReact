@@ -12,7 +12,7 @@ import signupStyles from '../styles.module.scss';
 type TOwnProps = {
   password: string;
   passwordConfirmation: string;
-  clickNext: (e: React.FormEvent<HTMLButtonElement>) => void;
+  clickNext: (e: FormEvent<HTMLButtonElement>) => void;
   clickPrev: () => void;
   onChange: (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   errors: {
@@ -38,7 +38,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
     const { passwordConfirmationError, passwordError } = this.state;
 
     return (
-      <div className={signupStyles.formFunnel}>
+      <form className={signupStyles.formFunnel} onSubmit={this.onSubmit}>
         <h1 className={signupStyles.h1}>
           {t('create_a_password')}
         </h1>
@@ -90,13 +90,14 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
           <Button
             color="primary"
             variant="contained"
+            type="submit"
             disabled={!this.allFieldsValid}
-            onClick={(e: React.FormEvent<HTMLButtonElement>) => clickNext(e)}
+            onClick={(e: FormEvent<HTMLButtonElement>) => clickNext(e)}
           >
             {t('save')}
           </Button>
         </div>
-      </div>
+      </form>
     );
   }
 
@@ -110,7 +111,7 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
 
   private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { passwordError } = this.state;
-    const { password, onChange } = this.props;
+    const { password, passwordConfirmation = '', onChange } = this.props;
 
     onChange(e);
 
@@ -120,10 +121,22 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
 
     const { name, value } = e.currentTarget;
 
-    if (name === 'passwordConfirmation') {
-      this.setState({
-        passwordConfirmationError: password !== value
-      });
+    if (passwordConfirmation.length) {
+      if (name === 'passwordConfirmation') {
+        this.setState({
+          passwordConfirmationError: password !== value
+        });
+
+        return;
+      }
+
+      if (name === 'password') {
+        this.setState({
+          passwordConfirmationError: passwordConfirmation !== value
+        });
+
+        return;
+      }
     }
   }
 
@@ -133,6 +146,16 @@ class PasswordFormComponent extends PureComponent<TComponentProps, TComponentSta
     this.setState({
       passwordError: value.length < MIN_PASSWORD_LENGTH
     });
+  }
+
+  private onSubmit = (e: FormEvent<HTMLButtonElement | HTMLFormElement>): void => {
+    e.preventDefault();
+
+    if (this.allFieldsValid) {
+      const { clickNext } = this.props;
+
+      clickNext(e as FormEvent<HTMLButtonElement>);
+    }
   }
 }
 
