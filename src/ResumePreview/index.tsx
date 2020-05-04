@@ -292,6 +292,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     return ` ${richText.trim().replace(/\n|&nbsp;|<em>|<\/em>/ig, '')}`
       .replace(/<br \/>/g, '\n')
       .replace(/&amp;/g, '&')
+      .replace(/<p><\/p>/g, '')
       .split(/<ul>|<\/ul>/)
       .map((ulTagOrPTag, idx) => {
         if (idx % 2 === 0) {
@@ -307,7 +308,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
         return (
           <View key={`ul-${idx}`} style={pdfStyles.ul}>
-            {ulTagOrPTag.split(/<li>|<\/li>/)
+            {ulTagOrPTag.split(/<li><p>|<\/p><\/li>|<li>|<\/li>/)
               .filter(e => e && e !== ' ')
               .map((li, idx2) => (
                 <View key={`li-${idx2}`} style={pdfStyles.li}>
