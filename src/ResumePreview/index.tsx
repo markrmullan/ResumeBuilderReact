@@ -292,6 +292,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     return ` ${richText.trim().replace(/\n|&nbsp;|<em>|<\/em>/ig, '')}`
       .replace(/<br \/>/g, '\n')
       .replace(/&amp;/g, '&')
+      .replace(/&rsquo;/g, "'")
       .replace(/<p><\/p>/g, '')
       .split(/<ul>|<\/ul>/)
       .map((ulTagOrPTag, idx) => {
