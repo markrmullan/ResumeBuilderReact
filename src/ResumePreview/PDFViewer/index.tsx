@@ -1,4 +1,4 @@
-import React, { PureComponent, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { WithNamespaces, withNamespaces } from 'react-i18next';
 
 import { Button, Typography } from '@material-ui/core';
@@ -19,6 +19,8 @@ type PDFViewerProps = {
 };
 
 type PDFViewerState = {
+  height: number;
+  width: number;
   document: string;
   numPages: number;
   pageNumber: number;
@@ -26,16 +28,20 @@ type PDFViewerState = {
 
 type TComponentProps = PDFViewerProps & WithNamespaces;
 
-class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> {
+class PDFViewerComponent extends Component<TComponentProps, PDFViewerState> {
   public static contextType = CurrentUserContextImpl;
   private throttledRenderDocument: Function;
+  private throttledHandleResize: Function;
 
   public constructor(props: TComponentProps) {
     super(props);
 
     this.throttledRenderDocument = throttle(this.renderDocument, 4000, { leading: false });
+    this.throttledHandleResize = throttle(this.handleResize, 1000, { leading: false });
 
     this.state = {
+      height: window.innerHeight,
+      width: window.innerWidth,
       document: '',
       numPages: 1,
       pageNumber: 1
@@ -52,7 +58,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
       <div className={styles.container}>
         <div className={previewStyles.pdfViewerWrapper}>
           <Document file={document} onLoadSuccess={this.onDocumentLoadSuccess}>
-            <Page renderMode="svg" pageNumber={pageNumber} scale={0.5} />
+            <Page renderMode="svg" pageNumber={pageNumber} scale={this.computeSvgScale()} />
           </Document>
         </div>
 
@@ -103,6 +109,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
   }
 
   public componentDidMount() {
+    window.addEventListener("resize", this.throttledHandleResize as unknown as any);
     const { document } = this.props;
 
     this.throttledRenderDocument(document);
@@ -124,6 +131,32 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
     if (document === prevProps.document) return;
 
     this.throttledRenderDocument(document);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener("resize", this.throttledHandleResize as unknown as any);
+  }
+
+  private handleResize = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+
+    this.setState({
+      height, width
+    });
+  }
+
+  private computeSvgScale = (): number => {
+    const { width } = this.state;
+
+    if (width > 1200) {
+      return 0.75;
+    }
+
+    if (width > 1085) {
+      return 0.66;
+    }
+
+    return 0.5;
   }
 
   private renderDocument(doc: ReactElement) {
