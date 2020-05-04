@@ -289,8 +289,9 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
    * please forgive me
    */
   private convertRichTextToTsx = (richText: string = ''): ReactNode => {
-    return ` ${richText.trim().replace(/\n|&nbsp;/ig, '')}`
+    return ` ${richText.trim().replace(/\n|&nbsp;|<em>|<\/em>/ig, '')}`
       .replace(/<br \/>/g, '\n')
+      .replace(/&amp;/g, '&')
       .split(/<ul>|<\/ul>/)
       .map((ulTagOrPTag, idx) => {
         if (idx % 2 === 0) {
