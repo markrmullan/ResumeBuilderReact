@@ -52,7 +52,7 @@ class PDFViewerComponent extends PureComponent<TComponentProps, PDFViewerState> 
       <div className={styles.container}>
         <div className={previewStyles.pdfViewerWrapper}>
           <Document file={document} onLoadSuccess={this.onDocumentLoadSuccess}>
-            <Page renderMode="svg" pageNumber={pageNumber} />
+            <Page renderMode="svg" pageNumber={pageNumber} scale={0.5} />
           </Document>
         </div>
 
