@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Currently available at https://resume-builder-ts.herokuapp.com/.
+Currently available at https://easy-resu.me/.
 
 ## Available Scripts
 
