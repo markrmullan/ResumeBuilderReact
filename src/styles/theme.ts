@@ -60,6 +60,11 @@ const baseTheme = createMuiTheme({
         }
       }
     },
+    MuiTableCell: {
+      head: {
+        fontWeight: 700
+      }
+    },
     MuiTypography: {
       h4: {
         fontFamily: 'inherit',
