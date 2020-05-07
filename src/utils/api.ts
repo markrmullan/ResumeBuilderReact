@@ -61,7 +61,6 @@ export const get = async <T> (params: Partial<ApiQuery> | string): Promise<T> =>
 
 export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
   try {
-    console.log({ url: url(params)});
     const response = await axiosInstance.post(url(params), data) || {};
 
     return response.data as unknown as Promise<T>;

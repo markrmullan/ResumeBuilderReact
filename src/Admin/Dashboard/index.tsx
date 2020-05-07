@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
 import { Container } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { TableContainer } from 'common/Table/Container';
+import { Spinner } from 'common/Spinner';
 import { Table } from 'common/Table';
 import { TableBody } from 'common/Table/Body';
+import { TableCell } from 'common/Table/Cell';
+import { TableContainer } from 'common/Table/Container';
 import { TableHead } from 'common/Table/Head';
 import { TableRow } from 'common/Table/Row';
-import { TableCell } from 'common/Table/Cell';
-import { Spinner } from 'common/Spinner';
 import { User } from 'utils/models';
 import { becomeUser, fetchUsers } from 'utils/requests';
 
@@ -46,6 +46,10 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Num
+                </TableCell>
+
+                <TableCell>
                   First Name
                 </TableCell>
 
@@ -68,8 +72,12 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
             </TableHead>
 
             <TableBody>
-              {users.map(user => (
+              {users.map((user, i) => (
                 <TableRow key={user.uuid}>
+                  <TableCell>
+                    {users.length - i}
+                  </TableCell>
+
                   <TableCell>
                     {user.firstName}
                   </TableCell>
