@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import { Button } from '@material-ui/core';
+import { format } from 'date-fns';
 import { Container } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
@@ -14,6 +15,8 @@ import { TableHead } from 'common/Table/Head';
 import { TableRow } from 'common/Table/Row';
 import { User } from 'utils/models';
 import { becomeUser, fetchUsers } from 'utils/requests';
+
+const DATE_FORMAT = 'd MMM, HH:mm';
 
 type TComponentProps = RouteComponentProps;
 
@@ -46,6 +49,10 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Created @
+                </TableCell>
+
+                <TableCell>
                   Num
                 </TableCell>
 
@@ -58,11 +65,7 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
                 </TableCell>
 
                 <TableCell>
-                  Email
-                </TableCell>
-
-                <TableCell>
-                  Phone
+                  Email + Phone
                 </TableCell>
 
                 <TableCell>
@@ -74,6 +77,10 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
             <TableBody>
               {users.map((user, i) => (
                 <TableRow key={user.uuid}>
+                  <TableCell>
+                    {format(new Date(user.createdAt), DATE_FORMAT)}
+                  </TableCell>
+
                   <TableCell>
                     {users.length - i}
                   </TableCell>
@@ -87,10 +94,7 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
                   </TableCell>
 
                   <TableCell>
-                    {user.email}
-                  </TableCell>
-
-                  <TableCell>
+                    {user.email} <br/>
                     {user.phoneNumber}
                   </TableCell>
 
