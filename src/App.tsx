@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
+import { AdminDashboard } from 'Admin/Dashboard';
 import { BuyMeACoffee } from 'BuyMeACoffee';
 import { Dashboard } from 'DashboardComponent';
 import { EditResume } from 'EditResume';
@@ -56,6 +57,8 @@ class App extends Component<WithNamespaces, AppState> {
                 <Route exact path="/get-started" component={SignupComponent} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route path="/resumes/:rId/edit" component={EditResume} />
+
+                <Route exact path="/adm/dashboard" component={AdminDashboard} />
               </Switch>
             </MuiPickersUtilsProvider>
           </CurrentUserContextImpl.Provider>

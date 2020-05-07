@@ -9,6 +9,28 @@ export const fetchCurrentUser = (): Promise<User> => {
   return get<User>('users/current');
 };
 
+export const patchCurrentUser = (user: User): Promise<User> => {
+  const query: Partial<ApiQuery> = {
+    baseResourceId: user.uuid
+  };
+
+  return patch<User>(query, user);
+};
+
+export const fetchUsers = (): Promise<User[]> => {
+  return get<User[]>('users');
+};
+
+export const becomeUser = (userId: Uuid): Promise<void> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'users',
+    baseResourceId: userId,
+    nestedResources: ['become']
+  };
+
+  return post<void>(query);
+};
+
 export const fetchResume = (resumeId: Uuid): Promise<Resume> => {
   const query: Partial<ApiQuery> = {
     baseResource: 'resumes',
@@ -54,14 +76,6 @@ export const deleteResume = (resumeId: Uuid): Promise<void> => {
   };
 
   return destroy<void>(query);
-};
-
-export const patchCurrentUser = (user: User): Promise<User> => {
-  const query: Partial<ApiQuery> = {
-    baseResourceId: user.uuid
-  };
-
-  return patch<User>(query, user);
 };
 
 export const createWorkExperience = (resumeId: Uuid, experience: Partial<Experience> = {}): Promise<Experience> => {
