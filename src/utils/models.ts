@@ -46,3 +46,12 @@ export interface Education extends BaseModel {
 export interface Link extends BaseModel {
   url?: string;
 }
+
+export type FeatureFlag = {
+  enabled: boolean;
+  name: FeatureFlagEnum;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type FeatureFlagEnum = 'PASSWORD_RESET_ENABLED';
