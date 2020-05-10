@@ -14,8 +14,6 @@ declare module 'i18next-xhr-backend';
 declare module 'i18next-browser-languagedetector';
 declare module 'react-https-redirect';
 
-declare module 'react-async-button';
-
 interface Window {
   FB: any;
 }

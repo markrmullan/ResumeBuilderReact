@@ -69,7 +69,6 @@
     "postcss-safe-parser": "4.0.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.0",
-    "react-async-button": "^0.2.0",
     "react-bootstrap": "^1.0.0",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.8.6",

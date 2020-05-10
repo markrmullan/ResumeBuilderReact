@@ -8309,12 +8309,6 @@ react-app-polyfill@^0.2.0:
     raf "3.4.0"
     whatwg-fetch "3.0.0"
 
-react-async-button@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-async-button/-/react-async-button-0.2.0.tgz#6e5b6c00153f2351908d98db02bef91af17672cb"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-bootstrap@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.0.0.tgz#ed812810205e75b8e4a84b9514d79de090cdc627"
