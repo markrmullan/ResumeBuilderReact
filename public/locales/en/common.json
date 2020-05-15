@@ -62,6 +62,8 @@
   "experience": "Experience",
   "first_name": "First Name",
   "first_time_here": "First time here? ",
+  "forgot_password": "Forgot password?",
+  "forgot_your_password": "Forgot your password?",
   "full_name_resume_dot_pdf": "{{fullName}} Resume.pdf",
   "get_started": "Get Started",
   "gpa": "GPA",
@@ -131,5 +133,7 @@
     "comma_separated": "{{val1}}, {{val2}}",
     "em_dash_separated": "{{val1}} — {{val2}}"
   },
+  "we_sent_a_password_reset_email_to": "We sent a password reset email to {{email}}",
+  "we_will_send_reset_link": "We'll send you a password reset link",
   "zip_or_postal": "Zip / Postal Code"
 }

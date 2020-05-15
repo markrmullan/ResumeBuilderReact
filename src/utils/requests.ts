@@ -1,5 +1,5 @@
 import { ApiQuery, destroy, get, patch, post } from './api';
-import { Education, Experience, Link, Resume, User } from './models';
+import { Education, Experience, FeatureFlag, FeatureFlagEnum, Link, Resume, User } from './models';
 
 export const logOut = (): Promise<void> => {
   return destroy<void>('users/sign_out');
@@ -172,4 +172,17 @@ export const deleteLink = (resumeId: Uuid, linkId: Uuid): Promise<void> => {
   };
 
   return destroy<void>(query);
+};
+
+export const getFeatureFlag = (name: FeatureFlagEnum): Promise<FeatureFlag> => {
+  const query: Partial<ApiQuery> = {
+    baseResource: 'feature_flags',
+    baseResourceId: name
+  };
+
+  return get<FeatureFlag>(query);
+};
+
+export const createPasswordResetEmail = (user: Pick<User, 'email'>) => {
+  return post<{}>('users/password', { user });
 };

@@ -10,6 +10,7 @@ import { post } from 'utils/api';
 import { MIN_PASSWORD_LENGTH, ROUTES } from 'utils/constants';
 import { User } from 'utils/models';
 import { EMAIL_REQUIRED } from 'utils/regex';
+import { getFeatureFlag } from 'utils/requests';
 
 import signupStyles from 'SignupComponent/styles.module.scss';
 import styles from './styles.module.scss';
@@ -18,6 +19,7 @@ type LoginState = {
   email: string;
   error?: string;
   password: string;
+  passwordResetEnabled: boolean;
   submitting: boolean;
 };
 
@@ -28,12 +30,13 @@ class Login extends PureComponent<TComponentProps, LoginState> {
     email: '',
     error: undefined,
     password: '',
+    passwordResetEnabled: false,
     submitting: false
   };
 
   public render() {
     const { t } = this.props;
-    const { email, error, password, submitting } = this.state;
+    const { email, error, password, passwordResetEnabled, submitting } = this.state;
 
     return (
       <form onSubmit={e => this.allFieldsValid && this.submit(e)}>
@@ -78,9 +81,23 @@ class Login extends PureComponent<TComponentProps, LoginState> {
               {t('sign_up')}
             </Link>
           </div>
+
+          {passwordResetEnabled &&
+            <div className={signupStyles.switchAuthMethod}>
+              <Link to="forgot-password">
+                {t('forgot_password')}
+              </Link>
+            </div>
+          }
         </div>
       </form>
     );
+  }
+
+  public componentDidMount() {
+    getFeatureFlag('PASSWORD_RESET_ENABLED').then(({ enabled }) => {
+      this.setState({ passwordResetEnabled: enabled });
+    });
   }
 
   private onChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -1,0 +1,24 @@
+@import "styles/common";
+
+.alert {
+  margin: 20px auto 0;
+  width: fit-content;
+}
+
+.container {
+  color: $grey-800;
+  margin: 36px auto;
+  max-width: 391px;
+
+  &.compact {
+    margin: 12px auto;
+  }
+
+  .title {
+    margin-bottom: 8px;
+  }
+
+  .button-row {
+    margin-top: 16px;
+  }
+}

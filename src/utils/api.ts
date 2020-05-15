@@ -59,9 +59,11 @@ export const get = async <T> (params: Partial<ApiQuery> | string): Promise<T> =>
   return response.data as unknown as T;
 };
 
-export const post = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
+export const post = async <T> (params: Partial<ApiQuery> | string, data: object = {}): Promise<T> => {
+  if (typeof params === 'string') params = { path: params };
+
   try {
-    const response = await axiosInstance.post(url(params), data) || {};
+    const response = await axiosInstance.post<T>(url(params), data) || {};
 
     return response.data as unknown as Promise<T>;
   } catch ({ response }) {
@@ -83,7 +85,7 @@ export const destroy = async <T> (params: Partial<ApiQuery> | string): Promise<T
   return response.data as unknown as Promise<T>;
 };
 
-type BaseResource = 'resumes' | 'users';
+type BaseResource = 'resumes' | 'users' | 'feature_flags';
 
 type NestedResource = 'experiences' | 'educations' | 'links' | 'become';
 
