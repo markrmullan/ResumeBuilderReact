@@ -189,31 +189,31 @@ class ResetPasswordComponent extends PureComponent<TComponentProps, TComponentSt
 
     this.setState({
       [name]: value
-    } as unknown as TComponentState, () => {
-      const { password, passwordConfirmation = '', passwordError } = this.state;
+    } as unknown as TComponentState);
 
-      if (passwordError) {
-        this.onBlur(e);
+    const { password, passwordConfirmation = '', passwordError } = this.state;
+
+    if (passwordError) {
+      this.onBlur(e);
+    }
+
+    if (passwordConfirmation.length) {
+      if (name === 'passwordConfirmation') {
+        this.setState({
+          passwordConfirmationError: password !== value
+        });
+
+        return;
       }
 
-      if (passwordConfirmation.length) {
-        if (name === 'passwordConfirmation') {
-          this.setState({
-            passwordConfirmationError: password !== value
-          });
+      if (name === 'password') {
+        this.setState({
+          passwordConfirmationError: passwordConfirmation !== value
+        });
 
-          return;
-        }
-
-        if (name === 'password') {
-          this.setState({
-            passwordConfirmationError: passwordConfirmation !== value
-          });
-
-          return;
-        }
+        return;
       }
-    });
+    }
   }
 
   private onBlur = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
