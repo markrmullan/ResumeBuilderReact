@@ -15,6 +15,7 @@ export interface User extends BaseModel {
   state?: string;
   zip?: string;
   jobTitle?: string;
+  resetPasswordToken?: string;
 }
 
 export interface Resume extends BaseModel {

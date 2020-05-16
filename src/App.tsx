@@ -14,6 +14,7 @@ import { ForgotPassword } from 'ForgotPassword';
 import { HomePage } from 'HomePage';
 import { LoginComponent } from 'LoginComponent';
 import { PrivacyPolicy } from 'PrivacyPolicy';
+import { ResetPassword } from 'ResetPassword';
 import { ScrollToTop } from 'ScrollToTop';
 import { SignupComponent } from 'SignupComponent';
 import { TopAppHeader } from 'common/TopAppHeader';
@@ -56,6 +57,7 @@ class App extends Component<WithNamespaces, AppState> {
                 <Route exact path="/privacy-policy" component={PrivacyPolicy} />
                 <Route exact path={ROUTES.login} component={LoginComponent} />
                 <Route exact path="/forgot-password" component={ForgotPassword} />
+                <Route exact path="/users/password/edit" component={ResetPassword} />
                 <Route exact path="/get-started" component={SignupComponent} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route path="/resumes/:rId/edit" component={EditResume} />

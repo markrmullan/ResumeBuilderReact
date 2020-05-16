@@ -71,7 +71,9 @@ export const post = async <T> (params: Partial<ApiQuery> | string, data: object 
   }
 };
 
-export const patch = async <T> (params: Partial<ApiQuery>, data: object = {}): Promise<T> => {
+export const patch = async <T> (params: Partial<ApiQuery> | string, data: object = {}): Promise<T> => {
+  if (typeof params === 'string') params = { path: params };
+
   const response = await axiosInstance.patch(url(params), data) || {};
 
   return response.data as unknown as Promise<T>;

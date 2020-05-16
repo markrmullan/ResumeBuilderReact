@@ -186,3 +186,7 @@ export const getFeatureFlag = (name: FeatureFlagEnum): Promise<FeatureFlag> => {
 export const createPasswordResetEmail = (user: Pick<User, 'email'>) => {
   return post<{}>('users/password', { user });
 };
+
+export const resetPassword = (user: Pick<User, 'password' | 'resetPasswordToken'>) => {
+  return patch<{}>('users/password', { user });
+};

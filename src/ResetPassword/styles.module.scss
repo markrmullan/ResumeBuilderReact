@@ -1,0 +1,30 @@
+@import "styles/common";
+
+.alert {
+  margin: 36px auto 0;
+  width: fit-content;
+
+  .link {
+    color: $white;
+    font-weight: $bolder;
+    text-decoration: underline;
+  }
+}
+
+.container {
+  color: $grey-800;
+  margin: 36px auto 0;
+  max-width: 417px;
+
+  .text-field {
+    margin-bottom: 31px;
+
+    &.helper-text-active {
+      margin-bottom: 9px;
+    }
+  }
+}
+
+.vis {
+  cursor: pointer;
+}
