@@ -123,9 +123,7 @@ class ForgotPasswordComponent extends PureComponent<TComponentProps, TComponentS
     }
   }
 
-  private dismissSuccessAlert = () => {
-    this.setState({ showSuccessAlert: false });
-  }
+  private dismissSuccessAlert = () => this.setState({ showSuccessAlert: false });
 }
 
 export const ForgotPassword = withNamespaces()(ForgotPasswordComponent);
