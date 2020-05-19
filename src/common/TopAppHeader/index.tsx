@@ -18,12 +18,6 @@ const PATHS_TO_HIDE_HEADER: RegExp[] = [
 
 type TComponentProps = RouteComponentProps & WithNamespaces;
 
-/*
- * TODO inside the <Toolbar>, add a
- *           <IconButton edge="start" color="inherit" aria-label="menu">
- *             <Menu />
- *           </IconButton>
- */
 class TopAppHeaderComponent extends PureComponent<TComponentProps> {
   public static contextType = CurrentUserContextImpl;
 

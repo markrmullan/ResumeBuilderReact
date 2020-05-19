@@ -11,6 +11,7 @@ import { Footer } from 'Footer';
 import { Alert } from 'common/Alert';
 import { Card } from 'common/Card';
 import { FadeIn } from 'common/FadeIn';
+import { CurrentUserContextImpl } from 'utils/contexts';
 
 import resumeWireframe from 'common/assets/resume_wireframe.svg';
 import sampleResume from './sample_resume.svg';
@@ -25,6 +26,8 @@ type TComponentState = {
 };
 
 class HomePageComponent extends PureComponent<TComponentProps, TComponentState> {
+  public static contextType = CurrentUserContextImpl;
+
   public state = {
     isCovidAlertDismissed: !!localStorage.getItem('isCovidAlertDismissed')
   };
@@ -180,7 +183,12 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
   }
 
   private redirectToSignup = (): void => {
+    const { user: { uuid: userId } } = this.context;
     const { history } = this.props;
+
+    if (userId) {
+      return history.push('/dashboard');
+    }
 
     history.push('/get-started');
   }
