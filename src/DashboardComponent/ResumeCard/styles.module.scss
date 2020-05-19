@@ -45,6 +45,7 @@
 
     .delete-text {
       cursor: pointer;
+      display: flex;
 
       &:hover {
         color: $deep-purple-500;

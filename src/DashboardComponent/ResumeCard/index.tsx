@@ -62,12 +62,18 @@ class ResumeCardComponent extends PureComponent<TComponentProps, TComponentState
                 </Typography>
               </div>
               <Typography color="primary" className={styles.actionContainer}>
-                <EditOutlined style={{ color: ICON_COLOR }} className={styles.icon} />
-                <Link className="dark-link" to={getEditResumeRoute(resumeId)}>{t('edit')}</Link>
+                <Link className="dark-link" to={getEditResumeRoute(resumeId)}>
+                  <EditOutlined style={{ color: ICON_COLOR }} className={styles.icon} />
+
+                  {t('edit')}
+                </Link>
               </Typography>
               <Typography className={styles.actionContainer}>
-                <DeleteOutlined style={{ color: ICON_COLOR }} className={styles.icon} />
-                <span role="button" onClick={this.openDeleteConfirmation} className={styles.deleteText}>{t('delete')}</span>
+                <span role="button" onClick={this.openDeleteConfirmation} className={styles.deleteText}>
+                  <DeleteOutlined style={{ color: ICON_COLOR }} className={styles.icon} />
+
+                  {t('delete')}
+                </span>
               </Typography>
             </Col>
           </Row>
