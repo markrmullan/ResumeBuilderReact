@@ -221,8 +221,11 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
     );
   }
 
-  private getRoleAndPlace = (role: Maybe<string>, place: Maybe<string>, location: Maybe<string>): Maybe<ReactElement> => {
+  private getRoleAndPlace = (role: Maybe<string> = '', place: Maybe<string> = '', location: Maybe<string> = ''): Maybe<ReactElement> => {
     const { t } = this.props;
+    role = role.trim();
+    place = place.trim();
+    location = location.trim();
 
     if (role && place && location) {
       return (
