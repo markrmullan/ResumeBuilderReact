@@ -30,7 +30,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
   public render() {
     const { isMobilePreviewEnabled, resume, t } = this.props;
     const { user } = this.context;
-    const { email, jobTitle, phoneNumber, resumeEmail } = user;
+    const { email, firstName = '', jobTitle, lastName= '', phoneNumber, resumeEmail } = user;
     const { educations = [], experiences = [] } = resume;
     const now = Date.now();
     const emailToShow = resumeEmail || email;
@@ -43,7 +43,7 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
           <View style={pdfStyles.informationContainer}>
             <View>
               <Text style={pdfStyles.name}>
-                {`${user.firstName} ${user.lastName}`.trim()}
+                {`${firstName.trim()} ${lastName.trim()}`}
               </Text>
               {jobTitle &&
                 <Text style={pdfStyles.jobTitle}>{jobTitle}</Text>
