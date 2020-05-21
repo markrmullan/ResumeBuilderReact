@@ -37,13 +37,20 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
 
     const links = this.getLinks();
 
+    const fullName = `${firstName.trim()} ${lastName.trim()}`;
+
     const Resume = () => (
       <Document>
         <Page size="A4" style={pdfStyles.page}>
           <View style={pdfStyles.informationContainer}>
             <View>
-              <Text style={pdfStyles.name}>
-                {`${firstName.trim()} ${lastName.trim()}`}
+              <Text
+                style={{
+                  ...pdfStyles.name,
+                  ...(fullName.length > 19 ? pdfStyles.longName : {})
+                }}
+              >
+                {fullName}
               </Text>
               {jobTitle &&
                 <Text style={pdfStyles.jobTitle}>{jobTitle}</Text>

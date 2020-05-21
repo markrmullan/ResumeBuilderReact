@@ -31,6 +31,9 @@ export const pdfStyles = StyleSheet.create({
     lineHeight: 1,
     marginLeft: -1
   },
+  longName: {
+    fontSize: 22
+  },
   jobTitle: {
     fontSize: 11,
     marginTop: 6
