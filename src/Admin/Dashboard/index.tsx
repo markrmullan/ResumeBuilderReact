@@ -69,6 +69,10 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
                 </TableCell>
 
                 <TableCell>
+                  Title
+                </TableCell>
+
+                <TableCell>
                   Actions
                 </TableCell>
               </TableRow>
@@ -96,6 +100,10 @@ class AdminDashboardComponent extends PureComponent<TComponentProps, TComponentS
                   <TableCell>
                     {user.email} <br/>
                     {user.phoneNumber}
+                  </TableCell>
+
+                  <TableCell>
+                    {user.jobTitle}
                   </TableCell>
 
                   <TableCell>
