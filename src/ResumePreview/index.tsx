@@ -5,6 +5,7 @@ import { blueGrey } from '@material-ui/core/colors';
 import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
 import classnames from 'classnames';
 import { format } from 'date-fns';
+import { AllHtmlEntities } from 'html-entities';
 import { Col } from 'react-bootstrap';
 
 import { CurrentUserContextImpl } from 'utils/contexts';
@@ -299,10 +300,10 @@ class ResumePreviewComponent extends PureComponent<TComponentProps> {
    * please forgive me
    */
   private convertRichTextToTsx = (richText: string = ''): ReactNode => {
-    return ` ${richText.trim().replace(/\n|&nbsp;|<em>|<\/em>/ig, '')}`
+    richText = new AllHtmlEntities().decode(richText);
+
+    return ` ${new AllHtmlEntities().decode(richText.trim()).replace(/\n|<em>|<\/em>/ig, '')}`
       .replace(/<br \/>/g, '\n')
-      .replace(/&amp;/g, '&')
-      .replace(/&rsquo;/g, '\'')
       .replace(/<p><\/p>/g, '')
       .split(/<ul>|<\/ul>/)
       .map((ulTagOrPTag, idx) => {
