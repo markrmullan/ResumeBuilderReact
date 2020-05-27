@@ -183,7 +183,8 @@ class HomePageComponent extends PureComponent<TComponentProps, TComponentState> 
   }
 
   private redirectToSignup = (): void => {
-    const { user: { uuid: userId } } = this.context;
+    const { user = {} } = this.context;
+    const { uuid: userId } = user;
     const { history } = this.props;
 
     if (userId) {
