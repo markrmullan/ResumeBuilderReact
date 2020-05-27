@@ -26,6 +26,8 @@ import { registerPDFViewerFonts } from 'utils/initializers/font-registrar';
 import { User } from 'utils/models';
 import { fetchCurrentUser, patchCurrentUser } from 'utils/requests';
 
+import 'intersection-observer';
+
 import './App.scss';
 
 type AppState = {
