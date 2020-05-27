@@ -78,6 +78,7 @@ class Signup extends PureComponent<TComponentProps, SignupStateWithErrors> {
 
     return (
       <Modal
+        className={`${styles.modal} ${styles.signup}`}
         isOpen={funnelIsOpen}
       >
         <div className={className}>

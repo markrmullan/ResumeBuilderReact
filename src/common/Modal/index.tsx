@@ -7,16 +7,17 @@ import styles from './styles.module.scss';
 
 type ModalComponentProps = {
   isOpen: boolean;
+  className?: string;
 };
 
 class ModalComponent extends PureComponent<ModalComponentProps> {
   public render() {
-    const { children, isOpen } = this.props;
+    const { children, className = '', isOpen } = this.props;
 
     return (
       <ReactModal
         overlayClassName={styles.overlay}
-        className={styles.content}
+        className={`${styles.content} ${className}`}
         isOpen={isOpen}
         shouldCloseOnOverlayClick={false}
       >

@@ -1,5 +1,11 @@
 @import "styles/common";
 
+.signup {
+  &.modal {
+    overflow-x: hidden;
+  }
+}
+
 .auth-container {
   display: grid;
   grid-template: repeat(4, auto) / 1fr;
