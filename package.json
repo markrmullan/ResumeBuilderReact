@@ -120,7 +120,8 @@
       "!src/**/*.d.ts"
     ],
     "globals": {
-      "DEVELOPMENT": true
+      "DEVELOPMENT": true,
+      "PRODUCTION": false
     },
     "resolver": "jest-pnp-resolver",
     "setupFiles": [
