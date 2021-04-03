@@ -15,12 +15,11 @@ axios.createWith401Handler = (config: AxiosRequestConfig) => {
     const { pathname } = window.location;
 
     if (error.response.status === 401 && pathname !== ROUTES.login) {
-        window.location.href = ROUTES.login;
-      }
+      window.location.href = ROUTES.login;
+    }
 
     return Promise.reject(error);
-    }
-  );
+  });
 
   return axiosInstance;
 };
