@@ -19,16 +19,6 @@ class FooterComponent extends PureComponent<TComponentProps> {
       <Container fluid className={styles.container}>
         <Row>
           <Col>
-            <Typography align="center" variant="h6">
-              <Link to="/coffee" className={styles.footerLink}>
-                {t('coffee.buy_me_a_coffee')}
-              </Link>
-            </Typography>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
             <Typography align="center" variant="subtitle1" className={styles.madeWith}>
               {t('home_page.made_with_muscle')}
             </Typography>
